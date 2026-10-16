@@ -1,0 +1,950 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f3f8ff">
+<title>Thailand Weather & Air Quality Dashboard</title>
+
+<style>
+:root {
+  --bg: #f3f8ff;
+  --card: #ffffff;
+  --ink: #203047;
+  --muted: #718096;
+  --blue: #5188f5;
+  --line: #e6edf7;
+}
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+button, input { font: inherit; }
+
+.app {
+  width: 100%;
+  max-width: 1800px;
+  margin: auto;
+  padding: clamp(16px, 3vw, 42px);
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.brand-mark {
+  width: 65px;
+  height: 65px;
+  border-radius: 22px;
+  background: #fff0c5;
+  display: grid;
+  place-items: center;
+  font-size: 35px;
+}
+h1 {
+  margin: 0;
+  font-size: clamp(25px, 3vw, 43px);
+  letter-spacing: -1px;
+}
+.subtitle {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: clamp(14px, 1.3vw, 18px);
+}
+
+.clock-box {
+  text-align: right;
+  background: white;
+  border: 1px solid var(--line);
+  padding: 15px 22px;
+  border-radius: 20px;
+  min-width: 245px;
+}
+.clock-time {
+  font-size: clamp(27px, 3vw, 40px);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.clock-date {
+  color: var(--muted);
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.search-panel {
+  position: relative;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: clamp(17px, 2vw, 27px);
+  margin-bottom: 26px;
+  box-shadow: 0 5px 24px #243b5310;
+}
+.search-title {
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+.search-row {
+  display: flex;
+  gap: 12px;
+}
+#locationInput {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 18px 20px;
+  border: 2px solid #e3eaf6;
+  border-radius: 16px;
+  outline: none;
+  color: var(--ink);
+  background: #fbfdff;
+  font-size: clamp(17px, 1.5vw, 21px);
+}
+#locationInput:focus { border-color: var(--blue); }
+.search-button {
+  border: 0;
+  border-radius: 16px;
+  padding: 0 30px;
+  background: var(--blue);
+  color: white;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.search-button:hover { background: #376fe0; }
+.quick-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 15px;
+}
+.quick-search button {
+  background: #eff5ff;
+  border: 1px solid #dfebff;
+  color: #365b9c;
+  border-radius: 999px;
+  padding: 9px 15px;
+  cursor: pointer;
+}
+#status {
+  color: var(--muted);
+  font-size: 15px;
+  margin-top: 13px;
+  min-height: 20px;
+}
+#results {
+  display: none;
+  position: absolute;
+  z-index: 5;
+  top: calc(100% - 16px);
+  left: 24px;
+  right: 24px;
+  max-height: 320px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 12px 35px #20304720;
+}
+.result-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 16px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: white;
+  cursor: pointer;
+  color: var(--ink);
+}
+.result-item:hover { background: #f2f7ff; }
+.result-name { font-weight: 800; font-size: 17px; }
+.result-detail { color: var(--muted); font-size: 14px; margin-top: 5px; }
+
+.location-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 22px 0;
+}
+.location-heading h2 {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 38px);
+}
+.updated {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: clamp(22px, 3vw, 38px);
+  min-width: 0;
+  box-shadow: 0 7px 28px #243b5309;
+}
+.card-label {
+  font-size: clamp(18px, 1.7vw, 23px);
+  font-weight: 800;
+}
+.card-description {
+  color: var(--muted);
+  font-size: 16px;
+  margin-top: 7px;
+}
+.weather-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 24px 0;
+}
+.weather-icon {
+  font-size: clamp(72px, 10vw, 130px);
+  line-height: 1;
+}
+.temperature {
+  font-size: clamp(65px, 9vw, 112px);
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -5px;
+}
+.condition {
+  font-size: clamp(19px, 2vw, 26px);
+  font-weight: 700;
+  margin-top: 12px;
+}
+.weather-bottom {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 25px;
+}
+.metric {
+  background: #f5f8fe;
+  border-radius: 18px;
+  padding: 16px 12px;
+}
+.metric-name { font-size: 14px; color: var(--muted); }
+.metric-value {
+  font-size: clamp(19px, 2vw, 27px);
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+.aqi-card { transition: border-color .2s; }
+.aqi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.aqi-value {
+  font-size: clamp(58px, 8vw, 95px);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-top: 20px;
+}
+.aqi-unit { font-size: 17px; color: var(--muted); }
+.aqi-badge {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: clamp(15px, 1.5vw, 19px);
+  font-weight: 800;
+  background: #e7f8eb;
+  color: #168344;
+  margin-top: 12px;
+}
+.face-area {
+  display: flex;
+  align-items: center;
+  gap: clamp(15px, 3vw, 32px);
+  margin-top: 25px;
+  background: #f8faff;
+  border-radius: 24px;
+  padding: 20px;
+}
+.face-svg {
+  flex-shrink: 0;
+  width: clamp(100px, 13vw, 155px);
+  height: auto;
+}
+.face-message {
+  font-size: clamp(19px, 2.1vw, 27px);
+  font-weight: 800;
+  line-height: 1.35;
+}
+.face-advice {
+  font-size: clamp(15px, 1.4vw, 18px);
+  line-height: 1.5;
+  color: #56657b;
+  margin-top: 9px;
+}
+.aqi-scale {
+  margin-top: 24px;
+  height: 13px;
+  border-radius: 999px;
+  background: linear-gradient(to right,
+    #35bd73 0%, #a7d84c 20%,
+    #f5d547 40%, #f39b47 60%,
+    #ed6268 80%, #a85ed5 100%);
+}
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.pollutant {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.pollutant strong { font-size: 21px; }
+.pollutant span { color: var(--muted); font-size: 14px; }
+
+.info-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+.info-tile {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 22px;
+}
+.info-icon { font-size: 30px; }
+.info-title { font-weight: 800; margin-top: 12px; font-size: 18px; }
+.info-text { color: var(--muted); margin-top: 7px; line-height: 1.5; }
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 30px 10px 12px;
+}
+footer a { color: #4777ca; }
+
+@media (max-width: 760px) {
+  .dashboard { grid-template-columns: 1fr; }
+  .info-strip { grid-template-columns: 1fr; }
+  .clock-box { text-align: left; width: 100%; }
+  .search-row { flex-direction: column; }
+  .search-button { min-height: 55px; }
+  .weather-bottom { gap: 8px; }
+  .metric { padding: 13px 9px; }
+  .face-area { align-items: flex-start; }
+  #results { left: 12px; right: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+  <header>
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">☀</div>
+      <div>
+        <h1>Weather & Air Quality</h1>
+        <div class="subtitle">Let's check the sky and breathe safely!</div>
+      </div>
+    </div>
+    <div class="clock-box">
+      <div class="clock-time" id="clock">--:--:--</div>
+      <div class="clock-date" id="date">Loading date...</div>
+    </div>
+  </header>
+
+  <section class="search-panel">
+    <div class="search-title">Where would you like to check?</div>
+    <form id="searchForm" class="search-row">
+      <input
+        id="locationInput"
+        type="search"
+        placeholder="Search a Thai province, district, subdistrict or postcode..."
+        aria-label="Search a location in Thailand"
+        autocomplete="off"
+        required
+      >
+      <button class="search-button" type="submit">Search</button>
+    </form>
+    <div class="quick-search">
+      <button type="button" data-place="Bangkok">Bangkok</button>
+      <button type="button" data-place="Nonthaburi">Nonthaburi</button>
+      <button type="button" data-place="Chiang Mai">Chiang Mai</button>
+      <button type="button" data-place="Phuket">Phuket</button>
+      <button type="button" data-place="Pattaya">Pattaya</button>
+    </div>
+    <div id="status" role="status" aria-live="polite">
+      Loading current conditions...
+    </div>
+    <div id="results" role="listbox" aria-label="Location search results"></div>
+  </section>
+
+  <div class="location-heading">
+    <h2 id="locationTitle">Bangkok, Thailand</h2>
+    <div class="updated" id="updated">Preparing dashboard...</div>
+  </div>
+
+  <main>
+    <div class="dashboard">
+      <section class="card">
+        <div class="card-label">Today's Weather</div>
+        <div class="card-description">Current conditions at your selected location</div>
+
+        <div class="weather-main">
+          <div>
+            <div class="temperature" id="temperature">--°</div>
+            <div class="condition" id="condition">Loading weather...</div>
+          </div>
+          <div class="weather-icon" id="weatherIcon" aria-hidden="true">☀️</div>
+        </div>
+
+        <div class="weather-bottom">
+          <div class="metric">
+            <div class="metric-name">Feels like</div>
+            <div class="metric-value" id="feelsLike">--°</div>
+          </div>
+          <div class="metric">
+            <div class="metric-name">Humidity</div>
+            <div class="metric-value" id="humidity">--%</div>
+          </div>
+          <div class="metric">
+            <div class="metric-name">Wind</div>
+            <div class="metric-value" id="wind">-- km/h</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card aqi-card" id="aqiCard">
+        <div class="aqi-top">
+          <div>
+            <div class="card-label">Air Quality (AQI)</div>
+            <div class="card-description">How clean is the air today?</div>
+          </div>
+        </div>
+
+        <div class="aqi-value" id="aqiValue">--</div>
+        <div class="aqi-unit">US AQI · Higher values mean more pollution</div>
+        <div class="aqi-badge" id="aqiBadge">Checking air quality...</div>
+
+        <div class="face-area">
+          <svg id="aqiFace" class="face-svg" viewBox="0 0 160 160"
+               role="img" aria-label="Air quality face illustration">
+            <circle cx="80" cy="80" r="67" fill="#d9f6e4" stroke="#243447" stroke-width="5"/>
+            <circle cx="57" cy="65" r="6" fill="#243447"/>
+            <circle cx="103" cy="65" r="6" fill="#243447"/>
+            <path d="M48 91 Q80 126 112 91" fill="none" stroke="#243447"
+                  stroke-width="6" stroke-linecap="round"/>
+            <circle cx="39" cy="84" r="9" fill="#ff9e9e" opacity=".6"/>
+            <circle cx="121" cy="84" r="9" fill="#ff9e9e" opacity=".6"/>
+          </svg>
+          <div>
+            <div class="face-message" id="faceMessage">Let's check the air!</div>
+            <div class="face-advice" id="faceAdvice">
+              The latest air-quality information will appear here.
+            </div>
+          </div>
+        </div>
+
+        <div class="aqi-scale" aria-label="AQI scale from good to hazardous"></div>
+        <div class="scale-labels">
+          <span>Good</span>
+          <span>Moderate</span>
+          <span>Sensitive</span>
+          <span>Unhealthy</span>
+          <span>Very unhealthy</span>
+        </div>
+
+        <div class="pollutant">
+          <div>
+            <strong>PM2.5</strong>
+            <div><span>Fine particles in the air</span></div>
+          </div>
+          <strong id="pm25">-- µg/m³</strong>
+        </div>
+      </section>
+    </div>
+
+    <div class="info-strip">
+      <section class="info-tile">
+        <div class="info-icon" aria-hidden="true">🌤</div>
+        <div class="info-title">Check the weather</div>
+        <div class="info-text">See the temperature and current weather before heading outside.</div>
+      </section>
+      <section class="info-tile">
+        <div class="info-icon" aria-hidden="true">♡</div>
+        <div class="info-title">Protect your lungs</div>
+        <div class="info-text" id="healthTip">Check air quality before outdoor activities.</div>
+      </section>
+      <section class="info-tile">
+        <div class="info-icon" aria-hidden="true">📍</div>
+        <div class="info-title">Your selected area</div>
+        <div class="info-text" id="locationDetail">Bangkok, Thailand</div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    Weather and air-quality data are provided by
+    <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>.
+    Location results are based on the Open-Meteo geocoding database.
+    Data are estimates and may not represent a ground-level monitoring station.
+    <br>
+    US AQI categories are used for the face indicator. Always follow local health guidance.
+  </footer>
+</div>
+
+<script>
+"use strict";
+
+// Default location: Bangkok, Thailand.
+let selectedLocation = {
+  name: "Bangkok",
+  admin1: "Bangkok",
+  country: "Thailand",
+  latitude: 13.7563,
+  longitude: 100.5018,
+  timezone: "Asia/Bangkok",
+  postcode: ""
+};
+
+let lastWeatherFetch = 0;
+let searchSequence = 0;
+let weatherRequestSequence = 0;
+
+const $ = id => document.getElementById(id);
+
+function updateClock() {
+  const now = new Date();
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Bangkok",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  }).format(now);
+
+  const date = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Bangkok",
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  }).format(now);
+
+  $("clock").textContent = parts;
+  $("date").textContent = date + " · Thailand";
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+function setStatus(message) {
+  $("status").textContent = message;
+}
+
+function showResults(show) {
+  $("results").style.display = show ? "block" : "none";
+}
+
+function weatherDescription(code) {
+  const map = {
+    0: ["Clear sky", "☀️"],
+    1: ["Mainly clear", "🌤️"],
+    2: ["Partly cloudy", "⛅"],
+    3: ["Overcast", "☁️"],
+    45: ["Foggy", "🌫️"],
+    48: ["Foggy", "🌫️"],
+    51: ["Light drizzle", "🌦️"],
+    53: ["Drizzle", "🌦️"],
+    55: ["Heavy drizzle", "🌧️"],
+    56: ["Freezing drizzle", "🌧️"],
+    57: ["Freezing drizzle", "🌧️"],
+    61: ["Light rain", "🌦️"],
+    63: ["Rain", "🌧️"],
+    65: ["Heavy rain", "🌧️"],
+    66: ["Freezing rain", "🌧️"],
+    67: ["Heavy freezing rain", "🌧️"],
+    71: ["Light snow", "🌨️"],
+    73: ["Snow", "🌨️"],
+    75: ["Heavy snow", "❄️"],
+    77: ["Snow grains", "🌨️"],
+    80: ["Rain showers", "🌦️"],
+    81: ["Rain showers", "🌧️"],
+    82: ["Heavy rain showers", "⛈️"],
+    85: ["Snow showers", "🌨️"],
+    86: ["Heavy snow showers", "🌨️"],
+    95: ["Thunderstorm", "⛈️"],
+    96: ["Thunderstorm with hail", "⛈️"],
+    99: ["Severe thunderstorm", "⛈️"]
+  };
+  return map[code] || ["Weather unavailable", "🌤️"];
+}
+
+function getAqiCategory(value) {
+  if (value <= 50) return {
+    label: "Good",
+    color: "#168344",
+    bg: "#e1f8e9",
+    face: "#bcebc9",
+    message: "Yay! The air looks good!",
+    advice: "Air quality is satisfactory. Enjoy outdoor activities if you feel well.",
+    tip: "Air quality is good. Enjoy outdoor activities as usual."
+  };
+  if (value <= 100) return {
+    label: "Moderate",
+    color: "#8a6900",
+    bg: "#fff4c2",
+    face: "#ffe48b",
+    message: "Pretty good, but check in!",
+    advice: "Sensitive people may need to reduce prolonged or strenuous outdoor activity.",
+    tip: "People sensitive to pollution should pay attention to symptoms."
+  };
+  if (value <= 150) return {
+    label: "Unhealthy for Sensitive Groups",
+    color: "#b85a00",
+    bg: "#ffead4",
+    face: "#ffc58b",
+    message: "Let's be a little careful!",
+    advice: "Children and sensitive people should consider limiting prolonged outdoor exertion.",
+    tip: "Children and sensitive people should consider reducing prolonged outdoor activity."
+  };
+  if (value <= 200) return {
+    label: "Unhealthy",
+    color: "#bd303d",
+    bg: "#ffe1e4",
+    face: "#ffabb3",
+    message: "The air isn't healthy today.",
+    advice: "Consider moving exercise indoors and limiting outdoor exposure.",
+    tip: "Limit outdoor exposure, especially strenuous activity."
+  };
+  if (value <= 300) return {
+    label: "Very Unhealthy",
+    color: "#8137a8",
+    bg: "#f0dcff",
+    face: "#d8b3f1",
+    message: "Time to stay safer indoors.",
+    advice: "Avoid strenuous outdoor activity. Keep windows closed if outdoor air is polluted.",
+    tip: "Avoid strenuous outdoor activity and reduce exposure."
+  };
+  return {
+    label: "Hazardous",
+    color: "#7c2939",
+    bg: "#f5d7e2",
+    face: "#dca0b4",
+    message: "Please protect your breathing.",
+    advice: "Avoid outdoor exertion and follow official public-health advice.",
+    tip: "Avoid outdoor exertion and follow official health advisories."
+  };
+}
+
+function drawFace(value) {
+  const cat = getAqiCategory(value);
+  const svg = $("aqiFace");
+  svg.innerHTML = `
+    <circle cx="80" cy="80" r="67" fill="${cat.face}"
+      stroke="#243447" stroke-width="5"/>
+    <circle cx="57" cy="65" r="6" fill="#243447"/>
+    <circle cx="103" cy="65" r="6" fill="#243447"/>
+    ${value <= 50
+      ? '<path d="M48 91 Q80 126 112 91" fill="none" stroke="#243447" stroke-width="6" stroke-linecap="round"/>'
+      : value <= 100
+      ? '<path d="M51 100 Q80 96 109 100" fill="none" stroke="#243447" stroke-width="6" stroke-linecap="round"/>'
+      : value <= 150
+      ? '<path d="M50 105 Q80 85 110 105" fill="none" stroke="#243447" stroke-width="6" stroke-linecap="round"/>'
+      : '<path d="M48 111 Q80 73 112 111" fill="none" stroke="#243447" stroke-width="6" stroke-linecap="round"/>'
+    }
+    <circle cx="39" cy="84" r="9" fill="#ff8d8d" opacity=".55"/>
+    <circle cx="121" cy="84" r="9" fill="#ff8d8d" opacity=".55"/>
+    ${value > 150
+      ? '<path d="M48 48 l17 8 M95 56 l17 -8" stroke="#243447" stroke-width="5" stroke-linecap="round" fill="none"/>'
+      : ''}
+  `;
+  svg.setAttribute("aria-label", cat.label + " air quality face");
+  $("aqiBadge").textContent = cat.label;
+  $("aqiBadge").style.background = cat.bg;
+  $("aqiBadge").style.color = cat.color;
+  $("aqiValue").style.color = cat.color;
+  $("aqiCard").style.borderColor = cat.bg;
+  $("faceMessage").textContent = cat.message;
+  $("faceAdvice").textContent = cat.advice;
+  $("healthTip").textContent = cat.tip;
+}
+
+function formatPostcode(location) {
+  if (Array.isArray(location.postcodes) && location.postcodes.length) {
+    return location.postcodes.join(", ");
+  }
+  return location.postcode || "";
+}
+
+function locationLabel(location) {
+  const bits = [
+    location.name,
+    location.admin2,
+    location.admin1,
+    location.country
+  ].filter(Boolean);
+
+  return [...new Set(bits)].join(", ");
+}
+
+async function searchLocations(query) {
+  const seq = ++searchSequence;
+  const q = query.trim();
+
+  if (q.length < 2) {
+    showResults(false);
+    setStatus("Type at least 2 characters to search.");
+    return;
+  }
+
+  setStatus("Searching locations...");
+  showResults(false);
+
+  try {
+    const url = new URL("https://geocoding-api.open-meteo.com/v1/search");
+    url.searchParams.set("name", q);
+    url.searchParams.set("count", "20");
+    url.searchParams.set("language", "en");
+    url.searchParams.set("countryCode", "TH");
+    url.searchParams.set("format", "json");
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Location search failed.");
+
+    const data = await response.json();
+    if (seq !== searchSequence) return;
+
+    const results = (data.results || []).filter(item =>
+      item.country_code === "TH"
+    );
+
+    const box = $("results");
+    box.replaceChildren();
+
+    if (!results.length) {
+      setStatus("No matching locations found. Try an English place name or postcode.");
+      showResults(false);
+      return;
+    }
+
+    results.forEach(item => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "result-item";
+      button.setAttribute("role", "option");
+
+      const name = document.createElement("div");
+      name.className = "result-name";
+      name.textContent = item.name + (formatPostcode(item)
+        ? " · " + formatPostcode(item) : "");
+
+      const detail = document.createElement("div");
+      detail.className = "result-detail";
+      detail.textContent = [
+        item.admin3,
+        item.admin2,
+        item.admin1,
+        item.country
+      ].filter(Boolean).join(", ");
+
+      button.append(name, detail);
+      button.addEventListener("click", () => {
+        selectedLocation = {
+          name: item.name,
+          admin1: item.admin1 || "",
+          admin2: item.admin2 || "",
+          admin3: item.admin3 || "",
+          country: item.country || "Thailand",
+          latitude: item.latitude,
+          longitude: item.longitude,
+          timezone: item.timezone || "Asia/Bangkok",
+          postcode: formatPostcode(item)
+        };
+        $("locationInput").value = item.name;
+        showResults(false);
+        loadDashboard();
+      });
+
+      box.appendChild(button);
+    });
+
+    showResults(true);
+    setStatus("Select a location from the search results.");
+  } catch (error) {
+    if (seq !== searchSequence) return;
+    setStatus("Search failed. Check your internet connection and try again.");
+  }
+}
+
+$("searchForm").addEventListener("submit", async event => {
+  event.preventDefault();
+  const query = $("locationInput").value.trim();
+  if (!query) return;
+
+  // Search the requested location first. Do not silently show a different place.
+  await searchLocations(query);
+});
+
+$("locationInput").addEventListener("keydown", event => {
+  if (event.key === "Escape") showResults(false);
+});
+
+document.addEventListener("click", event => {
+  if (!event.target.closest(".search-panel")) showResults(false);
+});
+
+document.querySelectorAll("[data-place]").forEach(button => {
+  button.addEventListener("click", () => {
+    $("locationInput").value = button.dataset.place;
+    searchLocations(button.dataset.place);
+  });
+});
+
+async function loadDashboard() {
+  const requestId = ++weatherRequestSequence;
+  const loc = selectedLocation;
+  const label = locationLabel(loc);
+
+  $("locationTitle").textContent = label;
+  $("locationDetail").textContent = label +
+    (loc.postcode ? " · Postcode: " + loc.postcode : "");
+  $("updated").textContent = "Updating live conditions...";
+  setStatus("Loading weather and air-quality data...");
+
+  const lat = encodeURIComponent(loc.latitude);
+  const lon = encodeURIComponent(loc.longitude);
+  const timezone = encodeURIComponent(loc.timezone || "Asia/Bangkok");
+
+  const weatherUrl =
+    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+    `&current=temperature_2m,relative_humidity_2m,apparent_temperature,` +
+    `is_day,precipitation,weather_code,wind_speed_10m&timezone=${timezone}`;
+
+  const airUrl =
+    `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}` +
+    `&longitude=${lon}&current=us_aqi,pm2_5&timezone=${timezone}`;
+
+  try {
+    const [weatherResponse, airResponse] = await Promise.all([
+      fetch(weatherUrl),
+      fetch(airUrl)
+    ]);
+
+    if (!weatherResponse.ok) throw new Error("Weather service unavailable.");
+    if (!airResponse.ok) throw new Error("Air-quality service unavailable.");
+
+    const [weatherData, airData] = await Promise.all([
+      weatherResponse.json(),
+      airResponse.json()
+    ]);
+
+    if (requestId !== weatherRequestSequence) return;
+
+    const current = weatherData.current;
+    if (!current) throw new Error("No current weather data.");
+
+    $("temperature").textContent =
+      Math.round(current.temperature_2m) + "°";
+
+    $("feelsLike").textContent =
+      Math.round(current.apparent_temperature) + "°";
+
+    $("humidity").textContent =
+      Math.round(current.relative_humidity_2m) + "%";
+
+    $("wind").textContent =
+      Math.round(current.wind_speed_10m) + " km/h";
+
+    const [description, icon] = weatherDescription(current.weather_code);
+    $("condition").textContent = description;
+    $("weatherIcon").textContent = icon;
+
+    const air = airData.current;
+    const aqi = air && air.us_aqi;
+    const pm25 = air && air.pm2_5;
+
+    if (Number.isFinite(aqi)) {
+      drawFace(Math.round(aqi));
+      $("aqiValue").textContent = Math.round(aqi);
+    } else {
+      $("aqiValue").textContent = "--";
+      $("aqiBadge").textContent = "AQI unavailable";
+      $("aqiBadge").style.background = "#eef2f7";
+      $("aqiBadge").style.color = "#56657b";
+      $("faceMessage").textContent = "Air quality data unavailable";
+      $("faceAdvice").textContent =
+        "Try again later or check an official local air-quality monitoring service.";
+      $("aqiFace").setAttribute("aria-label", "Air quality data unavailable");
+    }
+
+    $("pm25").textContent = Number.isFinite(pm25)
+      ? Number(pm25).toFixed(1) + " µg/m³"
+      : "-- µg/m³";
+
+    $("updated").textContent =
+      "Data time: " + (current.time || "Latest available") +
+      " · Refreshes periodically";
+
+    setStatus("Dashboard updated successfully.");
+    lastWeatherFetch = Date.now();
+  } catch (error) {
+    if (requestId !== weatherRequestSequence) return;
+    $("updated").textContent = "Unable to update live data.";
+    setStatus(error.message || "Could not load data. Please try again.");
+  }
+}
+
+// Refresh live data every 15 minutes.
+setInterval(() => {
+  if (Date.now() - lastWeatherFetch >= 15 * 60 * 1000) {
+    loadDashboard();
+  }
+}, 60 * 1000);
+
+// Start the dashboard.
+loadDashboard();
+</script>
+</body>
+</html>
