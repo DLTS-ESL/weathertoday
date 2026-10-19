@@ -3,784 +3,951 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#eef5ff">
-<title>DLTS | Weather & Air Quality</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DLTS Weather Dashboard</title>
 
 <style>
 :root {
-  --bg:#eef5ff;
-  --card:#fff;
-  --ink:#203047;
-  --muted:#718096;
-  --blue:#3677db;
-  --line:#dce6f3;
-  --shadow:0 5px 20px #2030470c;
+  --blue: #164e8a;
+  --blue-light: #eaf3ff;
+  --navy: #122b49;
+  --bg: #edf2f7;
+  --card: #ffffff;
+  --text: #18283b;
+  --muted: #64748b;
+  --green: #16835c;
+  --orange: #d97706;
+  --red: #c0392b;
 }
-* { box-sizing:border-box; }
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:Arial,"Trebuchet MS",sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--bg);
 }
-.app {
-  width:100%;
-  max-width:1920px;
-  height:100vh;
-  min-height:650px;
-  margin:auto;
-  padding:14px 20px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  overflow:auto;
-}
-header,.location,.card,.hourly,.tip {
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:18px;
-  box-shadow:var(--shadow);
-}
-header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  padding:10px 20px;
-  flex-shrink:0;
-}
-.brand {
-  display:flex;
-  align-items:center;
-  gap:16px;
-  min-width:0;
-}
-.logo {
-  width:clamp(65px,7vw,105px);
-  height:clamp(65px,7vw,105px);
-  object-fit:contain;
-  flex-shrink:0;
-}
-h1 {
-  font-size:clamp(24px,2.5vw,40px);
-  line-height:1.1;
-  margin:0;
-  letter-spacing:-.5px;
-}
-.subtitle {
-  color:var(--muted);
-  font-size:clamp(13px,1.2vw,18px);
-  margin-top:7px;
-}
-.clockbox {
-  text-align:right;
-  flex-shrink:0;
-}
-#clock {
-  font-size:clamp(34px,4vw,59px);
-  line-height:1.05;
-  font-weight:900;
-  font-variant-numeric:tabular-nums;
-}
-#date,#day {
-  font-size:clamp(14px,1.4vw,21px);
-  font-weight:700;
-  margin-top:5px;
-}
-#day { color:var(--muted); }
 
-.location {
-  padding:9px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  flex-shrink:0;
-}
-.location h2 {
-  font-size:clamp(21px,2.2vw,33px);
-  margin:0;
-}
-.updated {
-  color:var(--muted);
-  font-size:clamp(11px,1vw,14px);
-  text-align:right;
-}
 .dashboard {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  flex:1 0 auto;
-  min-height:0;
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  overflow: hidden;
 }
+
+/* Header */
+.header {
+  flex: 0 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-width: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.logo {
+  width: 125px;
+  height: 44px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.school-title {
+  font-size: clamp(17px, 1.8vw, 25px);
+  font-weight: 800;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.location-label {
+  color: var(--muted);
+  font-size: clamp(12px, 1.1vw, 15px);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Cards */
 .card {
-  min-width:0;
-  padding:clamp(13px,1.4vw,23px);
-  overflow:hidden;
+  background: var(--card);
+  border-radius: 14px;
+  padding: 12px 15px;
+  min-width: 0;
+  min-height: 0;
+  box-shadow: 0 2px 8px rgba(25, 50, 80, 0.06);
 }
-.card-title {
-  font-size:clamp(19px,1.8vw,27px);
-  font-weight:800;
+
+.card-heading {
+  font-size: clamp(14px, 1.25vw, 18px);
+  font-weight: 800;
+  margin: 0 0 7px;
+  color: var(--navy);
 }
-.description {
-  font-size:clamp(12px,1.1vw,16px);
-  color:var(--muted);
-  margin-top:5px;
+
+.muted {
+  color: var(--muted);
 }
+
+/* Clock */
+.clock-card {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  background: linear-gradient(110deg, #ffffff, #eaf3ff);
+}
+
+.clock-time {
+  font-size: clamp(36px, 4.3vw, 58px);
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--blue);
+}
+
+.clock-date {
+  text-align: right;
+}
+
+.clock-day {
+  font-size: clamp(17px, 1.8vw, 25px);
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.clock-full-date {
+  font-size: clamp(13px, 1.25vw, 18px);
+  color: var(--muted);
+}
+
+/* Weather and air quality */
+.main-grid {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 9px;
+  min-height: 0;
+}
+
+.weather-card,
+.aqi-card {
+  min-height: 0;
+}
+
 .weather-main {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  margin:12px 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
-#temperature {
-  font-size:clamp(65px,8vw,112px);
-  font-weight:900;
-  line-height:1;
-  letter-spacing:-4px;
-}
-#condition {
-  font-size:clamp(17px,1.7vw,25px);
-  font-weight:700;
-  margin-top:8px;
-}
-#weatherIcon {
-  font-size:clamp(65px,8vw,115px);
-  line-height:1;
-  animation:float 3s ease-in-out infinite;
-}
-@keyframes float {
-  50% { transform:translateY(-5px); }
-}
-.metrics {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:8px;
-  margin-top:12px;
-}
-.metric {
-  padding:12px 9px;
-  background:#f2f7ff;
-  border-radius:13px;
-  min-width:0;
-}
-.metric-name {
-  font-size:clamp(11px,1vw,14px);
-  color:var(--muted);
-}
-.metric-value {
-  font-size:clamp(17px,1.8vw,26px);
-  font-weight:800;
-  margin-top:7px;
-}
-#aqiValue {
-  font-size:clamp(58px,7vw,94px);
-  font-weight:900;
-  line-height:1;
-  margin-top:18px;
-}
-#aqiBadge {
-  display:inline-block;
-  padding:8px 15px;
-  margin-top:10px;
-  border-radius:999px;
-  font-weight:800;
-  font-size:clamp(14px,1.3vw,19px);
-  background:#edf1f7;
-}
-#aqiAdvice {
-  font-size:clamp(14px,1.3vw,19px);
-  line-height:1.45;
-  margin-top:12px;
-}
-.scale {
-  display:flex;
-  height:10px;
-  border-radius:99px;
-  overflow:hidden;
-  margin-top:17px;
-}
-.scale span { flex:1; }
-.scale span:nth-child(1){background:#35bd73}
-.scale span:nth-child(2){background:#f5d547}
-.scale span:nth-child(3){background:#f39b47}
-.scale span:nth-child(4){background:#ed6268}
-.scale span:nth-child(5){background:#a85ed5}
-.scale-labels {
-  display:flex;
-  justify-content:space-between;
-  gap:3px;
-  margin-top:5px;
-  color:var(--muted);
-  font-size:clamp(9px,.8vw,12px);
-}
-.pmrow {
-  border-top:1px solid var(--line);
-  margin-top:13px;
-  padding-top:10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-size:clamp(14px,1.3vw,19px);
-  gap:10px;
-}
-.pmrow strong { font-size:clamp(18px,1.8vw,25px); }
 
-.hourly {
-  padding:10px 14px;
-  flex-shrink:0;
+.weather-icon {
+  font-size: clamp(42px, 4.2vw, 58px);
+  line-height: 1;
 }
+
+.temperature {
+  font-size: clamp(35px, 3.5vw, 48px);
+  line-height: 1;
+  font-weight: 800;
+}
+
+.weather-description {
+  font-size: clamp(13px, 1.25vw, 17px);
+  margin-top: 5px;
+}
+
+.feels-like {
+  font-size: clamp(12px, 1.05vw, 15px);
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.detail {
+  border-radius: 9px;
+  background: #f3f6fa;
+  padding: 8px 7px;
+  min-width: 0;
+}
+
+.detail-label {
+  font-size: clamp(10px, 0.95vw, 13px);
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.detail-value {
+  font-size: clamp(13px, 1.2vw, 17px);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.aqi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.aqi-number {
+  font-size: clamp(35px, 3.5vw, 48px);
+  line-height: 1;
+  font-weight: 800;
+}
+
+.aqi-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #e5f5ec;
+  color: var(--green);
+  font-size: clamp(11px, 1vw, 14px);
+  font-weight: 800;
+  margin-top: 5px;
+}
+
+.aqi-scale {
+  display: flex;
+  gap: 3px;
+  height: 7px;
+  margin: 12px 0 8px;
+}
+
+.aqi-scale span {
+  flex: 1;
+  border-radius: 5px;
+}
+
+.aqi-scale span:nth-child(1) { background: #22a06b; }
+.aqi-scale span:nth-child(2) { background: #d4b900; }
+.aqi-scale span:nth-child(3) { background: #f59e0b; }
+.aqi-scale span:nth-child(4) { background: #e55353; }
+.aqi-scale span:nth-child(5) { background: #8b5cf6; }
+.aqi-scale span:nth-child(6) { background: #7f1d1d; }
+
+.aqi-pm {
+  font-size: clamp(12px, 1.1vw, 16px);
+  margin-top: 6px;
+}
+
+.aqi-advice {
+  font-size: clamp(11px, 1vw, 14px);
+  line-height: 1.25;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* Forecast */
+.forecast-section {
+  flex: 0 0 auto;
+  min-height: 0;
+}
+
 .section-heading {
-  font-size:clamp(16px,1.5vw,22px);
-  font-weight:800;
-  margin-bottom:8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 2px 6px;
 }
-.hour-grid {
-  display:grid;
-  grid-template-columns:repeat(6,minmax(0,1fr));
-  gap:8px;
-}
-.hour {
-  text-align:center;
-  background:#f4f8ff;
-  border-radius:12px;
-  padding:8px 3px;
-  min-width:0;
-}
-.hour-time {
-  color:var(--muted);
-  font-size:clamp(11px,1vw,15px);
-  font-weight:700;
-}
-.hour-icon {
-  font-size:clamp(22px,2.5vw,36px);
-  margin:4px 0;
-}
-.hour-temp {
-  font-size:clamp(17px,1.7vw,25px);
-  font-weight:900;
-}
-.hour-rain {
-  color:#4777ca;
-  font-size:clamp(10px,.95vw,14px);
-  margin-top:4px;
-}
-.tip {
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:11px 17px;
-  background:linear-gradient(100deg,#fff7d9,#fffdf5);
-  border-color:#f0dfaa;
-  flex-shrink:0;
-}
-.tip-icon {
-  width:48px;
-  height:48px;
-  border-radius:14px;
-  background:#ffe9a8;
-  display:grid;
-  place-items:center;
-  font-size:28px;
-  flex-shrink:0;
-}
-.tip-heading {
-  color:#8a6410;
-  font-size:clamp(12px,1.1vw,16px);
-  font-weight:900;
-  text-transform:uppercase;
-}
-#tipText {
-  font-size:clamp(15px,1.4vw,21px);
-  font-weight:700;
-  margin-top:4px;
-  line-height:1.3;
-}
-#tipSub {
-  color:var(--muted);
-  font-size:clamp(11px,.95vw,14px);
-  margin-top:3px;
-}
-footer {
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  padding:2px;
-  flex-shrink:0;
-}
-.error { color:#b42332; }
 
-@media(min-width:761px) and (max-height:800px) {
-  .app { padding:8px 14px; gap:7px; }
-  header { padding:6px 14px; }
-  .logo { width:60px;height:60px; }
-  .location { padding:6px 12px; }
-  .card { padding:12px 16px; }
-  .weather-main { margin:8px 0; }
-  #temperature { font-size:clamp(55px,6vw,78px); }
-  #weatherIcon { font-size:clamp(55px,6vw,80px); }
-  #aqiValue { margin-top:10px;font-size:clamp(48px,5vw,65px); }
-  #aqiAdvice { margin-top:7px; }
-  .metrics { margin-top:7px; }
-  .metric { padding:8px; }
-  .metric-value { margin-top:4px; }
-  .hourly { padding:7px 10px; }
-  .hour { padding:5px 3px; }
-  .tip { padding:7px 12px; }
-  .tip-icon { width:37px;height:37px;font-size:22px; }
-  #tipSub { display:none; }
+.section-heading h2 {
+  font-size: clamp(14px, 1.25vw, 18px);
+  margin: 0;
+  color: var(--navy);
 }
-@media(max-width:760px) {
-  .app { height:auto;min-height:100vh;overflow:visible;padding:10px; }
-  header { flex-direction:column;align-items:stretch; }
-  .brand { justify-content:flex-start; }
-  .clockbox { text-align:center;padding:8px; }
-  .location { align-items:flex-start;flex-direction:column; }
-  .updated { text-align:left; }
-  .dashboard { grid-template-columns:1fr; }
-  .hour-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
-  .card { padding:18px; }
-  #temperature { font-size:76px; }
-  #weatherIcon { font-size:75px; }
-  #aqiValue { font-size:65px; }
-  .tip { align-items:flex-start; }
+
+.section-heading span {
+  font-size: clamp(10px, 0.95vw, 13px);
+  color: var(--muted);
 }
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after { animation:none!important; }
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.forecast-item {
+  text-align: center;
+  padding: 9px 5px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(25, 50, 80, 0.05);
+  min-width: 0;
+}
+
+.forecast-time {
+  font-size: clamp(11px, 1.05vw, 15px);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.forecast-icon {
+  font-size: clamp(23px, 2.3vw, 32px);
+  line-height: 1.2;
+  margin: 4px 0;
+}
+
+.forecast-temp {
+  font-size: clamp(17px, 1.7vw, 23px);
+  font-weight: 800;
+}
+
+.forecast-rain {
+  font-size: clamp(10px, 0.95vw, 13px);
+  color: var(--blue);
+  margin-top: 4px;
+}
+
+/* Healthy tip */
+.tip-card {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #fff8e7;
+  border: 1px solid #f5e6bd;
+}
+
+.tip-icon {
+  font-size: clamp(24px, 2.5vw, 34px);
+  line-height: 1;
+}
+
+.tip-content {
+  min-width: 0;
+}
+
+.tip-title {
+  font-size: clamp(13px, 1.15vw, 16px);
+  font-weight: 800;
+  margin-bottom: 3px;
+  color: #875b08;
+}
+
+.tip-text {
+  font-size: clamp(12px, 1.05vw, 15px);
+  line-height: 1.25;
+}
+
+/* Footer */
+.footer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: clamp(9px, 0.8vw, 11px);
+  color: var(--muted);
+  padding: 0 3px;
+}
+
+/* Loading and errors */
+.loading {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.error {
+  color: var(--red);
+  font-size: 12px;
+}
+
+/* Short TV screens */
+@media (max-height: 800px) {
+  .dashboard {
+    padding: 6px 12px;
+    gap: 6px;
+  }
+
+  .header {
+    flex-basis: 36px;
+  }
+
+  .logo {
+    height: 34px;
+    width: 105px;
+  }
+
+  .card {
+    padding: 8px 11px;
+  }
+
+  .clock-card {
+    padding: 8px 14px;
+  }
+
+  .weather-details {
+    margin-top: 8px;
+    gap: 5px;
+  }
+
+  .detail {
+    padding: 6px 5px;
+  }
+
+  .forecast-item {
+    padding: 6px 3px;
+  }
+
+  .forecast-icon {
+    margin: 2px 0;
+  }
+
+  .tip-card {
+    padding: 7px 11px;
+  }
+}
+
+@media (max-height: 650px) {
+  .dashboard {
+    padding: 4px 10px;
+    gap: 4px;
+  }
+
+  .header {
+    flex-basis: 30px;
+  }
+
+  .logo {
+    height: 28px;
+    width: 90px;
+  }
+
+  .school-title {
+    font-size: 16px;
+  }
+
+  .clock-time {
+    font-size: clamp(28px, 3.5vw, 42px);
+  }
+
+  .clock-day {
+    font-size: 16px;
+  }
+
+  .temperature {
+    font-size: 32px;
+  }
+
+  .weather-icon {
+    font-size: 36px;
+  }
+
+  .weather-details {
+    margin-top: 6px;
+  }
+
+  .card-heading {
+    margin-bottom: 4px;
+  }
+
+  .aqi-scale {
+    margin: 7px 0 5px;
+  }
+
+  .forecast-item {
+    padding: 4px 2px;
+  }
+
+  .tip-card {
+    padding: 5px 8px;
+  }
+
+  .footer {
+    font-size: 9px;
+  }
 }
 </style>
 </head>
 
 <body>
-<div class="app">
+<div class="dashboard">
 
-<header>
-  <div class="brand">
-    <img
-      class="logo"
-      src="https://i.ibb.co/FbyHfVzQ/DLTS-Logo.png"
-      alt="DLTS International School logo"
-      onerror="this.style.display='none';document.getElementById('logoError').hidden=false;"
-    >
-    <div id="logoError" hidden aria-live="polite">DLTS</div>
+  <header class="header">
+    <div class="brand">
+      <img
+        class="logo"
+        src="https://i.ibb.co/FbyHfVzQ/DLTS-Logo.png"
+        alt="DLTS Logo"
+        onerror="this.style.display='none';"
+      >
+      <div class="school-title">Weather & Wellness</div>
+    </div>
+    <div class="location-label">
+      <strong>NONTHABURI, THAILAND</strong><br>
+      Local weather dashboard
+    </div>
+  </header>
+
+  <section class="card clock-card">
     <div>
-      <h1>Weather &amp; Air Quality</h1>
-      <div class="subtitle">DLTS International School · Stay healthy, breathe safely!</div>
+      <div class="clock-time" id="clockTime">--:--:--</div>
     </div>
-  </div>
-  <div class="clockbox">
-    <div id="clock">--:--:--</div>
-    <div id="date">Loading date...</div>
-    <div id="day">Loading day...</div>
-  </div>
-</header>
-
-<section class="location">
-  <h2>📍 Nonthaburi, Thailand</h2>
-  <div class="updated" id="updated">Connecting to weather services...</div>
-</section>
-
-<main class="dashboard">
-
-  <section class="card">
-    <div class="card-title">Today's Weather</div>
-    <div class="description">Current local conditions</div>
-
-    <div class="weather-main">
-      <div>
-        <div id="temperature">--°</div>
-        <div id="condition">Loading weather...</div>
-      </div>
-      <div id="weatherIcon" aria-hidden="true">🌤️</div>
-    </div>
-
-    <div class="metrics">
-      <div class="metric">
-        <div class="metric-name">Feels like</div>
-        <div class="metric-value" id="feelsLike">--°</div>
-      </div>
-      <div class="metric">
-        <div class="metric-name">Humidity</div>
-        <div class="metric-value" id="humidity">--%</div>
-      </div>
-      <div class="metric">
-        <div class="metric-name">Wind</div>
-        <div class="metric-value" id="wind">-- km/h</div>
-      </div>
+    <div class="clock-date">
+      <div class="clock-day" id="clockDay">Loading day...</div>
+      <div class="clock-full-date" id="clockDate">Loading date...</div>
     </div>
   </section>
 
-  <section class="card" id="aqiCard">
-    <div class="card-title">Air Quality (AQI)</div>
-    <div class="description">Estimated outdoor air quality</div>
+  <section class="main-grid">
 
-    <div id="aqiValue">--</div>
-    <div style="color:var(--muted);font-size:13px;margin-top:5px">
-      US AQI · Higher values mean more pollution
-    </div>
-    <div id="aqiBadge">Loading air quality...</div>
-    <div id="aqiAdvice" aria-live="polite">
-      Retrieving the latest air-quality estimate.
-    </div>
-
-    <div class="scale" aria-label="Air quality scale">
-      <span></span><span></span><span></span><span></span><span></span>
-    </div>
-    <div class="scale-labels">
-      <span>Good</span><span>Moderate</span><span>Sensitive</span>
-      <span>Unhealthy</span><span>Hazardous</span>
-    </div>
-
-    <div class="pmrow">
-      <div>
-        <strong>PM2.5</strong>
-        <div style="font-size:12px;color:var(--muted);margin-top:3px">
-          Fine particles (µg/m³)
+    <div class="card weather-card">
+      <h2 class="card-heading">🌤 Current Weather</h2>
+      <div class="weather-main">
+        <div class="weather-icon" id="weatherIcon">⏳</div>
+        <div>
+          <div class="temperature" id="temperature">--°C</div>
+          <div class="weather-description" id="weatherDescription">Loading weather...</div>
+          <div class="feels-like" id="feelsLike">Feels like --°C</div>
         </div>
       </div>
-      <strong id="pm25">--</strong>
+
+      <div class="weather-details">
+        <div class="detail">
+          <div class="detail-label">💧 Humidity</div>
+          <div class="detail-value" id="humidity">--%</div>
+        </div>
+        <div class="detail">
+          <div class="detail-label">💨 Wind</div>
+          <div class="detail-value" id="wind">-- km/h</div>
+        </div>
+        <div class="detail">
+          <div class="detail-label">🌧 Rain</div>
+          <div class="detail-value" id="currentRain">--%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card aqi-card">
+      <h2 class="card-heading">🌿 Air Quality</h2>
+      <div class="aqi-top">
+        <div>
+          <div class="aqi-number" id="aqiNumber">--</div>
+          <div class="muted" style="font-size:12px">US AQI</div>
+        </div>
+        <div style="text-align:right">
+          <div class="aqi-status" id="aqiStatus">Loading...</div>
+          <div class="aqi-pm" id="pm25">PM2.5: -- µg/m³</div>
+        </div>
+      </div>
+
+      <div class="aqi-scale">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="aqi-advice" id="aqiAdvice">
+        Retrieving the latest available air quality data...
+      </div>
+    </div>
+
+  </section>
+
+  <section class="forecast-section">
+    <div class="section-heading">
+      <h2>🕒 Weather Forecast</h2>
+      <span>Upcoming times · Every 2 hours</span>
+    </div>
+    <div class="forecast-grid" id="forecastGrid">
+      <div class="forecast-item">
+        <div class="forecast-time">Loading</div>
+        <div class="forecast-icon">⏳</div>
+        <div class="forecast-temp">--°</div>
+        <div class="forecast-rain">Rain --%</div>
+      </div>
+      <div class="forecast-item">
+        <div class="forecast-time">Loading</div>
+        <div class="forecast-icon">⏳</div>
+        <div class="forecast-temp">--°</div>
+        <div class="forecast-rain">Rain --%</div>
+      </div>
+      <div class="forecast-item">
+        <div class="forecast-time">Loading</div>
+        <div class="forecast-icon">⏳</div>
+        <div class="forecast-temp">--°</div>
+        <div class="forecast-rain">Rain --%</div>
+      </div>
+      <div class="forecast-item">
+        <div class="forecast-time">Loading</div>
+        <div class="forecast-icon">⏳</div>
+        <div class="forecast-temp">--°</div>
+        <div class="forecast-rain">Rain --%</div>
+      </div>
+      <div class="forecast-item">
+        <div class="forecast-time">Loading</div>
+        <div class="forecast-icon">⏳</div>
+        <div class="forecast-temp">--°</div>
+        <div class="forecast-rain">Rain --%</div>
+      </div>
+      <div class="forecast-item">
+        <div class="forecast-time">Loading</div>
+        <div class="forecast-icon">⏳</div>
+        <div class="forecast-temp">--°</div>
+        <div class="forecast-rain">Rain --%</div>
+      </div>
     </div>
   </section>
 
-</main>
+  <section class="card tip-card">
+    <div class="tip-icon" id="tipIcon">💡</div>
+    <div class="tip-content">
+      <div class="tip-title">Daily Healthy Tip</div>
+      <div class="tip-text" id="tipText">Loading today's healthy tip...</div>
+    </div>
+  </section>
 
-<section class="hourly">
-  <div class="section-heading">🌤️ Weather Forecast · Every 2 Hours</div>
-  <div class="hour-grid" id="hourGrid">
-    <div class="hour">Loading forecast...</div>
-  </div>
-</section>
-
-<section class="tip" aria-live="polite">
-  <div class="tip-icon" id="tipIcon">💧</div>
-  <div>
-    <div class="tip-heading" id="tipHeading">Healthy Tip of the Day</div>
-    <div id="tipText">Drink water regularly throughout the day.</div>
-    <div id="tipSub">Keep a water bottle nearby and take small sips often.</div>
-  </div>
-</section>
-
-<footer>
-  Weather and air quality: Open-Meteo · Forecast estimates may differ from local monitoring stations.
-  <span id="dataStatus" role="status">Connecting...</span>
-</footer>
+  <footer class="footer">
+    <span>DLTS International School · Nonthaburi</span>
+    <span id="lastUpdated">Updating weather information...</span>
+  </footer>
 
 </div>
 
 <script>
 "use strict";
 
+/* Nonthaburi coordinates */
+const LATITUDE = 13.8591;
+const LONGITUDE = 100.5217;
+const TIMEZONE = "Asia/Bangkok";
+
 const $ = id => document.getElementById(id);
 
-const LOCATION = {
-  latitude: 13.8591,
-  longitude: 100.5217,
-  timezone: "Asia/Bangkok"
-};
+function updateClock() {
+  const now = new Date();
+
+  $("clockTime").textContent = new Intl.DateTimeFormat("en-GB", {
+    timeZone: TIMEZONE,
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  }).format(now);
+
+  $("clockDay").textContent = new Intl.DateTimeFormat("en-US", {
+    timeZone: TIMEZONE,
+    weekday: "long"
+  }).format(now);
+
+  $("clockDate").textContent = new Intl.DateTimeFormat("en-GB", {
+    timeZone: TIMEZONE,
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  }).format(now);
+}
 
 const tips = [
-  ["💧","Healthy Tip of the Day","Drink water regularly throughout the day.","Keep a water bottle nearby and take small sips often."],
-  ["🌿","Breathe Easier","Check the AQI before outdoor exercise.","When air quality is poor, choose an indoor activity."],
-  ["☀️","Sun Safety","Seek shade during the strongest sunshine.","A hat, sunscreen and water help protect you outdoors."],
-  ["🚶","Move a Little","Take a movement break every hour.","Stretch, walk or move gently to reset your body."],
-  ["🥗","Eat Well","Add a fruit or vegetable to your next meal.","A variety of colourful foods supports a balanced diet."],
-  ["😴","Rest Well","Keep a regular bedtime whenever possible.","A calming routine can help you prepare for sleep."],
-  ["🧼","Healthy Hands","Wash your hands with soap for 20 seconds.","Wash before eating and after using the toilet."],
-  ["👀","Eye Break","Look away from screens regularly.","Try looking at something far away for 20 seconds."],
-  ["🌧️","Rainy Day Safety","Take care on wet floors and walkways.","Slow down and wear shoes with good grip."],
-  ["😊","Kindness Counts","Offer someone a kind word today.","Small acts of kindness make our school community happier."]
+  { icon: "💧", text: "Drink water regularly throughout the day, especially in hot weather." },
+  { icon: "🥗", text: "Add colourful fruits and vegetables to your meals for a range of nutrients." },
+  { icon: "🚶", text: "Take short movement breaks from sitting to help your body stay active." },
+  { icon: "😴", text: "A regular bedtime and enough sleep help support learning and concentration." },
+  { icon: "🧴", text: "Use sun protection and seek shade when spending time outdoors." },
+  { icon: "🧼", text: "Wash your hands with soap before eating and after using the toilet." },
+  { icon: "👀", text: "Give your eyes regular breaks from screens and look into the distance." },
+  { icon: "🍎", text: "Choose a balanced snack such as fruit, yoghurt, or unsalted nuts when suitable." },
+  { icon: "🌬️", text: "When air quality is poor, reduce strenuous outdoor activity and follow local guidance." },
+  { icon: "🧘", text: "Pause, breathe slowly, and relax your shoulders when you feel stressed." },
+  { icon: "🦷", text: "Brush your teeth twice daily with fluoride toothpaste." },
+  { icon: "🏃", text: "Find a fun way to move today, such as dancing, walking, or playing a game." }
 ];
 
 function showDailyTip() {
-  const now = new Date();
-  const localDate = new Intl.DateTimeFormat("en-CA", {
-    timeZone:LOCATION.timezone,
-    year:"numeric",month:"2-digit",day:"2-digit"
-  }).format(now);
+  const start = new Date(
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: TIMEZONE,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).format(new Date())
+  );
 
   const dayNumber = Math.floor(
-    new Date(localDate + "T12:00:00Z").getTime() / 86400000
+    Date.UTC(start.getFullYear(), start.getMonth(), start.getDate()) / 86400000
   );
+
   const tip = tips[((dayNumber % tips.length) + tips.length) % tips.length];
-
-  $("tipIcon").textContent = tip[0];
-  $("tipHeading").textContent = tip[1];
-  $("tipText").textContent = tip[2];
-  $("tipSub").textContent = tip[3];
+  $("tipIcon").textContent = tip.icon;
+  $("tipText").textContent = tip.text;
 }
 
-function updateClock() {
-  const options = {timeZone:LOCATION.timezone};
-
-  $("clock").textContent = new Intl.DateTimeFormat("en-GB",{
-    ...options,hour:"2-digit",minute:"2-digit",second:"2-digit",
-    hour12:false
-  }).format(new Date());
-
-  $("date").textContent = new Intl.DateTimeFormat("en-GB",{
-    ...options,day:"2-digit",month:"short",year:"numeric"
-  }).format(new Date());
-
-  $("day").textContent = new Intl.DateTimeFormat("en-GB",{
-    ...options,weekday:"long"
-  }).format(new Date()) + " · Thailand";
+function getWeatherInfo(code) {
+  if (code === 0) return { icon: "☀️", text: "Clear sky" };
+  if (code === 1) return { icon: "🌤️", text: "Mainly clear" };
+  if (code === 2) return { icon: "⛅", text: "Partly cloudy" };
+  if (code === 3) return { icon: "☁️", text: "Overcast" };
+  if (code === 45 || code === 48) return { icon: "🌫️", text: "Foggy" };
+  if ([51, 53, 55].includes(code)) return { icon: "🌦️", text: "Drizzle" };
+  if ([56, 57].includes(code)) return { icon: "🌧️", text: "Freezing drizzle" };
+  if ([61, 63, 65].includes(code)) return { icon: "🌧️", text: "Rain" };
+  if ([66, 67].includes(code)) return { icon: "🌧️", text: "Freezing rain" };
+  if ([71, 73, 75, 77].includes(code)) return { icon: "🌨️", text: "Snow" };
+  if ([80, 81, 82].includes(code)) return { icon: "🌧️", text: "Rain showers" };
+  if ([85, 86].includes(code)) return { icon: "🌨️", text: "Snow showers" };
+  if (code === 95) return { icon: "⛈️", text: "Thunderstorm" };
+  if ([96, 99].includes(code)) return { icon: "⛈️", text: "Thunderstorm with hail" };
+  return { icon: "🌡️", text: "Weather unavailable" };
 }
 
-function weatherDescription(code) {
-  const map = {
-    0:["Clear sky","☀️"],
-    1:["Mainly clear","🌤️"],
-    2:["Partly cloudy","⛅"],
-    3:["Overcast","☁️"],
-    45:["Foggy","🌫️"],
-    48:["Foggy","🌫️"],
-    51:["Light drizzle","🌦️"],
-    53:["Drizzle","🌦️"],
-    55:["Heavy drizzle","🌧️"],
-    56:["Freezing drizzle","🌧️"],
-    57:["Freezing drizzle","🌧️"],
-    61:["Light rain","🌦️"],
-    63:["Rain","🌧️"],
-    65:["Heavy rain","🌧️"],
-    66:["Freezing rain","🌧️"],
-    67:["Heavy freezing rain","🌧️"],
-    71:["Light snow","🌨️"],
-    73:["Snow","🌨️"],
-    75:["Heavy snow","❄️"],
-    77:["Snow grains","🌨️"],
-    80:["Rain showers","🌦️"],
-    81:["Rain showers","🌧️"],
-    82:["Heavy rain showers","⛈️"],
-    85:["Snow showers","🌨️"],
-    86:["Heavy snow showers","🌨️"],
-    95:["Thunderstorm","⛈️"],
-    96:["Thunderstorm with hail","⛈️"],
-    99:["Severe thunderstorm","⛈️"]
-  };
-  return map[code] || ["Conditions unavailable","🌤️"];
-}
-
-function categoryForAqi(value) {
-  if(value <= 50) return {
-    label:"Good",color:"#168344",bg:"#e1f8e9",
-    advice:"Air quality is satisfactory. Normal outdoor activities are generally fine."
-  };
-  if(value <= 100) return {
-    label:"Moderate",color:"#8a6900",bg:"#fff4c2",
-    advice:"Sensitive individuals should monitor symptoms during prolonged outdoor activity."
-  };
-  if(value <= 150) return {
-    label:"Unhealthy for Sensitive Groups",color:"#b85a00",bg:"#ffead4",
-    advice:"Children and sensitive individuals should limit prolonged outdoor exertion."
-  };
-  if(value <= 200) return {
-    label:"Unhealthy",color:"#bd303d",bg:"#ffe1e4",
-    advice:"Consider moving exercise indoors and reducing outdoor exposure."
-  };
-  if(value <= 300) return {
-    label:"Very Unhealthy",color:"#8137a8",bg:"#f0dcff",
-    advice:"Reduce outdoor exposure and avoid strenuous outdoor activities."
-  };
-  return {
-    label:"Hazardous",color:"#7c2939",bg:"#f5d7e2",
-    advice:"Avoid outdoor exertion and follow official public-health guidance."
-  };
-}
-
-async function fetchJSON(url) {
-  const response = await fetch(url);
-  if(!response.ok) throw new Error("HTTP " + response.status);
-  return response.json();
+function formatForecastTime(isoString) {
+  const date = new Date(isoString);
+  return new Intl.DateTimeFormat("en-GB", {
+    timeZone: TIMEZONE,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  }).format(date);
 }
 
 async function loadWeather() {
-  const params = new URLSearchParams({
-    latitude:LOCATION.latitude,
-    longitude:LOCATION.longitude,
-    timezone:LOCATION.timezone,
+  const url = new URL("https://api.open-meteo.com/v1/forecast");
+
+  url.search = new URLSearchParams({
+    latitude: LATITUDE,
+    longitude: LONGITUDE,
+    timezone: TIMEZONE,
     forecast_days: "2",
-    current:[
+    current: [
       "temperature_2m",
       "relative_humidity_2m",
       "apparent_temperature",
+      "precipitation",
       "weather_code",
       "wind_speed_10m"
     ].join(","),
-    hourly:[
+    hourly: [
       "temperature_2m",
-      "weather_code",
-      "precipitation_probability"
+      "precipitation_probability",
+      "weather_code"
     ].join(",")
-  });
+  }).toString();
 
   try {
-    const data = await fetchJSON(
-      "https://api.open-meteo.com/v1/forecast?" + params
-    );
+    const response = await fetch(url.toString(), { cache: "no-store" });
+    if (!response.ok) throw new Error("Weather service returned " + response.status);
+
+    const data = await response.json();
     const current = data.current;
 
-    if(!current) throw new Error("Current weather missing");
+    if (!current) throw new Error("Current weather data is unavailable.");
 
-    $("temperature").textContent =
-      Math.round(current.temperature_2m) + "°";
+    const weather = getWeatherInfo(current.weather_code);
 
+    $("weatherIcon").textContent = weather.icon;
+    $("temperature").textContent = Math.round(current.temperature_2m) + "°C";
+    $("weatherDescription").textContent = weather.text;
     $("feelsLike").textContent =
-      Math.round(current.apparent_temperature) + "°";
+      "Feels like " + Math.round(current.apparent_temperature) + "°C";
+    $("humidity").textContent = current.relative_humidity_2m + "%";
+    $("wind").textContent = Math.round(current.wind_speed_10m) + " km/h";
+    $("currentRain").textContent =
+      current.precipitation > 0 ? current.precipitation + " mm" : "0 mm";
 
-    $("humidity").textContent =
-      Math.round(current.relative_humidity_2m) + "%";
+    renderForecast(data.hourly);
 
-    $("wind").textContent =
-      Math.round(current.wind_speed_10m) + " km/h";
-
-    const [description,icon] = weatherDescription(current.weather_code);
-    $("condition").textContent = description;
-    $("weatherIcon").textContent = icon;
-
-    renderHourly(data.hourly);
-    $("updated").textContent =
-      "Weather data: " + current.time.replace("T"," ") +
-      " · Thailand local time";
-
-    $("dataStatus").textContent = "Weather updated successfully.";
-    $("temperature").classList.remove("error");
-  } catch(error) {
-    console.error("Weather loading error:",error);
-    $("condition").textContent = "Weather temporarily unavailable";
-    $("temperature").textContent = "--°";
-    $("temperature").classList.add("error");
-    $("dataStatus").textContent =
-      "Weather service unavailable. Retrying automatically.";
+    $("lastUpdated").textContent =
+      "Weather updated " +
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone: TIMEZONE,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      }).format(new Date());
+  } catch (error) {
+    console.error("Weather loading failed:", error);
+    $("weatherDescription").textContent = "Weather temporarily unavailable";
+    $("lastUpdated").textContent = "Weather data could not be refreshed";
   }
 }
 
-function renderHourly(hourly) {
-  const grid = $("hourGrid");
-  grid.replaceChildren();
-
-  if(!hourly || !hourly.time || !hourly.temperature_2m) {
-    grid.textContent = "Forecast currently unavailable.";
+function renderForecast(hourly) {
+  if (!hourly || !hourly.time || !hourly.time.length) {
+    $("forecastGrid").innerHTML =
+      '<div class="loading">Forecast data is unavailable.</div>';
     return;
   }
 
   const now = Date.now();
-  const times = hourly.time.map(t => new Date(t).getTime());
-  let start = times.findIndex(t => t >= now - 3600000);
+  const entries = [];
 
-  if(start < 0) start = 0;
+  for (let i = 0; i < hourly.time.length; i++) {
+    const forecastTime = new Date(hourly.time[i]).getTime();
 
-  // Show six forecast slots, spaced two hours apart.
-  for(let offset=0;offset<12;offset+=2) {
-    const i = start + offset;
-    if(i >= hourly.time.length) break;
+    if (forecastTime >= now - 60 * 60 * 1000) {
+      entries.push(i);
+    }
+  }
+
+  const selected = [];
+  if (entries.length) {
+    const first = entries[0];
+
+    for (let i = first; i < hourly.time.length && selected.length < 6; i += 2) {
+      selected.push(i);
+    }
+
+    /* Keep the six cards filled if the feed's first index is irregular. */
+    if (selected.length < 6) {
+      for (const i of entries) {
+        if (!selected.includes(i)) selected.push(i);
+        if (selected.length >= 6) break;
+      }
+      selected.sort((a, b) =>
+        new Date(hourly.time[a]).getTime() -
+        new Date(hourly.time[b]).getTime()
+      );
+    }
+  }
+
+  $("forecastGrid").innerHTML = "";
+
+  selected.slice(0, 6).forEach(index => {
+    const weather = getWeatherInfo(hourly.weather_code[index]);
+    const temperature = hourly.temperature_2m[index];
+    const rain = hourly.precipitation_probability[index];
 
     const item = document.createElement("div");
-    item.className = "hour";
+    item.className = "forecast-item";
 
     const time = document.createElement("div");
-    time.className = "hour-time";
-    time.textContent = new Intl.DateTimeFormat("en-GB",{
-      timeZone:LOCATION.timezone,hour:"2-digit",minute:"2-digit",
-      hour12:false
-    }).format(new Date(hourly.time[i]));
+    time.className = "forecast-time";
+    time.textContent = formatForecastTime(hourly.time[index]);
 
     const icon = document.createElement("div");
-    icon.className = "hour-icon";
-    icon.textContent = weatherDescription(hourly.weather_code[i])[1];
+    icon.className = "forecast-icon";
+    icon.textContent = weather.icon;
+    icon.title = weather.text;
 
     const temp = document.createElement("div");
-    temp.className = "hour-temp";
-    temp.textContent = Math.round(hourly.temperature_2m[i]) + "°";
+    temp.className = "forecast-temp";
+    temp.textContent = Math.round(temperature) + "°";
 
-    const rain = document.createElement("div");
-    rain.className = "hour-rain";
-    const chance = hourly.precipitation_probability?.[i];
-    rain.textContent = Number.isFinite(chance)
-      ? "🌧 " + chance + "%"
-      : "Rain: N/A";
+    const rainText = document.createElement("div");
+    rainText.className = "forecast-rain";
+    rainText.textContent = "Rain " + (rain ?? 0) + "%";
 
-    item.append(time,icon,temp,rain);
-    grid.appendChild(item);
-  }
-
-  if(!grid.children.length) {
-    grid.textContent = "Forecast currently unavailable.";
-  }
+    item.append(time, icon, temp, rainText);
+    $("forecastGrid").appendChild(item);
+  });
 }
 
 async function loadAirQuality() {
-  const params = new URLSearchParams({
-    latitude:LOCATION.latitude,
-    longitude:LOCATION.longitude,
-    timezone:LOCATION.timezone,
-    current:"us_aqi,pm2_5"
-  });
+  const url = new URL("https://air-quality-api.open-meteo.com/v1/air-quality");
+
+  url.search = new URLSearchParams({
+    latitude: LATITUDE,
+    longitude: LONGITUDE,
+    timezone: TIMEZONE,
+    current: "us_aqi,pm2_5"
+  }).toString();
 
   try {
-    const data = await fetchJSON(
-      "https://air-quality-api.open-meteo.com/v1/air-quality?" + params
-    );
+    const response = await fetch(url.toString(), { cache: "no-store" });
+    if (!response.ok) throw new Error("Air quality service returned " + response.status);
+
+    const data = await response.json();
     const current = data.current;
-    if(!current) throw new Error("Air quality data missing");
+
+    if (!current) throw new Error("Air quality data is unavailable.");
 
     const aqi = current.us_aqi;
-    const pm = current.pm2_5;
+    const pm25 = current.pm2_5;
 
-    $("aqiValue").textContent = Number.isFinite(aqi)
-      ? Math.round(aqi) : "--";
+    $("aqiNumber").textContent =
+      Number.isFinite(aqi) ? Math.round(aqi) : "--";
 
-    $("pm25").textContent = Number.isFinite(pm)
-      ? Number(pm).toFixed(1) : "--";
+    $("pm25").textContent =
+      "PM2.5: " + (Number.isFinite(pm25) ? pm25.toFixed(1) : "--") + " µg/m³";
 
-    if(Number.isFinite(aqi)) {
-      const category = categoryForAqi(aqi);
-      $("aqiValue").style.color = category.color;
-      $("aqiBadge").textContent = category.label;
-      $("aqiBadge").style.color = category.color;
-      $("aqiBadge").style.background = category.bg;
-      $("aqiAdvice").textContent = category.advice;
-      $("aqiCard").style.borderColor = category.bg;
-    } else {
-      $("aqiBadge").textContent = "AQI unavailable";
-      $("aqiAdvice").textContent =
-        "No AQI estimate is available right now.";
+    let status = "Unavailable";
+    let color = "#64748b";
+    let advice = "Air quality information is not currently available.";
+
+    if (Number.isFinite(aqi)) {
+      if (aqi <= 50) {
+        status = "Good";
+        color = "#16835c";
+        advice = "Air quality is generally satisfactory. Usual outdoor activities are appropriate.";
+      } else if (aqi <= 100) {
+        status = "Moderate";
+        color = "#9a7b00";
+        advice = "Air quality is acceptable for most people. Sensitive individuals may wish to reduce prolonged outdoor exertion.";
+      } else if (aqi <= 150) {
+        status = "Unhealthy for Sensitive Groups";
+        color = "#d97706";
+        advice = "Sensitive groups should reduce prolonged or strenuous outdoor activity.";
+      } else if (aqi <= 200) {
+        status = "Unhealthy";
+        color = "#c0392b";
+        advice = "Consider limiting outdoor exertion, especially for children and sensitive individuals.";
+      } else if (aqi <= 300) {
+        status = "Very Unhealthy";
+        color = "#7e57c2";
+        advice = "Avoid strenuous outdoor activity and follow local air-quality guidance.";
+      } else {
+        status = "Hazardous";
+        color = "#7f1d1d";
+        advice = "Avoid outdoor exertion and follow official health and air-quality advice.";
+      }
     }
 
-    $("dataStatus").textContent += " Air quality updated.";
-  } catch(error) {
-    console.error("Air-quality loading error:",error);
-    $("aqiValue").textContent = "--";
-    $("pm25").textContent = "--";
-    $("aqiBadge").textContent = "Temporarily unavailable";
+    $("aqiStatus").textContent = status;
+    $("aqiStatus").style.color = color;
+    $("aqiStatus").style.background = color + "1A";
+    $("aqiNumber").style.color = color;
+    $("aqiAdvice").textContent = advice;
+  } catch (error) {
+    console.error("Air quality loading failed:", error);
+    $("aqiNumber").textContent = "--";
+    $("aqiStatus").textContent = "Unavailable";
     $("aqiAdvice").textContent =
-      "Air quality could not be retrieved. The weather display can still work.";
+      "Air quality data could not load. Check the internet connection and refresh.";
   }
 }
 
-async function refreshDashboard() {
-  $("updated").textContent = "Refreshing weather data...";
-  await Promise.allSettled([loadWeather(),loadAirQuality()]);
-  $("updated").textContent +=
-    " · Refreshed " + new Intl.DateTimeFormat("en-GB",{
-      timeZone:LOCATION.timezone,hour:"2-digit",minute:"2-digit",
-      hour12:false
-    }).format(new Date());
-}
-
-function startDashboard() {
+function initDashboard() {
   updateClock();
   showDailyTip();
-  refreshDashboard();
+  loadWeather();
+  loadAirQuality();
 
-  setInterval(updateClock,1000);
-
-  // Refresh the weather and AQI every 15 minutes.
-  setInterval(refreshDashboard,15*60*1000);
+  setInterval(updateClock, 1000);
+  setInterval(loadWeather, 15 * 60 * 1000);
+  setInterval(loadAirQuality, 15 * 60 * 1000);
 }
 
-startDashboard();
+initDashboard();
 </script>
 </body>
 </html>
