@@ -11,7 +11,12 @@
   --blue: #164b8c;
   --text: #18324f;
   --muted: #62748a;
-  --border: #dce5ef;
+  --border: #dce8f5;
+  --yellow: #fff4c2;
+  --pink: #ffe8f0;
+  --green: #e1f8e8;
+  --purple: #f0e8ff;
+  --sky: #e5f3ff;
 }
 
 * { box-sizing: border-box; }
@@ -22,7 +27,7 @@ html, body {
   height: 100%;
   overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
-  background: #f1f5fa;
+  background: #eef5ff;
   color: var(--text);
 }
 
@@ -35,15 +40,20 @@ html, body {
   flex-direction: column;
   gap: 6px;
   overflow: hidden;
+  background:
+    radial-gradient(circle at 8% 10%, #fff5c8 0, transparent 18%),
+    radial-gradient(circle at 92% 20%, #dff4ff 0, transparent 22%),
+    #eef5ff;
 }
 
 .card {
   background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  border: 2px solid var(--border);
+  border-radius: 16px;
   padding: 8px 12px;
   min-width: 0;
-  box-shadow: 0 2px 5px #18324f08;
+  box-shadow: 0 3px 8px #214b7710;
+  position: relative;
 }
 
 .header {
@@ -88,6 +98,10 @@ h1 {
   font-size: clamp(12px, 1.2vw, 17px);
   text-align: right;
   white-space: nowrap;
+  background: white;
+  border: 2px solid #d8eaff;
+  border-radius: 30px;
+  padding: 8px 12px;
 }
 
 .top-row {
@@ -102,6 +116,7 @@ h1 {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  background: linear-gradient(120deg, white, #f7fbff);
 }
 
 .eyebrow {
@@ -144,6 +159,22 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
+}
+
+.weather-card:nth-child(1) {
+  background: linear-gradient(135deg, #fff9d9, #fff);
+  border-color: #f2e5a8;
+}
+
+.weather-card:nth-child(2) {
+  background: linear-gradient(135deg, #e8f4ff, #fff);
+  border-color: #cce5ff;
+}
+
+.weather-card:nth-child(4) {
+  background: linear-gradient(135deg, #f0eaff, #fff);
+  border-color: #dfd0ff;
 }
 
 .weather-main {
@@ -155,6 +186,7 @@ h1 {
 .weather-icon {
   font-size: clamp(34px, 3.5vw, 49px);
   line-height: 1;
+  filter: drop-shadow(0 2px 2px #0000000b);
 }
 
 .temperature {
@@ -191,9 +223,9 @@ h1 {
   color: var(--muted);
 }
 
-/* AQI colour states */
+/* AQI card changes color automatically */
 #aqiCard {
-  transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+  transition: background-color 0.5s, border-color 0.5s;
 }
 
 #aqiCard .metric-title,
@@ -247,6 +279,20 @@ h1 {
   font-size: clamp(14px, 1.3vw, 19px);
   font-weight: 800;
   margin: 0 0 5px 2px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.heading-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff1c9;
+  border-radius: 10px;
+  width: 31px;
+  height: 29px;
+  flex-shrink: 0;
 }
 
 .forecast-grid {
@@ -258,6 +304,9 @@ h1 {
 .forecast-card {
   padding: 7px 4px;
   text-align: center;
+  background: linear-gradient(180deg, #fff, #f6fbff);
+  border-color: #dceafa;
+  border-radius: 14px;
 }
 
 .forecast-time {
@@ -297,11 +346,12 @@ h1 {
   justify-content: center;
   min-height: 0;
   overflow: hidden;
+  border-radius: 17px;
 }
 
 .tip-card {
-  background: #eff9f1;
-  border-color: #d5ead9;
+  background: linear-gradient(135deg, #e5f9e8, #f7fff8);
+  border-color: #bde8c7;
 }
 
 .tip-heading, .math-heading {
@@ -309,9 +359,27 @@ h1 {
   font-weight: 800;
   letter-spacing: 0.6px;
   margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.heading-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 10px;
+  font-size: 18px;
+  flex-shrink: 0;
 }
 
 .tip-heading { color: #237849; }
+
+.tip-heading .heading-bubble {
+  background: #c9f1d1;
+}
 
 .tip-text {
   color: #285b3b;
@@ -321,14 +389,21 @@ h1 {
 }
 
 .math-card {
-  background: #eaf3ff;
-  border-color: #cfdef4;
+  background: linear-gradient(135deg, #e4f1ff, #f6f0ff);
+  border-color: #cadcf8;
   align-items: center;
   text-align: center;
   padding: 7px 10px;
+  position: relative;
 }
 
-.math-heading { color: var(--blue); }
+.math-heading {
+  color: var(--blue);
+}
+
+.math-heading .heading-bubble {
+  background: #d6e6ff;
+}
 
 .math-question {
   color: #17447e;
@@ -336,6 +411,11 @@ h1 {
   font-weight: 800;
   line-height: 1.1;
   white-space: nowrap;
+  background: white;
+  border: 2px dashed #b7d2ff;
+  border-radius: 14px;
+  padding: 5px 16px;
+  max-width: 100%;
 }
 
 .math-caption {
@@ -351,12 +431,12 @@ h1 {
   font-size: 10px;
 }
 
-/* Extra compact for shorter TV screens */
+/* Short TV screens */
 @media (max-height: 750px) {
   .dashboard { padding: 5px 10px; gap: 4px; }
   .header { min-height: 46px; }
   .logo { width: 48px; height: 39px; }
-  .card { padding: 6px 9px; border-radius: 9px; }
+  .card { padding: 6px 9px; border-radius: 12px; }
   .weather-card { min-height: 74px; }
   .forecast-card { padding: 5px 3px; }
   .forecast-icon { margin: 2px 0; }
@@ -379,25 +459,27 @@ h1 {
   .forecast-temp { font-size: 18px; }
   .bottom-row { min-height: 58px; }
   .tip-text { font-size: 12px; }
-  .math-question { font-size: 24px; }
+  .math-question { font-size: 24px; padding: 3px 10px; }
   .math-caption { display: none; }
+  .heading-bubble { width: 23px; height: 23px; font-size: 15px; }
 }
 
 @media (max-width: 700px) {
-  .dashboard { padding: 5px; gap: 4px; }
+  html, body { height: auto; min-height: 100%; overflow: auto; }
+  .dashboard { height: auto; min-height: 100vh; overflow: visible; padding: 5px; gap: 5px; }
   .header { gap: 4px; }
   .brand { gap: 5px; }
   .logo { width: 36px; height: 35px; }
   h1 { font-size: 17px; }
-  .location { font-size: 10px; }
+  .location { font-size: 10px; padding: 5px 7px; }
   .top-row { gap: 4px; }
   .weather-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
   .weather-card { min-height: 59px; }
   .forecast-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
   .forecast-card:nth-child(n+4) { display: none; }
-  .bottom-row { grid-template-columns: 1fr 1fr; gap: 4px; }
+  .bottom-row { grid-template-columns: 1fr 1fr; gap: 4px; min-height: 110px; }
   .tip-text { font-size: 11px; }
-  .math-question { font-size: clamp(17px, 4vw, 25px); }
+  .math-question { font-size: clamp(17px, 4vw, 25px); padding: 4px 6px; }
   .math-caption { font-size: 9px; }
 }
 </style>
@@ -413,8 +495,8 @@ h1 {
         alt="DLTS Logo"
         onerror="this.style.display='none'">
       <div>
-        <h1>DLTS Weather &amp; Air Quality</h1>
-        <div class="subtitle">Weather updates, air quality and a daily challenge</div>
+        <h1>🌈 DLTS Weather &amp; Air Quality</h1>
+        <div class="subtitle">☀️ Weather updates, healthy habits &amp; brain challenges ⭐</div>
       </div>
     </div>
     <div class="location">📍 Nonthaburi, Thailand</div>
@@ -423,11 +505,11 @@ h1 {
   <div class="top-row">
     <section class="card time-date">
       <div>
-        <div class="eyebrow">TIME</div>
+        <div class="eyebrow">🕒 LOCAL TIME</div>
         <div class="big-time" id="clock">--:--:--</div>
       </div>
       <div style="text-align:right">
-        <div class="eyebrow">DATE</div>
+        <div class="eyebrow">📅 TODAY</div>
         <div class="big-date" id="date">---</div>
         <div class="day-text" id="day">---</div>
       </div>
@@ -435,11 +517,11 @@ h1 {
 
     <section class="card time-date">
       <div>
-        <div class="eyebrow">LOCAL WEATHER</div>
+        <div class="eyebrow">🌍 YOUR LOCAL WEATHER</div>
         <div style="font-size:clamp(16px,1.8vw,25px);font-weight:800">Nonthaburi</div>
-        <div class="day-text">Live weather and air quality</div>
+        <div class="day-text">🌤️ Live weather &amp; air quality</div>
       </div>
-      <div style="font-size:clamp(27px,3vw,40px)">🌏</div>
+      <div style="font-size:clamp(27px,3vw,40px)">🏫</div>
     </section>
   </div>
 
@@ -455,26 +537,29 @@ h1 {
     </section>
 
     <section class="card weather-card">
-      <div class="metric-title">FEELS LIKE</div>
+      <div class="metric-title">🌡️ FEELS LIKE</div>
       <div class="metric-value" id="feelsLike">--°</div>
-      <div class="metric-sub">Apparent temperature</div>
+      <div class="metric-sub">How warm it feels outside</div>
     </section>
 
     <section class="card weather-card aqi-moderate" id="aqiCard">
-      <div class="metric-title">AIR QUALITY (US AQI)</div>
+      <div class="metric-title">🍃 AIR QUALITY (US AQI)</div>
       <div class="metric-value" id="aqi">--</div>
       <div class="metric-sub" id="aqiLabel">Loading air quality...</div>
     </section>
 
     <section class="card weather-card">
-      <div class="metric-title">PM2.5</div>
+      <div class="metric-title">🔬 PM2.5</div>
       <div class="metric-value" id="pm25">--</div>
-      <div class="metric-sub">µg/m³ · fine particles</div>
+      <div class="metric-sub">Tiny particles in the air · µg/m³</div>
     </section>
   </div>
 
   <section class="forecast-section">
-    <h2 class="section-heading">⏱️ Weather Forecast · Next Hours</h2>
+    <h2 class="section-heading">
+      <span class="heading-icon">⏰</span>
+      WEATHER ADVENTURE · NEXT HOURS 🌈
+    </h2>
     <div class="forecast-grid" id="forecast">
       <div class="card forecast-card">Loading forecast...</div>
     </div>
@@ -482,18 +567,24 @@ h1 {
 
   <div class="bottom-row">
     <section class="card tip-card">
-      <div class="tip-heading">💚 HEALTHY TIP</div>
+      <div class="tip-heading">
+        <span class="heading-bubble" id="tipIcon">💚</span>
+        HEALTHY HABITS
+      </div>
       <div class="tip-text" id="healthyTip">Small healthy choices make a difference!</div>
     </section>
 
     <section class="card math-card">
-      <div class="math-heading">🧠 MATH CHALLENGE</div>
+      <div class="math-heading">
+        <span class="heading-bubble">🧠</span>
+        SUPER MATH CHALLENGE ⭐
+      </div>
       <div class="math-question" id="mathQuestion">Loading...</div>
-      <div class="math-caption">Can you solve it? · New question every 10 minutes</div>
+      <div class="math-caption">💡 Can you solve it? · New puzzle every 10 minutes!</div>
     </section>
   </div>
 
-  <div class="status-line" id="updatedAt">Connecting to live weather data...</div>
+  <div class="status-line" id="updatedAt">🔄 Connecting to live weather data...</div>
 </div>
 
 <script>
@@ -532,36 +623,36 @@ updateClock();
 setInterval(updateClock, 1000);
 
 const tips = [
-  "Drink water regularly throughout the day.",
-  "Stand up and stretch after sitting for a long time.",
-  "Eat a variety of colourful fruits and vegetables.",
-  "Wash your hands before eating.",
-  "Take a short movement break between tasks.",
-  "Get enough sleep to help your brain recharge.",
-  "Remember to blink and rest your eyes from screens.",
-  "Choose water instead of sugary drinks.",
-  "Spend time outdoors when air quality is good.",
-  "Brush your teeth twice a day.",
-  "Enjoy a balanced breakfast to start your day.",
-  "Sit with good posture when studying.",
-  "Take slow, deep breaths when you feel stressed.",
-  "Keep your personal water bottle clean.",
-  "Walk or move whenever you have the opportunity.",
-  "Eat slowly and enjoy your meals.",
-  "Cover your mouth when coughing or sneezing.",
-  "Make time for play, hobbies and laughter.",
-  "Wash fruits before eating them.",
-  "Give your eyes a break from screens.",
-  "Try to include protein in your meals.",
-  "Keep your workspace clean and organised.",
-  "Spend time talking and laughing with friends.",
-  "Wear a hat or find shade in strong sunshine.",
-  "Stretch gently after long periods of sitting.",
-  "Remember that rest is part of being productive.",
-  "Choose a healthy snack when you feel hungry.",
-  "Keep your surroundings tidy to reduce dust.",
-  "Think of one good thing that happened today.",
-  "Be kind to yourself and others."
+  ["💧", "Drink water regularly throughout the day."],
+  ["🤸", "Stand up and stretch after sitting for a long time."],
+  ["🍎", "Eat a variety of colourful fruits and vegetables."],
+  ["🧼", "Wash your hands before eating."],
+  ["🏃", "Take a short movement break between tasks."],
+  ["💤", "Get enough sleep to help your brain recharge."],
+  ["👀", "Remember to blink and rest your eyes from screens."],
+  ["🥤", "Choose water instead of sugary drinks."],
+  ["🌳", "Spend time outdoors when air quality is good."],
+  ["🦷", "Brush your teeth twice a day."],
+  ["🥣", "Enjoy a balanced breakfast to start your day."],
+  ["🪑", "Sit with good posture when studying."],
+  ["🌬️", "Take slow, deep breaths when you feel stressed."],
+  ["🚰", "Keep your personal water bottle clean."],
+  ["🚶", "Walk or move whenever you have the opportunity."],
+  ["🍽️", "Eat slowly and enjoy your meals."],
+  ["🤧", "Cover your mouth when coughing or sneezing."],
+  ["😄", "Make time for play, hobbies and laughter."],
+  ["🍓", "Wash fruits before eating them."],
+  ["📵", "Give your eyes a break from screens."],
+  ["🥚", "Try to include protein in your meals."],
+  ["🧹", "Keep your workspace clean and organised."],
+  ["🧑‍🤝‍🧑", "Spend time talking and laughing with friends."],
+  ["🧢", "Wear a hat or find shade in strong sunshine."],
+  ["🌱", "Stretch gently after long periods of sitting."],
+  ["💚", "Remember that rest is part of being productive."],
+  ["🥕", "Choose a healthy snack when you feel hungry."],
+  ["🧽", "Keep your surroundings tidy to reduce dust."],
+  ["⭐", "Think of one good thing that happened today."],
+  ["🤝", "Be kind to yourself and others."]
 ];
 
 function bangkokDateKey() {
@@ -583,13 +674,14 @@ function updateHealthyTip() {
     new Date(key + "T00:00:00Z").getTime() / 86400000
   );
   const index = ((dayNumber % tips.length) + tips.length) % tips.length;
-  document.getElementById("healthyTip").textContent = tips[index];
+
+  document.getElementById("tipIcon").textContent = tips[index][0];
+  document.getElementById("healthyTip").textContent = tips[index][1];
 }
 
 updateHealthyTip();
 setInterval(updateHealthyTip, 60 * 60 * 1000);
 
-// Random mixed arithmetic questions. Answers are not displayed.
 function makeMathQuestion() {
   const rand = (min, max) =>
     Math.floor(Math.random() * (max - min + 1)) + min;
@@ -643,77 +735,62 @@ setInterval(updateMathQuestion, 10 * 60 * 1000);
 
 function weatherInfo(code) {
   const map = {
-    0:["☀️","Clear sky"],
-    1:["🌤️","Mainly clear"],
-    2:["⛅","Partly cloudy"],
-    3:["☁️","Overcast"],
-    45:["🌫️","Fog"],
-    48:["🌫️","Fog"],
-    51:["🌦️","Light drizzle"],
-    53:["🌦️","Drizzle"],
-    55:["🌧️","Heavy drizzle"],
-    56:["🌧️","Freezing drizzle"],
-    57:["🌧️","Freezing drizzle"],
-    61:["🌦️","Light rain"],
-    63:["🌧️","Moderate rain"],
-    65:["🌧️","Heavy rain"],
-    66:["🌧️","Freezing rain"],
-    67:["🌧️","Freezing rain"],
-    71:["🌨️","Light snow"],
-    73:["🌨️","Snow"],
-    75:["❄️","Heavy snow"],
-    77:["🌨️","Snow grains"],
-    80:["🌦️","Rain showers"],
-    81:["🌧️","Moderate showers"],
-    82:["⛈️","Heavy showers"],
-    85:["🌨️","Snow showers"],
-    86:["❄️","Heavy snow showers"],
-    95:["⛈️","Thunderstorm"],
-    96:["⛈️","Thunderstorm with hail"],
-    99:["⛈️","Severe thunderstorm"]
+    0: ["☀️", "Sunny skies"],
+    1: ["🌤️", "Mostly sunny"],
+    2: ["⛅", "Partly cloudy"],
+    3: ["☁️", "Cloudy skies"],
+    45: ["🌫️", "Foggy"],
+    48: ["🌫️", "Foggy"],
+    51: ["🌦️", "Light drizzle"],
+    53: ["🌦️", "Drizzle"],
+    55: ["🌧️", "Heavy drizzle"],
+    56: ["🌧️", "Freezing drizzle"],
+    57: ["🌧️", "Freezing drizzle"],
+    61: ["🌦️", "Light rain"],
+    63: ["🌧️", "Moderate rain"],
+    65: ["🌧️", "Heavy rain"],
+    66: ["🌧️", "Freezing rain"],
+    67: ["🌧️", "Freezing rain"],
+    71: ["🌨️", "Light snow"],
+    73: ["🌨️", "Snow"],
+    75: ["❄️", "Heavy snow"],
+    77: ["🌨️", "Snow grains"],
+    80: ["🌦️", "Rain showers"],
+    81: ["🌧️", "Moderate showers"],
+    82: ["⛈️", "Heavy showers"],
+    85: ["🌨️", "Snow showers"],
+    86: ["❄️", "Heavy snow showers"],
+    95: ["⛈️", "Thunderstorm"],
+    96: ["⛈️", "Thunderstorm with hail"],
+    99: ["⛈️", "Severe thunderstorm"]
   };
-  return map[code] || ["🌤️","Weather unavailable"];
+
+  return map[code] || ["🌤️", "Weather unavailable"];
 }
 
 function getAQIState(value) {
   if (value == null || !Number.isFinite(Number(value))) {
-    return {
-      className: "",
-      label: "Unavailable"
-    };
+    return { className: "", label: "⚪ Unavailable" };
   }
 
   value = Number(value);
 
-  if (value <= 50) return {
-    className: "aqi-good",
-    label: "Good"
-  };
+  if (value <= 50)
+    return { className: "aqi-good", label: "🟢 Good air" };
 
-  if (value <= 100) return {
-    className: "aqi-moderate",
-    label: "Moderate"
-  };
+  if (value <= 100)
+    return { className: "aqi-moderate", label: "🟡 Moderate" };
 
-  if (value <= 150) return {
-    className: "aqi-sensitive",
-    label: "Unhealthy for sensitive groups"
-  };
+  if (value <= 150)
+    return { className: "aqi-sensitive", label: "🟠 Sensitive groups" };
 
-  if (value <= 200) return {
-    className: "aqi-unhealthy",
-    label: "Unhealthy"
-  };
+  if (value <= 200)
+    return { className: "aqi-unhealthy", label: "🔴 Unhealthy" };
 
-  if (value <= 300) return {
-    className: "aqi-very-unhealthy",
-    label: "Very unhealthy"
-  };
+  if (value <= 300)
+    return { className: "aqi-very-unhealthy", label: "🟣 Very unhealthy" };
 
-  return {
-    className: "aqi-hazardous",
-    label: "Hazardous"
-  };
+  return { className: "aqi-hazardous", label: "🟤 Hazardous" };
 }
 
 async function loadWeather() {
@@ -759,6 +836,7 @@ async function loadWeather() {
       if (index >= data.hourly.time.length) break;
 
       const time = new Date(data.hourly.time[index]);
+
       const timeLabel = new Intl.DateTimeFormat("en-GB", {
         timeZone: TIMEZONE,
         hour: "2-digit",
@@ -775,7 +853,7 @@ async function loadWeather() {
 
       const timeEl = document.createElement("div");
       timeEl.className = "forecast-time";
-      timeEl.textContent = timeLabel;
+      timeEl.textContent = "🕒 " + timeLabel;
 
       const iconEl = document.createElement("div");
       iconEl.className = "forecast-icon";
@@ -787,14 +865,14 @@ async function loadWeather() {
 
       const rainEl = document.createElement("div");
       rainEl.className = "forecast-rain";
-      rainEl.textContent = `🌧️ ${rain ?? "--"}% rain`;
+      rainEl.textContent = `💧 ${rain ?? "--"}% rain`;
 
       card.append(timeEl, iconEl, tempEl, rainEl);
       container.appendChild(card);
     }
 
     document.getElementById("updatedAt").textContent =
-      "Weather updated: " +
+      "🔄 Weather updated: " +
       new Intl.DateTimeFormat("en-GB", {
         timeZone: TIMEZONE,
         hour: "2-digit",
@@ -805,8 +883,10 @@ async function loadWeather() {
   } catch (error) {
     document.getElementById("weatherDescription").textContent =
       "Weather data unavailable";
+
     document.getElementById("updatedAt").textContent =
-      "Weather connection unavailable. Retrying automatically.";
+      "⚠️ Weather connection unavailable. Retrying automatically.";
+
     console.error(error);
   }
 }
@@ -850,15 +930,13 @@ async function loadAirQuality() {
       "aqi-hazardous"
     );
 
-    if (state.className) {
-      card.classList.add(state.className);
-    }
+    if (state.className) card.classList.add(state.className);
 
     document.getElementById("aqiLabel").textContent = state.label;
 
   } catch (error) {
     document.getElementById("aqi").textContent = "--";
-    document.getElementById("aqiLabel").textContent = "Unavailable";
+    document.getElementById("aqiLabel").textContent = "⚪ Unavailable";
     document.getElementById("pm25").textContent = "--";
     console.error(error);
   }
@@ -867,7 +945,6 @@ async function loadAirQuality() {
 loadWeather();
 loadAirQuality();
 
-// Refresh weather, air quality and forecast every 10 minutes.
 setInterval(loadWeather, 10 * 60 * 1000);
 setInterval(loadAirQuality, 10 * 60 * 1000);
 </script>
