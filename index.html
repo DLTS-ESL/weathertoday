@@ -139,6 +139,13 @@ body { overflow: hidden; }
   gap: 8px;
 }
 
+.current-weather-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(115px, .85fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 0;
+}
 .current-weather {
   display: flex;
   align-items: center;
@@ -173,16 +180,22 @@ body { overflow: hidden; }
 
 .weather-details {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 7px;
-  margin-top: 10px;
+  grid-template-columns: 1fr;
+  align-content: center;
+  gap: 6px;
+  margin-top: 0;
+  min-width: 0;
 }
 
 .detail {
   background: #f3f7fd;
   border-radius: 11px;
-  padding: 9px 7px;
-  text-align: center;
+  padding: 6px 9px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
 }
 
 .detail .value {
@@ -193,8 +206,10 @@ body { overflow: hidden; }
 .detail .label {
   color: var(--muted);
   font-size: clamp(10px, .95vw, 13px);
-  margin-top: 4px;
+  margin-top: 0;
 }
+.detail .value { flex-shrink: 0; }
+@media (max-width: 560px) { .current-weather-layout { grid-template-columns: 1fr; } .weather-details { grid-template-columns: repeat(3, 1fr); } .detail { flex-direction: column; text-align: center; } }
 
 .aqi-card {
   border-radius: 15px;
@@ -767,85 +782,77 @@ body { overflow: hidden; }
 
 
 
-
-/* LG TV readability pass: larger type while keeping the full dashboard on screen */
-html, body { width:100%; min-height:100%; }
-body { font-size: clamp(16px, 1.15vw, 22px); }
-.dashboard { padding: 10px 16px 8px; gap: 9px; }
-.brand { font-size: clamp(24px, 2.15vw, 36px); }
-.location { font-size: clamp(15px, 1.25vw, 21px); }
-.live-label { font-size: clamp(13px, 1vw, 17px); }
-.clock-card { padding: 10px 18px; gap: 12px; }
-.clock-label { font-size: clamp(14px, 1.1vw, 18px); }
-.clock { font-size: clamp(48px, 5.2vw, 78px); }
-.date { font-size: clamp(20px, 1.9vw, 30px); }
-.date small { font-size: clamp(14px, 1.1vw, 18px); }
-.card { padding: 12px 14px; }
-.card-heading { font-size: clamp(18px, 1.45vw, 24px); margin-bottom: 7px; }
-.weather-icon { font-size: clamp(58px, 5vw, 82px); }
-.temperature { font-size: clamp(48px, 4.5vw, 72px); }
-.condition { font-size: clamp(17px, 1.35vw, 22px); }
-.feels { font-size: clamp(14px, 1.05vw, 18px); }
-.detail .value { font-size: clamp(18px, 1.55vw, 25px); }
-.detail .label { font-size: clamp(13px, 1vw, 17px); }
-.aqi-title { font-size: clamp(17px, 1.4vw, 23px); }
-.aqi-number { font-size: clamp(48px, 4vw, 68px); }
-.aqi-status { font-size: clamp(16px, 1.3vw, 22px); }
-.pm-value { font-size: clamp(15px, 1.2vw, 20px); }
-.aqi-place, .aqi-note { font-size: clamp(12px, .95vw, 16px); }
-.forecast-time { font-size: clamp(13px, 1.05vw, 18px); }
-.forecast-icon { font-size: clamp(30px, 2.7vw, 42px); }
-.forecast-temp { font-size: clamp(18px, 1.6vw, 26px); }
-.forecast-rain { font-size: clamp(12px, .95vw, 16px); }
-.info-card { padding: 10px 13px; min-height: 90px; }
-.info-heading { font-size: clamp(17px, 1.35vw, 23px); }
-.info-text { font-size: clamp(15px, 1.15vw, 20px); line-height: 1.25; }
-.info-subtext { font-size: clamp(13px, 1vw, 17px); }
-.tip-icon { font-size: 30px; }
-.math-question { font-size: clamp(27px, 2.3vw, 38px); }
-.calendar-card { padding: 10px 12px; min-height: 145px; }
-.calendar-month { font-size: clamp(17px, 1.35vw, 23px); }
-.calendar-year { font-size: clamp(14px, 1vw, 17px); }
-.calendar-weekday { font-size: clamp(12px, .95vw, 16px); padding: 3px 0; }
-.calendar-day { font-size: clamp(14px, 1.15vw, 19px); font-weight: 800; }
-.football-bar, .ticker-item { min-height: 52px; height: 52px; }
-.football-label { font-size: clamp(15px, 1.2vw, 20px); }
-.ticker-item { font-size: clamp(15px, 1.2vw, 20px); }
-.ticker-item .score { font-size: clamp(18px, 1.5vw, 25px); }
-.ticker-item .match-status { font-size: clamp(14px, 1.05vw, 18px); }
-.footer { font-size: clamp(11px, .8vw, 14px); }
-@media (max-height: 800px) {
-  .dashboard { padding: 6px 12px 5px; gap: 5px; }
-  .clock-card { padding: 6px 12px; }
-  .clock { font-size: clamp(40px, 4.4vw, 62px); }
-  .card { padding: 8px 10px; }
-  .info-card { min-height: 72px; padding: 7px 10px; }
-  .calendar-card { min-height: 118px; padding: 6px 8px; }
-  .football-bar, .ticker-item { min-height: 44px; height: 44px; }
+/* TV header: title, location, Thailand time and date share one row */
+.masthead-clock {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(250px, .8fr) minmax(0, .9fr);
+  align-items: center;
+  gap: clamp(12px, 1.5vw, 24px);
+  padding: clamp(10px, 1.2vw, 18px) clamp(16px, 1.7vw, 26px);
+  border-radius: 20px;
+  color: #fff;
+  background: linear-gradient(115deg, #145ec4, #398ded);
+  box-shadow: var(--shadow);
+  flex-shrink: 0;
+}
+.masthead-brand { min-width: 0; }
+.masthead-clock .brand { font-size: clamp(23px, 2.25vw, 38px); line-height: 1.12; }
+.masthead-clock .location { color: #e5f1ff; font-size: clamp(17px, 1.55vw, 26px); margin-top: 8px; }
+.masthead-time { min-width: 0; }
+.masthead-clock .clock-label { font-size: clamp(15px, 1.25vw, 21px); }
+.masthead-clock .clock { font-size: clamp(48px, 5vw, 82px); letter-spacing: -1px; }
+.masthead-date { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; min-width: 0; }
+.masthead-clock .date { font-size: clamp(22px, 2.1vw, 34px); }
+.masthead-clock .date small { font-size: clamp(16px, 1.35vw, 22px); }
+.masthead-clock .live-label { background: rgba(255,255,255,.18); color: #fff; font-size: clamp(12px, .95vw, 16px); padding: 6px 10px; }
+@media (max-width: 900px) {
+  .masthead-clock { grid-template-columns: 1fr 1fr; }
+  .masthead-date { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; }
+}
+@media (max-width: 560px) {
+  .masthead-clock { grid-template-columns: 1fr; gap: 10px; }
+  .masthead-clock .clock { font-size: clamp(42px, 11vw, 60px); }
+  .masthead-date { grid-column: auto; }
+  .masthead-clock .brand { font-size: 23px; }
 }
 
+
+/* TV readability: make upcoming forecast temperatures prominent like the main temperature */
+.forecast-card { padding: 10px 12px; }
+.forecast-card .card-heading { font-size: clamp(16px, 1.35vw, 22px); margin-bottom: 7px; }
+.forecast-list { gap: 6px; }
+.forecast-item { padding: 7px 3px; gap: 4px; }
+.forecast-time { font-size: clamp(12px, 1vw, 16px); font-weight: 700; }
+.forecast-icon { font-size: clamp(30px, 2.8vw, 44px); line-height: 1.1; }
+.forecast-temp { font-size: clamp(23px, 2.1vw, 34px); font-weight: 800; line-height: 1.05; }
+.forecast-rain { font-size: clamp(11px, .9vw, 14px); }
+@media (max-height: 760px) {
+  .forecast-card { padding: 7px 9px; }
+  .forecast-item { padding: 4px 2px; gap: 3px; }
+  .forecast-icon { font-size: clamp(25px, 2.4vw, 36px); }
+  .forecast-temp { font-size: clamp(20px, 1.8vw, 28px); }
+}
 </style>
 </head>
 
 <body>
 <div class="dashboard">
 
-  <header class="topbar">
-    <div>
+  <section class="masthead-clock">
+    <div class="masthead-brand">
       <div class="brand">🌤 DLTS Weather &amp; Date Dashboard</div>
       <div class="location">📍 Bang Kruai, Nonthaburi, Thailand</div>
     </div>
-    <div class="live-label">● LIVE DASHBOARD</div>
-  </header>
-
-  <section class="clock-card">
-    <div>
+    <div class="masthead-time">
       <div class="clock-label">THAILAND LOCAL TIME</div>
       <div class="clock" id="clock">--:--:--</div>
     </div>
-    <div class="date">
-      <div id="weekday">Loading day...</div>
-      <small id="fullDate">Loading date...</small>
+    <div class="masthead-date">
+      <div class="date">
+        <div id="weekday">Loading day...</div>
+        <small id="fullDate">Loading date...</small>
+      </div>
+      <div class="live-label">● LIVE DASHBOARD</div>
     </div>
   </section>
 
@@ -858,27 +865,19 @@ body { font-size: clamp(16px, 1.15vw, 22px); }
         <span id="weatherUpdated" style="font-size:11px;color:#60748c;">Updating...</span>
       </div>
 
-      <div class="current-weather">
-        <div class="weather-icon" id="currentIcon">🌤️</div>
-        <div>
-          <div class="temperature"><span id="temperature">--</span><span style="font-size:.55em;">°C</span></div>
-          <div class="condition" id="condition">Loading weather...</div>
-          <div class="feels">Feels like <strong id="feelsLike">--°C</strong></div>
+      <div class="current-weather-layout">
+        <div class="current-weather">
+          <div class="weather-icon" id="currentIcon">🌤️</div>
+          <div class="weather-primary">
+            <div class="temperature"><span id="temperature">--</span><span style="font-size:.55em;">°C</span></div>
+            <div class="condition" id="condition">Loading weather...</div>
+            <div class="feels">Feels like <strong id="feelsLike">--°C</strong></div>
+          </div>
         </div>
-      </div>
-
-      <div class="weather-details">
-        <div class="detail">
-          <div class="value" id="humidity">--%</div>
-          <div class="label">💧 Humidity</div>
-        </div>
-        <div class="detail">
-          <div class="value" id="wind">--</div>
-          <div class="label">💨 Wind km/h</div>
-        </div>
-        <div class="detail">
-          <div class="value" id="rainNow">--</div>
-          <div class="label">🌧 Rain mm</div>
+        <div class="weather-details">
+          <div class="detail"><div class="value" id="humidity">--%</div><div class="label">💧 Humidity</div></div>
+          <div class="detail"><div class="value" id="wind">--</div><div class="label">💨 Wind km/h</div></div>
+          <div class="detail"><div class="value" id="rainNow">--</div><div class="label">🌧 Rain mm</div></div>
         </div>
       </div>
     </section>
@@ -956,7 +955,7 @@ body { font-size: clamp(16px, 1.15vw, 22px); }
   </section>
 
   <div class="footer">
-    Weather and air-quality data are estimates. Football scores and fixtures depend on data-provider availability.
+    Weather and air-quality data are nearby model estimates, not readings from a sensor at Denla Rama 5. Local conditions can differ. Football scores and fixtures depend on data-provider availability.
   </div>
 
 </div>
@@ -966,7 +965,7 @@ body { font-size: clamp(16px, 1.15vw, 22px); }
 
 /* -------------------------------------------------------
    LOCATION AND CLOCK
-   Bang Kruai, Nonthaburi — approximate area coordinates
+   Bang Kruai, Nonthaburi — nearby forecast grid point
 ------------------------------------------------------- */
 const LAT = 13.805;
 const LON = 100.472;
@@ -1088,7 +1087,7 @@ async function loadWeather() {
     "&current=temperature_2m,relative_humidity_2m,apparent_temperature," +
     "is_day,precipitation,weather_code,wind_speed_10m" +
     "&hourly=temperature_2m,precipitation_probability,weather_code" +
-    "&forecast_days=2&timezone=Asia%2FBangkok";
+    "&forecast_days=2&timezone=Asia%2FBangkok&cell_selection=nearest";
 
   try {
     const response = await fetch(url, { cache: "no-store" });
