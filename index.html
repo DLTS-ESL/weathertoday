@@ -690,6 +690,82 @@ body { overflow: hidden; }
   .calendar-week-info { flex-wrap:wrap; }
 }
 
+
+/* Monthly calendar: use the full card height for the whole month */
+.forecast-calendar-stack > .calendar-card {
+  width: min(100%, 470px);
+  justify-self: center;
+  align-self: start;
+  min-height: 0;
+  height: fit-content;
+  padding: 8px 10px 7px;
+}
+.forecast-calendar-stack {
+  grid-template-rows: auto auto;
+  align-content: start;
+}
+.calendar-top { margin-bottom: 3px; }
+.calendar-grid { gap: 2px; }
+.calendar-weekday { padding: 2px 0; line-height: 1.05; }
+.calendar-day { aspect-ratio: 1 / 0.78; min-height: 0; }
+.calendar-week-info { margin-top: 4px; padding: 4px 7px; }
+@media (max-width: 900px) {
+  .forecast-calendar-stack > .calendar-card { width: 100%; }
+  .calendar-day { aspect-ratio: 1 / 0.9; }
+}
+
+
+    /* Full-month layout: evenly distribute all dates across six calendar rows */
+    .calendar-card { min-height: 0; }
+    .calendar-grid { flex: 1; grid-template-rows: auto repeat(6, minmax(0, 1fr)); gap: 3px; }
+    .calendar-weekday { padding: 2px 0; }
+    .calendar-day { aspect-ratio: auto; min-height: 0; height: 100%; font-size: clamp(12px, 1.05vw, 17px); }
+    .calendar-week-info { margin-top: 5px; }
+    @media (max-height: 760px) {
+      .calendar-grid { gap: 2px; }
+      .calendar-day { font-size: clamp(10px, .9vw, 14px); }
+    }
+
+
+/* Balanced TV dashboard: cards share space, and sparse cards use larger type */
+.weather-grid { align-items: stretch; }
+.weather-stack, .forecast-calendar-stack { height: 100%; align-content: stretch; }
+.weather-stack { grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); }
+.forecast-calendar-stack { grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); }
+.weather-stack > .card, .forecast-calendar-stack > .card { height: 100%; min-height: 0; }
+.forecast-calendar-stack > .calendar-card { width: 100%; max-width: none; justify-self: stretch; align-self: stretch; height: 100%; padding: clamp(10px, 1.2vw, 18px); }
+.card-heading { font-size: clamp(15px, 1.35vw, 21px); }
+.clock-card { min-height: 0; padding: clamp(12px, 1.5vw, 22px); }
+.clock-label { font-size: clamp(13px, 1.15vw, 18px); }
+.clock { font-size: clamp(42px, 5.4vw, 82px); }
+.date-line, .date-text { font-size: clamp(16px, 1.7vw, 25px); }
+.aqi-card { display:flex; flex-direction:column; justify-content:center; padding: clamp(12px, 1.5vw, 22px); }
+.aqi-title { font-size: clamp(16px, 1.45vw, 22px); }
+.aqi-number { font-size: clamp(42px, 5vw, 76px); line-height:1; }
+.aqi-status { font-size: clamp(15px, 1.45vw, 22px); }
+.aqi-place, .aqi-note { font-size: clamp(11px, .95vw, 15px); }
+.forecast-card { display:flex; flex-direction:column; justify-content:center; padding: clamp(10px, 1.3vw, 18px); }
+.forecast-list { flex:1; align-items:stretch; }
+.forecast-item { justify-content:center; }
+.forecast-time { font-size: clamp(11px, 1vw, 16px); }
+.forecast-icon { font-size: clamp(24px, 2.6vw, 40px); }
+.forecast-temp { font-size: clamp(17px, 1.7vw, 26px); }
+.forecast-rain { font-size: clamp(10px, .9vw, 14px); }
+.calendar-month { font-size: clamp(18px, 1.8vw, 28px); }
+.calendar-year { font-size: clamp(14px, 1.1vw, 18px); }
+.calendar-grid { flex:1; grid-auto-rows: minmax(0, 1fr); gap: clamp(2px, .35vw, 5px); }
+.calendar-weekday { font-size: clamp(12px, 1.05vw, 17px); padding: clamp(3px, .4vw, 6px) 0; }
+.calendar-day { font-size: clamp(17px, 1.8vw, 28px); min-height: 0; width: min(100%, 42px); justify-self:center; }
+.calendar-week-info { font-size: clamp(11px, .95vw, 15px); padding: clamp(5px, .6vw, 9px); }
+@media (max-height: 760px) {
+  .weather-stack, .forecast-calendar-stack { gap: 6px; }
+  .clock { font-size: clamp(36px, 4.6vw, 66px); }
+  .aqi-number { font-size: clamp(34px, 4vw, 58px); }
+  .calendar-day { font-size: clamp(15px, 1.5vw, 22px); }
+}
+
+
+
 </style>
 </head>
 
@@ -869,7 +945,7 @@ updateClock();
 setInterval(updateClock, 1000);
 
 /* -------------------------------------------------------
-   CURRENT WEEK CALENDAR — Monday to Sunday, Thailand date
+   FULL MONTH CALENDAR — Monday to Sunday, Thailand date
 ------------------------------------------------------- */
 function renderMonthCalendar() {
   const parts = new Intl.DateTimeFormat("en-US", {
@@ -879,19 +955,15 @@ function renderMonthCalendar() {
   const year = Number(part.year);
   const month = Number(part.month) - 1;
   const today = Number(part.day);
-  const todayDate = new Date(Date.UTC(year, month, today));
-  const todayWeekday = todayDate.getUTCDay();
-  const mondayOffset = todayWeekday === 0 ? -6 : 1 - todayWeekday;
-  const weekStart = new Date(todayDate);
-  weekStart.setUTCDate(weekStart.getUTCDate() + mondayOffset);
-  const weekEnd = new Date(weekStart);
-  weekEnd.setUTCDate(weekEnd.getUTCDate() + 6);
+  const firstOfMonth = new Date(Date.UTC(year, month, 1));
+  const firstWeekday = firstOfMonth.getUTCDay();
+  const mondayOffset = (firstWeekday + 6) % 7;
+  const daysInMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
 
-  const dateLabel = d => new Intl.DateTimeFormat("en-US", {
-    timeZone: "UTC", month: "short", day: "numeric"
-  }).format(d);
-  document.getElementById("calendarMonth").textContent = "📅 This Week";
-  document.getElementById("calendarYear").textContent = `${weekStart.getUTCFullYear()}`;
+  document.getElementById("calendarMonth").textContent = "📅 " + new Intl.DateTimeFormat("en-US", {
+    timeZone: "UTC", month: "long"
+  }).format(firstOfMonth);
+  document.getElementById("calendarYear").textContent = String(year);
 
   const grid = document.getElementById("calendarGrid");
   grid.innerHTML = "";
@@ -905,23 +977,26 @@ function renderMonthCalendar() {
     grid.appendChild(el);
   });
 
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(weekStart);
-    date.setUTCDate(weekStart.getUTCDate() + i);
+  for (let cell = 0; cell < 42; cell++) {
+    const dayNumber = cell - mondayOffset + 1;
     const el = document.createElement("div");
-    const isToday = date.getUTCFullYear() === year && date.getUTCMonth() === month && date.getUTCDate() === today;
-    el.className = "calendar-day" + (isToday ? " today" : "") + (i >= 5 ? " weekend" : "");
-    el.textContent = date.getUTCDate();
-    el.title = `${weekdayNames[i]}, ${dateLabel(date)}${isToday ? " — Today" : ""}`;
-    if (isToday) {
-      el.setAttribute("aria-current", "date");
+    if (dayNumber < 1 || dayNumber > daysInMonth) {
+      el.className = "calendar-day empty";
+      el.setAttribute("aria-hidden", "true");
+    } else {
+      const date = new Date(Date.UTC(year, month, dayNumber));
+      const isToday = dayNumber === today;
+      const weekdayIndex = cell % 7;
+      el.className = "calendar-day" + (isToday ? " today" : "") + (weekdayIndex >= 5 ? " weekend" : "");
+      el.textContent = dayNumber;
+      el.title = `${weekdayNames[weekdayIndex]}, ${dayNumber} ${new Intl.DateTimeFormat("en-US", {timeZone:"UTC", month:"long"}).format(date)}${isToday ? " — Today" : ""}`;
+      if (isToday) el.setAttribute("aria-current", "date");
     }
     grid.appendChild(el);
   }
 
-  const daysLeft = 6 - (todayWeekday === 0 ? 6 : todayWeekday - 1);
   const weekInfo = document.getElementById("calendarWeekInfo");
-  weekInfo.innerHTML = `<strong>THIS WEEK</strong><span>${dateLabel(weekStart)} – ${dateLabel(weekEnd)}</span><span class="week-progress">${daysLeft === 0 ? "Last day of the week" : `${daysLeft} day${daysLeft === 1 ? "" : "s"} left after today`}</span>`;
+  weekInfo.innerHTML = `<strong>THIS MONTH</strong><span>${daysInMonth} days</span><span class="week-progress">Today: ${today} ${new Intl.DateTimeFormat("en-US", {timeZone:"UTC", month:"short"}).format(firstOfMonth)}</span>`;
 }
 renderMonthCalendar();
 setInterval(renderMonthCalendar, 60 * 60 * 1000);
