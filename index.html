@@ -35,10 +35,10 @@ html, body {
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  padding: 7px 13px;
+  padding: 8px 14px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
   overflow: hidden;
   background:
     radial-gradient(circle at 8% 10%, #fff5c8 0, transparent 18%),
@@ -61,7 +61,7 @@ html, body {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  min-height: 55px;
+  min-height: 62px;
   flex-shrink: 0;
 }
 
@@ -73,8 +73,8 @@ html, body {
 }
 
 .logo {
-  width: 58px;
-  height: 47px;
+  width: 66px;
+  height: 54px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -82,7 +82,7 @@ html, body {
 h1 {
   margin: 0;
   color: var(--blue);
-  font-size: clamp(23px, 2.5vw, 37px);
+  font-size: clamp(27px, 2.8vw, 42px);
   letter-spacing: -0.6px;
 }
 
@@ -107,7 +107,7 @@ h1 {
 .top-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 7px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
@@ -129,14 +129,14 @@ h1 {
 
 .big-time {
   color: var(--blue);
-  font-size: clamp(28px, 3vw, 43px);
+  font-size: clamp(34px, 3.4vw, 50px);
   line-height: 1;
   font-weight: 800;
   white-space: nowrap;
 }
 
 .big-date {
-  font-size: clamp(17px, 1.8vw, 26px);
+  font-size: clamp(20px, 2vw, 30px);
   line-height: 1.15;
   font-weight: 800;
 }
@@ -155,7 +155,7 @@ h1 {
 }
 
 .weather-card {
-  min-height: 88px;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -184,14 +184,14 @@ h1 {
 }
 
 .weather-icon {
-  font-size: clamp(34px, 3.5vw, 49px);
+  font-size: clamp(39px, 3.8vw, 55px);
   line-height: 1;
   filter: drop-shadow(0 2px 2px #0000000b);
 }
 
 .temperature {
   color: var(--blue);
-  font-size: clamp(31px, 3.3vw, 46px);
+  font-size: clamp(36px, 3.6vw, 52px);
   line-height: 1;
   font-weight: 800;
 }
@@ -211,7 +211,7 @@ h1 {
 
 .metric-value {
   margin-top: 5px;
-  font-size: clamp(26px, 2.7vw, 37px);
+  font-size: clamp(30px, 3vw, 43px);
   font-weight: 800;
   line-height: 1.05;
   color: var(--blue);
@@ -271,12 +271,18 @@ h1 {
 }
 
 .forecast-section {
-  flex-shrink: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
+
+.forecast-grid { flex: 1; min-height: 0; }
+.forecast-card { display: flex; flex-direction: column; justify-content: center; }
 
 .section-heading {
   color: var(--blue);
-  font-size: clamp(14px, 1.3vw, 19px);
+  font-size: clamp(17px, 1.5vw, 22px);
   font-weight: 800;
   margin: 0 0 5px 2px;
   display: flex;
@@ -302,7 +308,7 @@ h1 {
 }
 
 .forecast-card {
-  padding: 7px 4px;
+  padding: 9px 5px;
   text-align: center;
   background: linear-gradient(180deg, #fff, #f6fbff);
   border-color: #dceafa;
@@ -311,18 +317,18 @@ h1 {
 
 .forecast-time {
   color: var(--muted);
-  font-size: clamp(10px, 0.95vw, 13px);
+  font-size: clamp(12px, 1.1vw, 16px);
   font-weight: bold;
 }
 
 .forecast-icon {
-  font-size: clamp(23px, 2.2vw, 32px);
+  font-size: clamp(29px, 2.5vw, 37px);
   margin: 3px 0;
 }
 
 .forecast-temp {
   color: var(--blue);
-  font-size: clamp(18px, 1.9vw, 27px);
+  font-size: clamp(23px, 2.1vw, 31px);
   font-weight: 800;
 }
 
@@ -334,10 +340,11 @@ h1 {
 
 .bottom-row {
   display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  gap: 7px;
-  flex: 1;
-  min-height: 80px;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 8px;
+  flex: 0 0 clamp(92px, 17vh, 135px);
+  min-height: 0;
+  max-height: 135px;
 }
 
 .tip-card, .math-card {
@@ -347,6 +354,7 @@ h1 {
   min-height: 0;
   overflow: hidden;
   border-radius: 17px;
+  padding: 8px 12px;
 }
 
 .tip-card {
@@ -355,7 +363,7 @@ h1 {
 }
 
 .tip-heading, .math-heading {
-  font-size: clamp(11px, 1.05vw, 15px);
+  font-size: clamp(13px, 1.15vw, 17px);
   font-weight: 800;
   letter-spacing: 0.6px;
   margin-bottom: 5px;
@@ -383,7 +391,7 @@ h1 {
 
 .tip-text {
   color: #285b3b;
-  font-size: clamp(13px, 1.25vw, 18px);
+  font-size: clamp(15px, 1.35vw, 20px);
   font-weight: 600;
   line-height: 1.25;
 }
@@ -407,7 +415,7 @@ h1 {
 
 .math-question {
   color: #17447e;
-  font-size: clamp(24px, 2.8vw, 40px);
+  font-size: clamp(25px, 2.5vw, 36px);
   font-weight: 800;
   line-height: 1.1;
   white-space: nowrap;
@@ -434,6 +442,7 @@ h1 {
 /* Short TV screens */
 @media (max-height: 750px) {
   .dashboard { padding: 5px 10px; gap: 4px; }
+  .bottom-row { flex-basis: clamp(76px, 14vh, 100px); }
   .header { min-height: 46px; }
   .logo { width: 48px; height: 39px; }
   .card { padding: 6px 9px; border-radius: 12px; }
@@ -447,6 +456,7 @@ h1 {
 
 @media (max-height: 600px) {
   .dashboard { padding: 4px 8px; gap: 3px; }
+  .bottom-row { flex-basis: 66px; }
   .header { min-height: 39px; }
   .logo { width: 40px; height: 33px; }
   h1 { font-size: clamp(19px, 2.2vw, 29px); }
@@ -457,7 +467,7 @@ h1 {
   .metric-value { font-size: 24px; }
   .forecast-icon { font-size: 22px; }
   .forecast-temp { font-size: 18px; }
-  .bottom-row { min-height: 58px; }
+  .bottom-row { min-height: 0; flex-basis: 62px; }
   .tip-text { font-size: 12px; }
   .math-question { font-size: 24px; padding: 3px 10px; }
   .math-caption { display: none; }
