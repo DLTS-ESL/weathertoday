@@ -882,13 +882,21 @@ body { overflow: hidden; }
 .iqair-link:focus, .iqair-link:hover { background: #eaf5ff; }
 
 
-/* Replacement for AQI: clear, weather-based outdoor guidance */
-.outdoor-card { display:flex; flex-direction:column; justify-content:center; gap:clamp(7px, .9vw, 13px); min-width:0; padding:clamp(13px, 1.6vw, 23px); border-radius:15px; background:#eaf4ff; border:1px solid #c8def8; color:#183153; }
-.outdoor-heading { font-size:clamp(17px, 1.65vw, 25px); font-weight:900; letter-spacing:.025em; }
-.outdoor-main { font-size:clamp(30px, 3.3vw, 49px); line-height:1.02; font-weight:950; }
-.outdoor-message { font-size:clamp(16px, 1.55vw, 23px); line-height:1.2; font-weight:800; }
-.outdoor-detail { font-size:clamp(13px, 1.15vw, 17px); line-height:1.25; font-weight:700; color:#526a85; }
-@media (max-height:760px) { .outdoor-card { padding:10px 12px; gap:6px; } .outdoor-main { font-size:clamp(26px, 2.8vw, 40px); } .outdoor-message { font-size:clamp(14px, 1.3vw, 19px); } .outdoor-detail { font-size:clamp(12px, 1vw, 15px); } }
+/* AQI and outdoor guide share the same row below current weather */
+.outdoor-aqi-split { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:7px; min-width:0; min-height:0; }
+.aqi-live-card, .outdoor-card { display:flex; flex-direction:column; justify-content:center; gap:clamp(5px, .7vw, 10px); min-width:0; padding:clamp(10px, 1.25vw, 18px); border-radius:15px; color:#183153; }
+.aqi-live-card { background:#f0f7ff; border:1px solid #c8def8; align-items:flex-start; }
+.aqi-live-heading, .outdoor-heading { font-size:clamp(15px, 1.35vw, 21px); font-weight:900; letter-spacing:.015em; line-height:1.12; }
+.aqi-live-number { font-size:clamp(42px, 4.6vw, 68px); line-height:.98; font-weight:950; }
+.aqi-live-status { font-size:clamp(16px, 1.5vw, 23px); font-weight:900; line-height:1.1; }
+.aqi-live-note { font-size:clamp(11px, .9vw, 14px); line-height:1.2; font-weight:700; color:#526a85; }
+.aqi-live-link { font-size:clamp(11px, .9vw, 14px); font-weight:900; color:#174c78; text-decoration:underline; }
+.outdoor-card { background:#eaf4ff; border:1px solid #c8def8; }
+.outdoor-main { font-size:clamp(23px, 2.6vw, 39px); line-height:1.02; font-weight:950; }
+.outdoor-message { font-size:clamp(13px, 1.15vw, 18px); line-height:1.2; font-weight:800; }
+.outdoor-detail { font-size:clamp(11px, .9vw, 14px); line-height:1.2; font-weight:700; color:#526a85; }
+@media (max-width:560px) { .outdoor-aqi-split { grid-template-columns:1fr; } }
+@media (max-height:760px) { .aqi-live-card, .outdoor-card { padding:8px 9px; gap:5px; } .aqi-live-number { font-size:clamp(35px, 3.8vw, 54px); } .outdoor-main { font-size:clamp(21px, 2.2vw, 32px); } .outdoor-message { font-size:clamp(12px, 1vw, 15px); } .outdoor-detail, .aqi-live-note, .aqi-live-link { font-size:clamp(10px, .8vw, 12px); } }
 
 </style>
 </head>
@@ -940,12 +948,20 @@ body { overflow: hidden; }
       </div>
     </section>
 
-    <section class="outdoor-card" id="outdoorCard" aria-live="polite">
-      <div class="outdoor-heading">TODAY’S OUTDOOR GUIDE</div>
-      <div class="outdoor-main" id="outdoorMain">CHECK THE WEATHER</div>
-      <div class="outdoor-message" id="outdoorMessage">Outdoor activity advice will update with the current weather.</div>
-      <div class="outdoor-detail" id="outdoorDetail">Use the forecast to plan ahead.</div>
-    </section>
+    <div class="outdoor-aqi-split">
+      <section class="aqi-live-card" aria-live="polite" aria-label="Bang Kruai air quality estimate">
+        <div class="aqi-live-heading">AIR QUALITY · BANG KRUAI, NONTHABURI</div>
+        <div class="aqi-live-number" id="aqiLiveNumber">--</div>
+        <div class="aqi-live-status" id="aqiLiveStatus">Loading AQI…</div>
+        <div class="aqi-live-note" id="aqiLiveNote">General Bang Kruai area estimate · US AQI</div>
+      </section>
+      <section class="outdoor-card" id="outdoorCard" aria-live="polite">
+        <div class="outdoor-heading">TODAY’S OUTDOOR GUIDE</div>
+        <div class="outdoor-main" id="outdoorMain">CHECK THE WEATHER</div>
+        <div class="outdoor-message" id="outdoorMessage">Outdoor activity advice will update with the current weather.</div>
+        <div class="outdoor-detail" id="outdoorDetail">Use the forecast to plan ahead.</div>
+      </section>
+    </div>
     </div>
 
     <div class="forecast-calendar-stack">
@@ -1243,7 +1259,49 @@ loadWeather();
 setInterval(loadWeather, 10 * 60 * 1000);
 
 /* -------------------------------------------------------
-   WEATHER-BASED OUTDOOR GUIDE (replaces AQI widget)
+   BANG KRUAI AIR QUALITY
+   General Open-Meteo modeled US AQI for Bang Kruai, Nonthaburi.
+------------------------------------------------------- */
+async function loadAirQuality() {
+  const numberEl = document.getElementById("aqiLiveNumber");
+  const statusEl = document.getElementById("aqiLiveStatus");
+  const noteEl = document.getElementById("aqiLiveNote");
+  const url = "https://air-quality-api.open-meteo.com/v1/air-quality" +
+    `?latitude=${LAT}&longitude=${LON}&current=us_aqi,pm2_5&timezone=Asia%2FBangkok`;
+  try {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) throw new Error("Air-quality service unavailable");
+    const data = await response.json();
+    const current = data.current || {};
+    const aqi = Number(current.us_aqi);
+    if (!Number.isFinite(aqi)) throw new Error("AQI not available");
+    numberEl.textContent = Math.round(aqi);
+    let status, bg, border;
+    if (aqi <= 50) { status = "GOOD"; bg = "#e5f7e9"; border = "#bde7c5"; }
+    else if (aqi <= 100) { status = "MODERATE"; bg = "#fff6d9"; border = "#f0df9b"; }
+    else if (aqi <= 150) { status = "UNHEALTHY · SENSITIVE"; bg = "#ffeadc"; border = "#f2c4a4"; }
+    else if (aqi <= 200) { status = "UNHEALTHY"; bg = "#ffe5e5"; border = "#efb8b8"; }
+    else if (aqi <= 300) { status = "VERY UNHEALTHY"; bg = "#f0e5ff"; border = "#d2b8f2"; }
+    else { status = "HAZARDOUS"; bg = "#eadde1"; border = "#d5aeb9"; }
+    statusEl.textContent = status;
+    const pm = Number(current.pm2_5);
+    noteEl.textContent = Number.isFinite(pm)
+      ? `PM2.5 ${pm.toFixed(1)} µg/m³ · General area estimate`
+      : "General Bang Kruai area estimate · US AQI";
+    const card = numberEl.closest(".aqi-live-card");
+    card.style.background = bg; card.style.borderColor = border;
+  } catch (error) {
+    numberEl.textContent = "--";
+    statusEl.textContent = "UNAVAILABLE";
+    noteEl.textContent = "Could not load Bang Kruai area AQI estimate";
+    console.warn("Air-quality update failed:", error);
+  }
+}
+loadAirQuality();
+setInterval(loadAirQuality, 15 * 60 * 1000);
+
+/* -------------------------------------------------------
+   WEATHER-BASED OUTDOOR GUIDE
 ------------------------------------------------------- */
 function updateOutdoorGuide(current) {
   const card = document.getElementById("outdoorCard");
