@@ -590,13 +590,13 @@ body { overflow: hidden; }
 .info-subtext { font-size: clamp(9px, .8vw, 11px); margin-top: 3px; line-height: 1.2; }
 .tip-icon { font-size: 23px; margin-right: 6px; }
 .math-question { font-size: clamp(19px, 2vw, 28px); margin-top: 1px; }
-.football-bar { min-height: 29px; height: 29px; border-radius: 8px; }
-.football-label { padding: 0 9px; font-size: 10px; gap: 5px; }
-.live-dot { width: 6px; height: 6px; }
-.ticker-item { height: 29px; padding: 0 14px; gap: 6px; font-size: clamp(10px, .85vw, 12px); }
-.ticker-item .score { font-size: 12px; }
-.ticker-item .match-status { font-size: 10px; }
-.ticker-loading { font-size: 11px; }
+.football-bar { min-height: 46px; height: 46px; border-radius: 10px; }
+.football-label { padding: 0 14px; font-size: clamp(12px, 1.05vw, 15px); gap: 7px; }
+.live-dot { width: 8px; height: 8px; }
+.ticker-item { height: 46px; padding: 0 20px; gap: 9px; font-size: clamp(12px, 1.05vw, 15px); }
+.ticker-item .score { font-size: clamp(15px, 1.25vw, 18px); }
+.ticker-item .match-status { font-size: clamp(11px, .9vw, 13px); }
+.ticker-loading { font-size: 13px; }
 .footer { font-size: 9px; line-height: 1.1; }
 
 @media (min-width: 1500px) {
@@ -617,6 +617,30 @@ body { overflow: hidden; }
   .forecast-item { padding: 3px 1px; gap: 2px; }
   .aqi-card { padding: 7px 9px; }
 }
+
+
+/* MINI MONTH CALENDAR */
+.info-grid { grid-template-columns: 1fr 1fr 1fr 1.18fr; align-items: stretch; }
+.calendar-card { background: #fff; border-color: #dce8fb; padding: 7px 9px; min-height: 116px; }
+.calendar-top { display:flex; align-items:center; justify-content:space-between; gap:6px; margin-bottom:5px; }
+.calendar-month { font-size: clamp(12px, 1.05vw, 15px); font-weight:900; color:#183153; }
+.calendar-year { font-size: clamp(10px, .8vw, 12px); color:#60748c; font-weight:800; }
+.calendar-grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:2px; text-align:center; }
+.calendar-weekday { color:#6a7f99; font-size:clamp(8px,.65vw,10px); font-weight:900; padding:2px 0; }
+.calendar-day { display:flex; align-items:center; justify-content:center; aspect-ratio:1 / 1; min-height:12px; border-radius:50%; font-size:clamp(8px,.72vw,11px); font-weight:700; color:#29425f; }
+.calendar-day.today { background:#2878e5; color:#fff; font-weight:900; box-shadow:0 1px 4px rgba(40,120,229,.3); }
+.calendar-day.weekend:not(.today) { color:#e05b58; }
+.calendar-day.empty { visibility:hidden; }
+@media (max-width:900px) { .info-grid { grid-template-columns:1fr 1fr; } .calendar-card { min-height:150px; } }
+@media (max-height:760px) { .calendar-card { min-height:108px; padding:5px 7px; } .calendar-top { margin-bottom:2px; } .calendar-grid { gap:1px; } .calendar-weekday { padding:1px 0; } }
+
+/* Keep the monthly calendar on the same row as the weather widgets */
+.weather-grid { grid-template-columns: minmax(0,1.02fr) minmax(0,1.55fr) minmax(150px,.72fr) minmax(180px,.82fr); gap:7px; }
+.weather-grid > .calendar-card { min-width:0; align-self:stretch; padding:7px 8px; }
+.info-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.calendar-day { min-height:0; }
+@media (max-width:1100px) and (min-width:901px) { .weather-grid { grid-template-columns: minmax(0,1fr) minmax(0,1.35fr); } .weather-grid > .calendar-card { min-height:145px; } .info-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media (max-width:900px) { .weather-grid { grid-template-columns:1fr 1fr; } .weather-grid > .calendar-card { min-height:150px; } .info-grid { grid-template-columns:1fr 1fr; } }
 
 </style>
 </head>
@@ -699,6 +723,14 @@ body { overflow: hidden; }
       <div class="aqi-note">Area estimate · Not a specific Rama 5 station reading</div>
     </section>
 
+    <div class="card calendar-card" aria-label="Monthly calendar">
+      <div class="calendar-top">
+        <div class="calendar-month" id="calendarMonth">📅 Month</div>
+        <div class="calendar-year" id="calendarYear">2026</div>
+      </div>
+      <div class="calendar-grid" id="calendarGrid" aria-live="polite"></div>
+    </div>
+
   </main>
 
   <section class="info-grid">
@@ -720,6 +752,7 @@ body { overflow: hidden; }
       <div class="info-text" id="schoolTip">Be kind, be curious, and help someone today!</div>
       <div class="info-subtext">Small actions can make our school a better place.</div>
     </div>
+
 
   </section>
 
@@ -781,6 +814,56 @@ function updateClock() {
 
 updateClock();
 setInterval(updateClock, 1000);
+
+/* -------------------------------------------------------
+   MONTH CALENDAR — Thailand local date, highlights today
+------------------------------------------------------- */
+function renderMonthCalendar() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: TIME_ZONE, year: "numeric", month: "numeric", day: "numeric"
+  }).formatToParts(new Date());
+  const part = Object.fromEntries(parts.map(p => [p.type, p.value]));
+  const year = Number(part.year);
+  const month = Number(part.month) - 1;
+  const today = Number(part.day);
+  const monthDate = new Date(Date.UTC(year, month, 1));
+  const monthName = new Intl.DateTimeFormat("en-US", {
+    month: "long", timeZone: "UTC"
+  }).format(monthDate);
+  document.getElementById("calendarMonth").textContent = "📅 " + monthName;
+  document.getElementById("calendarYear").textContent = year;
+
+  const grid = document.getElementById("calendarGrid");
+  grid.innerHTML = "";
+  ["S", "M", "T", "W", "T", "F", "S"].forEach((name, i) => {
+    const el = document.createElement("div");
+    el.className = "calendar-weekday";
+    el.textContent = name;
+    el.setAttribute("aria-label", ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][i]);
+    grid.appendChild(el);
+  });
+  const firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
+  const daysInMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+  for (let i = 0; i < firstDay; i++) {
+    const blank = document.createElement("div");
+    blank.className = "calendar-day empty";
+    blank.textContent = "0";
+    grid.appendChild(blank);
+  }
+  for (let day = 1; day <= daysInMonth; day++) {
+    const el = document.createElement("div");
+    const weekday = new Date(Date.UTC(year, month, day)).getUTCDay();
+    el.className = "calendar-day" + (day === today ? " today" : "") + ((weekday === 0 || weekday === 6) ? " weekend" : "");
+    el.textContent = day;
+    if (day === today) {
+      el.setAttribute("aria-current", "date");
+      el.title = "Today";
+    }
+    grid.appendChild(el);
+  }
+}
+renderMonthCalendar();
+setInterval(renderMonthCalendar, 60 * 60 * 1000);
 
 /* -------------------------------------------------------
    WEATHER
