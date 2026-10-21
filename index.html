@@ -11,11 +11,6 @@
   --bg: #f2f6fc;
   --navy: #183b66;
   --blue: #2878d0;
-  --white: #ffffff;
-  --green: #18864b;
-  --orange: #e58b13;
-  --red: #d83b42;
-  --purple: #792bb7;
 }
 
 * { box-sizing: border-box; }
@@ -34,9 +29,9 @@ body { overflow: hidden; }
 .dashboard {
   height: 100vh;
   height: 100dvh;
-  padding: 1.2vh 1.2vw;
+  padding: 1vh 1.1vw;
   display: grid;
-  grid-template-rows: auto 1.35fr 0.9fr 1fr;
+  grid-template-rows: auto 1.4fr 0.95fr 1.1fr;
   gap: 1vh;
 }
 
@@ -45,24 +40,25 @@ header {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 0.5vh 0.7vw;
+  padding: 0.3vh 0.5vw;
+  animation: fadeIn 0.7s ease both;
 }
 
 .brand {
-  font-size: clamp(24px, 2.8vw, 42px);
+  font-size: clamp(26px, 2.8vw, 44px);
   font-weight: 900;
   letter-spacing: -1px;
 }
 
 .location {
   text-align: right;
-  font-size: clamp(14px, 1.5vw, 22px);
-  font-weight: 700;
+  font-size: clamp(16px, 1.5vw, 23px);
+  font-weight: 800;
 }
 
 .location small {
   display: block;
-  font-size: 0.75em;
+  font-size: 0.78em;
   margin-top: 4px;
   color: #62758b;
 }
@@ -70,49 +66,63 @@ header {
 .top {
   min-height: 0;
   display: grid;
-  grid-template-columns: 1.05fr 1.15fr 0.8fr;
+  grid-template-columns: 1.05fr 1.15fr 0.9fr;
   gap: 1vw;
 }
 
 .panel {
-  background: var(--white);
+  background: white;
   border-radius: 18px;
-  padding: 1.5vh 1.3vw;
+  padding: 1.2vh 1.2vw;
   min-width: 0;
   min-height: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  box-shadow: 0 3px 12px #183b660e;
+  box-shadow: 0 3px 12px #183b6610;
+  animation: fadeIn 0.8s ease both;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.panel:hover {
+  box-shadow: 0 6px 18px #183b6620;
 }
 
 .panel-title {
-  font-size: clamp(15px, 1.5vw, 22px);
-  font-weight: 800;
+  font-size: clamp(18px, 1.65vw, 25px);
+  font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   color: #60748b;
 }
 
 .clock {
-  font-size: clamp(48px, 6.5vw, 96px);
+  font-size: clamp(48px, 6.2vw, 94px);
   font-weight: 900;
   letter-spacing: -3px;
-  line-height: 1.05;
+  line-height: 1.08;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.seconds {
+  font-size: 0.55em;
+  color: #2878d0;
+  letter-spacing: -1px;
 }
 
 .date {
-  font-size: clamp(18px, 2.1vw, 30px);
-  font-weight: 800;
+  font-size: clamp(20px, 2.2vw, 33px);
+  font-weight: 900;
   margin-top: 1vh;
 }
 
 .day {
-  font-size: clamp(16px, 1.7vw, 24px);
+  font-size: clamp(18px, 1.8vw, 27px);
   color: #60748b;
-  margin-top: 0.5vh;
+  margin-top: 0.4vh;
+  font-weight: 700;
 }
 
 .weather-main {
@@ -124,51 +134,74 @@ header {
 }
 
 .weather-icon {
-  font-size: clamp(55px, 7vw, 100px);
+  font-size: clamp(65px, 7.5vw, 108px);
   line-height: 1;
+  animation: weatherFloat 3s ease-in-out infinite;
+  transform-origin: center;
 }
 
 .temperature {
-  font-size: clamp(48px, 6vw, 88px);
+  font-size: clamp(55px, 6.3vw, 92px);
   font-weight: 900;
   letter-spacing: -3px;
   line-height: 1.05;
 }
 
 .condition {
-  font-size: clamp(17px, 2vw, 27px);
-  font-weight: 800;
+  font-size: clamp(21px, 2.2vw, 32px);
+  font-weight: 900;
   text-align: center;
 }
 
 .weather-detail {
-  font-size: clamp(14px, 1.4vw, 20px);
+  font-size: clamp(17px, 1.6vw, 23px);
   color: #60748b;
+  text-align: center;
+  margin-top: 0.7vh;
+  font-weight: 600;
+}
+
+.aqi-panel {
+  border-top: 8px solid #b6c3d0;
+  text-align: center;
+}
+
+.aqi-location {
+  font-size: clamp(16px, 1.45vw, 21px);
+  color: #183b66;
+  font-weight: 900;
+  margin-top: 0.4vh;
+}
+
+.aqi-note {
+  font-size: clamp(12px, 1.05vw, 15px);
+  color: #718096;
+  line-height: 1.2;
+  margin-top: 0.3vh;
+}
+
+.aqi-number {
+  font-size: clamp(75px, 9.5vw, 140px);
+  line-height: 1;
+  font-weight: 900;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  animation: numberIn 0.7s ease;
+}
+
+.aqi-status {
+  font-size: clamp(21px, 2.1vw, 31px);
+  font-weight: 900;
   text-align: center;
   margin-top: 0.7vh;
 }
 
-.aqi-number {
-  font-size: clamp(72px, 10vw, 145px);
-  line-height: 1;
-  font-weight: 900;
-  text-align: center;
-}
-
-.aqi-status {
-  font-size: clamp(20px, 2.2vw, 31px);
-  font-weight: 900;
+.pm {
+  font-size: clamp(17px, 1.5vw, 22px);
   text-align: center;
   margin-top: 0.8vh;
 }
 
-.pm {
-  font-size: clamp(15px, 1.4vw, 20px);
-  text-align: center;
-  margin-top: 1vh;
-}
-
-.aqi-panel { border-top: 8px solid #b6c3d0; }
 .aqi-good { border-top-color: #24a35a; }
 .aqi-moderate { border-top-color: #e6bd24; }
 .aqi-sensitive { border-top-color: #ed8a24; }
@@ -184,8 +217,8 @@ header {
 }
 
 .forecast-card {
-  background: #fff;
-  border-radius: 15px;
+  background: white;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -193,28 +226,38 @@ header {
   min-width: 0;
   padding: 0.7vh 0.3vw;
   text-align: center;
+  box-shadow: 0 3px 10px #183b660c;
+  transition: transform 0.25s, box-shadow 0.25s;
+  animation: fadeIn 0.7s ease both;
+}
+
+.forecast-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px #183b661a;
 }
 
 .forecast-time {
-  font-size: clamp(13px, 1.3vw, 19px);
+  font-size: clamp(16px, 1.5vw, 22px);
   color: #62758b;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .forecast-icon {
-  font-size: clamp(28px, 3.4vw, 48px);
+  font-size: clamp(37px, 4vw, 57px);
   margin: 0.6vh 0;
+  animation: weatherFloat 3.5s ease-in-out infinite;
 }
 
 .forecast-temp {
-  font-size: clamp(23px, 2.5vw, 36px);
+  font-size: clamp(27px, 2.8vw, 41px);
   font-weight: 900;
 }
 
 .forecast-rain {
-  font-size: clamp(12px, 1.15vw, 17px);
+  font-size: clamp(15px, 1.35vw, 20px);
   color: #2878d0;
   margin-top: 0.5vh;
+  font-weight: 700;
 }
 
 .bottom {
@@ -226,25 +269,33 @@ header {
 
 .info-card {
   min-height: 0;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 1.2vh 1.2vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: fadeIn 1s ease both;
+}
+
+.info-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px #183b6618;
 }
 
 .info-card h2 {
-  margin: 0 0 0.8vh;
-  font-size: clamp(17px, 1.7vw, 25px);
-  line-height: 1.1;
+  margin: 0 0 1vh;
+  font-size: clamp(21px, 2vw, 30px);
+  line-height: 1.15;
+  font-weight: 900;
 }
 
 .info-card p {
   margin: 0;
-  font-size: clamp(16px, 1.65vw, 24px);
+  font-size: clamp(19px, 1.85vw, 27px);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .tip-card {
@@ -263,14 +314,15 @@ header {
 }
 
 .math-question {
-  font-size: clamp(27px, 3vw, 44px) !important;
+  font-size: clamp(31px, 3.2vw, 47px) !important;
   font-weight: 900 !important;
-  margin: 0.3vh 0 0.6vh !important;
+  margin: 0.3vh 0 0.7vh !important;
+  line-height: 1.15 !important;
 }
 
 .math-hint {
-  font-size: clamp(12px, 1.1vw, 16px) !important;
-  font-weight: 600 !important;
+  font-size: clamp(15px, 1.35vw, 20px) !important;
+  font-weight: 700 !important;
 }
 
 .footer {
@@ -278,8 +330,42 @@ header {
   bottom: 3px;
   right: 8px;
   color: #8090a0;
-  font-size: 10px;
+  font-size: 11px;
   pointer-events: none;
+}
+
+@keyframes weatherFloat {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-5px) rotate(2deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes numberIn {
+  from { opacity: 0.5; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-height: 720px) and (min-width: 751px) {
+  .dashboard {
+    padding: 0.6vh 0.8vw;
+    gap: 0.65vh;
+    grid-template-rows: auto 1.35fr 0.9fr 1fr;
+  }
+
+  .panel { padding: 0.6vh 0.9vw; }
+  .info-card { padding: 0.7vh 0.9vw; }
+  .clock { font-size: clamp(43px, 5.3vw, 72px); }
+  .weather-icon { font-size: clamp(48px, 5.5vw, 75px); }
+  .temperature { font-size: clamp(46px, 5.2vw, 72px); }
+  .aqi-number { font-size: clamp(58px, 7vw, 95px); }
+  .forecast-icon { font-size: clamp(30px, 3vw, 43px); }
+  .info-card h2 { font-size: clamp(18px, 1.7vw, 24px); }
+  .info-card p { font-size: clamp(16px, 1.55vw, 22px); }
+  .math-question { font-size: clamp(26px, 2.6vw, 37px) !important; }
 }
 
 @media (max-width: 750px) {
@@ -289,25 +375,16 @@ header {
     min-height: 100dvh;
     grid-template-rows: auto auto auto auto;
   }
+  .brand { font-size: 23px; }
+  .location { font-size: 13px; }
   .top { grid-template-columns: 1fr 1fr; }
   .clock-panel { grid-column: 1 / -1; }
   .forecast { grid-template-columns: repeat(3, 1fr); }
-  .forecast-card { min-height: 110px; }
+  .forecast-card { min-height: 120px; }
   .bottom { grid-template-columns: 1fr; }
-  .panel { min-height: 150px; }
-  .info-card { min-height: 120px; }
-}
-
-@media (max-height: 650px) and (min-width: 751px) {
-  .dashboard {
-    padding: 0.7vh 1vw;
-    gap: 0.7vh;
-  }
-  .panel { padding: 0.8vh 1vw; }
-  .info-card { padding: 0.8vh 1vw; }
-  .weather-icon { font-size: clamp(42px, 5vw, 65px); }
-  .aqi-number { font-size: clamp(55px, 7vw, 90px); }
-  .clock { font-size: clamp(42px, 5vw, 65px); }
+  .panel { min-height: 160px; }
+  .info-card { min-height: 130px; }
+  .aqi-note { font-size: 12px; }
 }
 </style>
 </head>
@@ -327,7 +404,9 @@ header {
 
     <div class="panel clock-panel">
       <div class="panel-title">🕒 Current Time</div>
-      <div class="clock" id="clock">--:--</div>
+      <div class="clock">
+        <span id="clock">--:--</span><span class="seconds" id="seconds">:--</span>
+      </div>
       <div class="day" id="day">Loading date...</div>
       <div class="date" id="date">--</div>
     </div>
@@ -350,6 +429,8 @@ header {
 
     <div class="panel aqi-panel" id="aqiPanel">
       <div class="panel-title">🌱 Air Quality · US AQI</div>
+      <div class="aqi-location">BANG KRUAI, NONTHABURI</div>
+      <div class="aqi-note">Area estimate · Not a specific Rama 5 station reading</div>
       <div class="aqi-number" id="aqi">--</div>
       <div class="aqi-status" id="aqiStatus">Loading...</div>
       <div class="pm">PM2.5: <b id="pm25">--</b> µg/m³</div>
@@ -388,7 +469,6 @@ header {
 const LAT = 13.805;
 const LON = 100.472;
 const TZ = "Asia/Bangkok";
-
 const $ = id => document.getElementById(id);
 
 function updateClock() {
@@ -396,6 +476,10 @@ function updateClock() {
 
   $("clock").textContent = new Intl.DateTimeFormat("en-GB", {
     timeZone: TZ, hour: "2-digit", minute: "2-digit", hour12: false
+  }).format(now);
+
+  $("seconds").textContent = ":" + new Intl.DateTimeFormat("en-GB", {
+    timeZone: TZ, second: "2-digit"
   }).format(now);
 
   $("day").textContent = new Intl.DateTimeFormat("en-GB", {
@@ -408,42 +492,27 @@ function updateClock() {
 }
 
 const weatherCodes = {
-  0: ["☀️", "Sunny"],
-  1: ["🌤️", "Mostly Sunny"],
-  2: ["⛅", "Partly Cloudy"],
-  3: ["☁️", "Cloudy"],
-  45: ["🌫️", "Foggy"],
-  48: ["🌫️", "Foggy"],
-  51: ["🌦️", "Light Drizzle"],
-  53: ["🌦️", "Drizzle"],
-  55: ["🌧️", "Heavy Drizzle"],
-  56: ["🌧️", "Freezing Drizzle"],
-  57: ["🌧️", "Freezing Drizzle"],
-  61: ["🌦️", "Light Rain"],
-  63: ["🌧️", "Rain"],
-  65: ["🌧️", "Heavy Rain"],
-  66: ["🌧️", "Freezing Rain"],
-  67: ["🌧️", "Heavy Freezing Rain"],
-  71: ["🌨️", "Light Snow"],
-  73: ["🌨️", "Snow"],
-  75: ["❄️", "Heavy Snow"],
-  77: ["🌨️", "Snow Grains"],
-  80: ["🌦️", "Rain Showers"],
-  81: ["🌧️", "Rain Showers"],
-  82: ["⛈️", "Heavy Showers"],
-  85: ["🌨️", "Snow Showers"],
-  86: ["❄️", "Heavy Snow Showers"],
-  95: ["⛈️", "Thunderstorm"],
-  96: ["⛈️", "Thunderstorm"],
-  99: ["⛈️", "Severe Thunderstorm"]
+  0:["☀️","Sunny"], 1:["🌤️","Mostly Sunny"], 2:["⛅","Partly Cloudy"],
+  3:["☁️","Cloudy"], 45:["🌫️","Foggy"], 48:["🌫️","Foggy"],
+  51:["🌦️","Light Drizzle"], 53:["🌦️","Drizzle"], 55:["🌧️","Heavy Drizzle"],
+  56:["🌧️","Freezing Drizzle"], 57:["🌧️","Freezing Drizzle"],
+  61:["🌦️","Light Rain"], 63:["🌧️","Rain"], 65:["🌧️","Heavy Rain"],
+  66:["🌧️","Freezing Rain"], 67:["🌧️","Heavy Freezing Rain"],
+  71:["🌨️","Light Snow"], 73:["🌨️","Snow"], 75:["❄️","Heavy Snow"],
+  77:["🌨️","Snow Grains"], 80:["🌦️","Rain Showers"],
+  81:["🌧️","Rain Showers"], 82:["⛈️","Heavy Showers"],
+  85:["🌨️","Snow Showers"], 86:["❄️","Heavy Snow Showers"],
+  95:["⛈️","Thunderstorm"], 96:["⛈️","Thunderstorm"],
+  99:["⛈️","Severe Thunderstorm"]
 };
 
 function getWeather(code) {
-  return weatherCodes[code] || ["🌤️", "Weather"];
+  return weatherCodes[code] || ["🌤️","Weather"];
 }
 
 async function loadWeather() {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}` +
+  const url =
+    `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}` +
     `&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m` +
     `&hourly=temperature_2m,precipitation_probability,weather_code` +
     `&forecast_days=2&timezone=${TZ}`;
@@ -466,7 +535,6 @@ async function loadWeather() {
     const html = [];
     const times = data.hourly.time;
     const now = new Date(c.time).getTime();
-
     let start = times.findIndex(t => new Date(t).getTime() >= now);
     if (start < 0) start = 0;
 
@@ -502,7 +570,8 @@ async function loadWeather() {
 }
 
 async function loadAirQuality() {
-  const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${LAT}&longitude=${LON}` +
+  const url =
+    `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${LAT}&longitude=${LON}` +
     `&current=us_aqi,pm2_5&timezone=${TZ}`;
 
   try {
@@ -514,7 +583,8 @@ async function loadAirQuality() {
 
     const aqi = Math.round(c.us_aqi);
     $("aqi").textContent = aqi;
-    $("pm25").textContent = c.pm2_5 == null ? "--" : Number(c.pm2_5).toFixed(1);
+    $("pm25").textContent =
+      c.pm2_5 == null ? "--" : Number(c.pm2_5).toFixed(1);
 
     const panel = $("aqiPanel");
     panel.className = "panel aqi-panel";
@@ -523,7 +593,7 @@ async function loadAirQuality() {
     if (aqi <= 50) {
       status = "GOOD"; color = "#16864b"; cls = "aqi-good";
     } else if (aqi <= 100) {
-      status = "MODERATE"; color = "#b39b00"; cls = "aqi-moderate";
+      status = "MODERATE"; color = "#a28b00"; cls = "aqi-moderate";
     } else if (aqi <= 150) {
       status = "SENSITIVE GROUPS"; color = "#d97706"; cls = "aqi-sensitive";
     } else if (aqi <= 200) {
