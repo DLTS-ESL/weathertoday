@@ -634,13 +634,61 @@ body { overflow: hidden; }
 @media (max-width:900px) { .info-grid { grid-template-columns:1fr 1fr; } .calendar-card { min-height:150px; } }
 @media (max-height:760px) { .calendar-card { min-height:108px; padding:5px 7px; } .calendar-top { margin-bottom:2px; } .calendar-grid { gap:1px; } .calendar-weekday { padding:1px 0; } }
 
-/* Keep the monthly calendar on the same row as the weather widgets */
-.weather-grid { grid-template-columns: minmax(0,1.02fr) minmax(0,1.55fr) minmax(150px,.72fr) minmax(180px,.82fr); gap:7px; }
-.weather-grid > .calendar-card { min-width:0; align-self:stretch; padding:7px 8px; }
+/* Stack current weather + air quality on the left, with forecast and calendar vertically on the right */
+.weather-grid { grid-template-columns: minmax(0,1fr) minmax(0,1.45fr); gap:7px; }
+.forecast-calendar-stack { display:grid; grid-template-rows:minmax(0,1.2fr) minmax(0,.8fr); align-content:start; gap:7px; min-width:0; min-height:0; }
+.forecast-calendar-stack > .card { min-width:0; }
+.weather-stack { display:grid; grid-template-rows:auto auto; align-content:start; gap:7px; min-width:0; min-height:0; }
+.weather-stack .current-weather-card { min-width:0; }
+.weather-stack .aqi-card { min-width:0; }
+.forecast-calendar-stack > .calendar-card { min-width:0; align-self:stretch; padding:7px 8px; }
 .info-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
 .calendar-day { min-height:0; }
-@media (max-width:1100px) and (min-width:901px) { .weather-grid { grid-template-columns: minmax(0,1fr) minmax(0,1.35fr); } .weather-grid > .calendar-card { min-height:145px; } .info-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
-@media (max-width:900px) { .weather-grid { grid-template-columns:1fr 1fr; } .weather-grid > .calendar-card { min-height:150px; } .info-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:1100px) and (min-width:901px) { .weather-grid { grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); } .forecast-calendar-stack > .calendar-card { min-height:115px; } .info-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media (max-width:900px) { .weather-grid { grid-template-columns:1fr 1fr; } .forecast-calendar-stack > .calendar-card { min-height:150px; } .info-grid { grid-template-columns:1fr 1fr; } }
+
+
+
+/* Requested refinement: compact forecast, larger calendar date numbers */
+.forecast-calendar-stack { grid-template-rows: minmax(0, .85fr) minmax(0, 1.15fr); }
+.forecast-card { padding: 7px 9px; }
+.forecast-card .card-heading { font-size: clamp(12px, 1.05vw, 16px); margin-bottom: 4px; }
+.forecast-list { gap: 4px; }
+.forecast-item { padding: 4px 2px; gap: 2px; border-radius: 8px; }
+.forecast-time { font-size: clamp(9px, .75vw, 11px); }
+.forecast-icon { font-size: clamp(18px, 1.8vw, 27px); }
+.forecast-temp { font-size: clamp(13px, 1.2vw, 18px); }
+.forecast-rain { font-size: clamp(8px, .7vw, 10px); }
+.forecast-calendar-stack > .calendar-card { padding: 8px 10px; }
+.calendar-day { font-size: clamp(13px, 1.15vw, 18px); font-weight: 800; }
+.calendar-weekday { font-size: clamp(9px, .75vw, 12px); padding: 3px 0; }
+@media (max-height:760px) {
+  .forecast-calendar-stack { grid-template-rows: minmax(0, .8fr) minmax(0, 1.2fr); }
+  .calendar-day { font-size: clamp(12px, 1vw, 16px); }
+}
+
+
+/* Bigger calendar dates plus a compact current-week summary */
+.forecast-calendar-stack { grid-template-rows: minmax(0, .72fr) minmax(0, 1.28fr); }
+.forecast-calendar-stack > .calendar-card { padding: 9px 11px; }
+.calendar-month { font-size: clamp(15px, 1.35vw, 20px); }
+.calendar-year { font-size: clamp(12px, .95vw, 14px); }
+.calendar-grid { gap: 3px; }
+.calendar-weekday { font-size: clamp(11px, .9vw, 14px); padding: 3px 0; }
+.calendar-day { font-size: clamp(16px, 1.55vw, 24px); font-weight: 850; min-height: 20px; }
+.calendar-week-info { display:flex; align-items:center; justify-content:space-between; gap:5px; margin-top:5px; padding:5px 7px; border-radius:8px; background:#edf5ff; color:#23466f; font-size:clamp(9px,.78vw,12px); line-height:1.15; }
+.calendar-week-info strong { color:#1766c2; letter-spacing:.04em; white-space:nowrap; }
+.calendar-week-info span { white-space:nowrap; }
+.calendar-week-info .week-progress { color:#5c718b; }
+@media (max-height:760px) {
+  .forecast-calendar-stack { grid-template-rows: minmax(0, .68fr) minmax(0, 1.32fr); }
+  .calendar-day { font-size: clamp(14px, 1.35vw, 21px); }
+  .calendar-week-info { margin-top:3px; padding:4px 6px; }
+}
+@media (max-width:900px) {
+  .calendar-day { font-size: clamp(15px, 2vw, 22px); }
+  .calendar-week-info { flex-wrap:wrap; }
+}
 
 </style>
 </head>
@@ -669,7 +717,8 @@ body { overflow: hidden; }
 
   <main class="weather-grid">
 
-    <section class="card">
+    <div class="weather-stack">
+    <section class="card current-weather-card">
       <div class="card-heading">
         <span>🌦 Current Weather</span>
         <span id="weatherUpdated" style="font-size:11px;color:#60748c;">Updating...</span>
@@ -700,16 +749,6 @@ body { overflow: hidden; }
       </div>
     </section>
 
-    <section class="card forecast-card">
-      <div class="card-heading">
-        <span>🕒 Upcoming Weather</span>
-        <span style="font-size:11px;color:#60748c;">Next 6 hours</span>
-      </div>
-      <div class="forecast-list" id="forecastList">
-        <div class="forecast-item">Loading...</div>
-      </div>
-    </section>
-
     <section class="aqi-card" id="aqiCard">
       <div class="aqi-top">
         <div class="aqi-title">🌿 Air Quality</div>
@@ -722,6 +761,18 @@ body { overflow: hidden; }
       <div class="aqi-place">BANG KRUAI, NONTHABURI</div>
       <div class="aqi-note">Area estimate · Not a specific Rama 5 station reading</div>
     </section>
+    </div>
+
+    <div class="forecast-calendar-stack">
+    <section class="card forecast-card">
+      <div class="card-heading">
+        <span>🕒 Upcoming Weather</span>
+        <span style="font-size:11px;color:#60748c;">Next 6 hours</span>
+      </div>
+      <div class="forecast-list" id="forecastList">
+        <div class="forecast-item">Loading...</div>
+      </div>
+    </section>
 
     <div class="card calendar-card" aria-label="Monthly calendar">
       <div class="calendar-top">
@@ -729,6 +780,8 @@ body { overflow: hidden; }
         <div class="calendar-year" id="calendarYear">2026</div>
       </div>
       <div class="calendar-grid" id="calendarGrid" aria-live="polite"></div>
+      <div class="calendar-week-info" id="calendarWeekInfo" aria-live="polite"></div>
+    </div>
     </div>
 
   </main>
@@ -816,7 +869,7 @@ updateClock();
 setInterval(updateClock, 1000);
 
 /* -------------------------------------------------------
-   MONTH CALENDAR — Thailand local date, highlights today
+   CURRENT WEEK CALENDAR — Monday to Sunday, Thailand date
 ------------------------------------------------------- */
 function renderMonthCalendar() {
   const parts = new Intl.DateTimeFormat("en-US", {
@@ -826,41 +879,49 @@ function renderMonthCalendar() {
   const year = Number(part.year);
   const month = Number(part.month) - 1;
   const today = Number(part.day);
-  const monthDate = new Date(Date.UTC(year, month, 1));
-  const monthName = new Intl.DateTimeFormat("en-US", {
-    month: "long", timeZone: "UTC"
-  }).format(monthDate);
-  document.getElementById("calendarMonth").textContent = "📅 " + monthName;
-  document.getElementById("calendarYear").textContent = year;
+  const todayDate = new Date(Date.UTC(year, month, today));
+  const todayWeekday = todayDate.getUTCDay();
+  const mondayOffset = todayWeekday === 0 ? -6 : 1 - todayWeekday;
+  const weekStart = new Date(todayDate);
+  weekStart.setUTCDate(weekStart.getUTCDate() + mondayOffset);
+  const weekEnd = new Date(weekStart);
+  weekEnd.setUTCDate(weekEnd.getUTCDate() + 6);
+
+  const dateLabel = d => new Intl.DateTimeFormat("en-US", {
+    timeZone: "UTC", month: "short", day: "numeric"
+  }).format(d);
+  document.getElementById("calendarMonth").textContent = "📅 This Week";
+  document.getElementById("calendarYear").textContent = `${weekStart.getUTCFullYear()}`;
 
   const grid = document.getElementById("calendarGrid");
   grid.innerHTML = "";
-  ["S", "M", "T", "W", "T", "F", "S"].forEach((name, i) => {
+  const weekdayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  const weekdayLetters = ["M", "T", "W", "T", "F", "S", "S"];
+  weekdayLetters.forEach((name, i) => {
     const el = document.createElement("div");
     el.className = "calendar-weekday";
     el.textContent = name;
-    el.setAttribute("aria-label", ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][i]);
+    el.setAttribute("aria-label", weekdayNames[i]);
     grid.appendChild(el);
   });
-  const firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
-  const daysInMonth = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
-  for (let i = 0; i < firstDay; i++) {
-    const blank = document.createElement("div");
-    blank.className = "calendar-day empty";
-    blank.textContent = "0";
-    grid.appendChild(blank);
-  }
-  for (let day = 1; day <= daysInMonth; day++) {
+
+  for (let i = 0; i < 7; i++) {
+    const date = new Date(weekStart);
+    date.setUTCDate(weekStart.getUTCDate() + i);
     const el = document.createElement("div");
-    const weekday = new Date(Date.UTC(year, month, day)).getUTCDay();
-    el.className = "calendar-day" + (day === today ? " today" : "") + ((weekday === 0 || weekday === 6) ? " weekend" : "");
-    el.textContent = day;
-    if (day === today) {
+    const isToday = date.getUTCFullYear() === year && date.getUTCMonth() === month && date.getUTCDate() === today;
+    el.className = "calendar-day" + (isToday ? " today" : "") + (i >= 5 ? " weekend" : "");
+    el.textContent = date.getUTCDate();
+    el.title = `${weekdayNames[i]}, ${dateLabel(date)}${isToday ? " — Today" : ""}`;
+    if (isToday) {
       el.setAttribute("aria-current", "date");
-      el.title = "Today";
     }
     grid.appendChild(el);
   }
+
+  const daysLeft = 6 - (todayWeekday === 0 ? 6 : todayWeekday - 1);
+  const weekInfo = document.getElementById("calendarWeekInfo");
+  weekInfo.innerHTML = `<strong>THIS WEEK</strong><span>${dateLabel(weekStart)} – ${dateLabel(weekEnd)}</span><span class="week-progress">${daysLeft === 0 ? "Last day of the week" : `${daysLeft} day${daysLeft === 1 ? "" : "s"} left after today`}</span>`;
 }
 renderMonthCalendar();
 setInterval(renderMonthCalendar, 60 * 60 * 1000);
