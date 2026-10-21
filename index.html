@@ -587,11 +587,8 @@ body { overflow: hidden; }
 .aqi-title { font-size: clamp(12px, 1.1vw, 16px); }
 .aqi-number { font-size: clamp(30px, 3.4vw, 44px); margin-top: 4px; }
 .aqi-status { font-size: clamp(11px, 1vw, 14px); margin-top: 1px; }
-.aqi-reading { display:flex; align-items:center; justify-content:space-between; gap:8px; }
-.aqi-face { font-size:clamp(30px,3vw,44px); line-height:1; }
-.aqi-ranges { display:grid; grid-template-columns:1fr 1fr; gap:4px 8px; margin-top:8px; font-size:clamp(9px,.8vw,12px); line-height:1.15; }
-.aqi-ranges div { white-space:normal; }
-.aqi-ranges b { font-weight:900; }
+.aqi-bar { height: 6px; margin-top: 7px; }
+.aqi-marker { height: 13px; top: -4px; }
 .pm-value { font-size: clamp(10px, .95vw, 13px); margin-top: 6px; }
 .aqi-place { font-size: clamp(9px, .8vw, 11px); margin-top: 5px; }
 .aqi-note { font-size: clamp(9px, .75vw, 10px); margin-top: 2px; line-height: 1.2; }
@@ -837,71 +834,33 @@ body { overflow: hidden; }
 }
 
 
-/* Final TV balance: reduce the top/weather section height and give daily tips more room */
-.dashboard { padding: 5px 10px 4px; gap: 5px; }
-.masthead-clock { padding: clamp(6px, .65vw, 10px) clamp(12px, 1.2vw, 18px); border-radius: 14px; gap: clamp(8px, 1vw, 15px); }
-.masthead-clock .brand { font-size: clamp(21px, 1.9vw, 31px); }
-.masthead-clock .location { font-size: clamp(14px, 1.2vw, 20px); margin-top: 3px; }
-.masthead-clock .clock-label { font-size: clamp(12px, 1vw, 16px); }
-.masthead-clock .clock { font-size: clamp(40px, 4.1vw, 66px); }
-.masthead-clock .date { font-size: clamp(18px, 1.7vw, 27px); }
-.masthead-clock .date small { font-size: clamp(13px, 1.1vw, 18px); }
-.masthead-date { gap: 4px; }
-.weather-grid { flex: 1 1 0; min-height: 0; gap: 6px; }
-.weather-stack, .forecast-calendar-stack { gap: 5px; }
-.weather-stack { grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); }
-.forecast-calendar-stack { grid-template-rows: minmax(0, .82fr) minmax(0, 1.18fr); }
-.weather-stack > .card, .forecast-calendar-stack > .card { min-height: 0; }
-.forecast-card { padding: 7px 9px; }
-.forecast-card .card-heading { font-size: clamp(14px, 1.15vw, 18px); margin-bottom: 3px; }
-.forecast-list { gap: 3px; }
-.forecast-item { padding: 3px 2px; gap: 2px; }
-.forecast-time { font-size: clamp(10px, .85vw, 13px); }
-.forecast-icon { font-size: clamp(22px, 2.1vw, 34px); }
-.forecast-temp { font-size: clamp(18px, 1.7vw, 27px); }
-.forecast-rain { font-size: clamp(9px, .75vw, 12px); }
-.forecast-calendar-stack > .calendar-card { padding: 6px 8px; }
-.calendar-month { font-size: clamp(15px, 1.3vw, 21px); }
-.calendar-year { font-size: clamp(11px, .9vw, 14px); }
-.calendar-weekday { font-size: clamp(10px, .8vw, 13px); padding: 1px 0; }
-.calendar-day { font-size: clamp(13px, 1.2vw, 19px); }
-.calendar-week-info { margin-top: 3px; padding: 3px 5px; font-size: clamp(9px, .7vw, 11px); }
-.info-grid { gap: 6px; flex: 0 0 auto; }
-.info-card { min-height: clamp(118px, 16vh, 170px); padding: clamp(10px, 1vw, 16px) clamp(12px, 1.2vw, 18px); }
-.info-heading { font-size: clamp(17px, 1.5vw, 24px); margin-bottom: 7px; line-height: 1.15; }
-.info-text { font-size: clamp(16px, 1.45vw, 23px); line-height: 1.28; }
-.info-subtext { font-size: clamp(12px, 1vw, 16px); line-height: 1.25; margin-top: 6px; }
-.math-question { font-size: clamp(27px, 2.35vw, 39px); line-height: 1.12; margin-top: 5px; }
-.football-bar { height: 36px; min-height: 36px; }
-.ticker-item { height: 36px; }
+/* TV-first readability: emphasize the main information and remove tiny details */
+.aqi-title { font-size: clamp(22px, 2.1vw, 34px) !important; font-weight: 900; letter-spacing: .02em; }
+.aqi-number { font-size: clamp(64px, 7vw, 108px) !important; line-height: .98 !important; font-weight: 900 !important; }
+.aqi-status { font-size: clamp(22px, 2vw, 32px) !important; font-weight: 850 !important; line-height: 1.15 !important; margin: 8px 0 !important; }
+.aqi-bar, .aqi-marker { display: none !important; }
+.aqi-top > span { font-size: clamp(18px, 1.4vw, 24px) !important; }
+.pm-value { font-size: clamp(18px, 1.5vw, 25px) !important; font-weight: 800 !important; }
+.aqi-place { font-size: clamp(15px, 1.2vw, 20px) !important; font-weight: 800 !important; }
+.aqi-note { font-size: clamp(13px, 1vw, 17px) !important; line-height: 1.25 !important; }
+.weather-details { gap: clamp(10px, 1.3vw, 20px) !important; }
+.detail .value { font-size: clamp(30px, 3vw, 48px) !important; font-weight: 900 !important; line-height: 1.05 !important; }
+.detail .label { font-size: clamp(17px, 1.45vw, 24px) !important; font-weight: 800 !important; line-height: 1.1 !important; }
+.info-heading { font-size: clamp(22px, 2vw, 32px) !important; font-weight: 900 !important; }
+.info-text { font-size: clamp(21px, 2vw, 32px) !important; line-height: 1.18 !important; font-weight: 800 !important; }
+.info-subtext { font-size: clamp(16px, 1.35vw, 22px) !important; line-height: 1.2 !important; }
+.math-question { font-size: clamp(34px, 3.4vw, 54px) !important; line-height: 1.1 !important; font-weight: 900 !important; }
+.card-heading { font-size: clamp(20px, 1.8vw, 29px) !important; font-weight: 900 !important; }
+.forecast-temp { font-size: clamp(30px, 2.7vw, 44px) !important; font-weight: 900 !important; }
+.forecast-time { font-size: clamp(16px, 1.25vw, 21px) !important; }
+.forecast-rain { font-size: clamp(14px, 1vw, 17px) !important; }
+.aqi-card { gap: 5px !important; }
 @media (max-height: 760px) {
-  .dashboard { padding: 4px 8px 3px; gap: 4px; }
-  .masthead-clock { padding: 5px 10px; }
-  .masthead-clock .brand { font-size: clamp(18px, 1.7vw, 26px); }
-  .masthead-clock .location { font-size: clamp(12px, 1vw, 16px); }
-  .masthead-clock .clock { font-size: clamp(34px, 3.8vw, 52px); }
-  .weather-stack, .forecast-calendar-stack { gap: 4px; }
-  .info-card { min-height: 105px; padding: 8px 10px; }
-  .info-heading { font-size: clamp(15px, 1.3vw, 20px); margin-bottom: 4px; }
-  .info-text { font-size: clamp(14px, 1.2vw, 19px); }
-  .info-subtext { font-size: clamp(10px, .85vw, 13px); margin-top: 3px; }
-  .math-question { font-size: clamp(23px, 2vw, 31px); }
-  .football-bar, .ticker-item { height: 32px; min-height: 32px; }
+ .info-text { font-size: clamp(19px, 1.8vw, 27px) !important; }
+ .math-question { font-size: clamp(30px, 3vw, 44px) !important; }
+ .aqi-number { font-size: clamp(56px, 6vw, 82px) !important; }
 }
 
-
-
-/* Larger weather detail tiles for TV viewing */
-.weather-details { gap: 9px; }
-.detail { padding: 10px 12px; gap: 8px; border-radius: 13px; min-height: 48px; }
-.detail .value { font-size: clamp(23px, 2.25vw, 34px); line-height: 1.05; font-weight: 900; }
-.detail .label { font-size: clamp(14px, 1.25vw, 19px); line-height: 1.15; font-weight: 800; color: #334b67; }
-@media (max-height: 760px) {
-  .weather-details { gap: 6px; }
-  .detail { padding: 7px 9px; min-height: 40px; }
-  .detail .value { font-size: clamp(20px, 1.9vw, 29px); }
-  .detail .label { font-size: clamp(12px, 1.05vw, 16px); }
-}
 </style>
 </head>
 
@@ -931,7 +890,7 @@ body { overflow: hidden; }
     <div class="weather-stack">
     <section class="card current-weather-card">
       <div class="card-heading">
-        <span>🌦 Current Weather</span>
+        <span>CURRENT WEATHER</span>
         <span id="weatherUpdated" style="font-size:11px;color:#60748c;">Updating...</span>
       </div>
 
@@ -954,22 +913,11 @@ body { overflow: hidden; }
 
     <section class="aqi-card" id="aqiCard">
       <div class="aqi-top">
-        <div class="aqi-title">🌿 Air Quality</div>
+        <div class="aqi-title">AIR QUALITY</div>
         <span style="font-size:11px;font-weight:800;">US AQI</span>
       </div>
-      <div class="aqi-reading">
-        <div class="aqi-number" id="aqiNumber">--</div>
-        <div class="aqi-face" id="aqiFace" aria-label="Air quality face">🙂</div>
-      </div>
+      <div class="aqi-number" id="aqiNumber">--</div>
       <div class="aqi-status" id="aqiStatus">Loading air quality...</div>
-      <div class="aqi-ranges" aria-label="US AQI number ranges">
-        <div>😊 <b>0–50</b> Good</div>
-        <div>😐 <b>51–100</b> Moderate</div>
-        <div>😷 <b>101–150</b> Sensitive groups</div>
-        <div>😟 <b>151–200</b> Unhealthy</div>
-        <div>🤢 <b>201–300</b> Very unhealthy</div>
-        <div>☠️ <b>301+</b> Hazardous</div>
-      </div>
       <div class="pm-value">PM2.5: <span id="pm25">--</span> µg/m³</div>
       <div class="aqi-place">BANG KRUAI, NONTHABURI</div>
       <div class="aqi-note">Area estimate · Not a specific Rama 5 station reading</div>
@@ -1293,33 +1241,41 @@ async function loadAirQuality() {
     document.getElementById("pm25").textContent =
       pm25 == null ? "--" : Number(pm25).toFixed(1);
 
-    let status, face, background, border;
+    let status, background, border;
 
     if (aqi <= 50) {
-      status = "Good · Air quality is satisfactory"; face = "😊";
-      background = "#e4f7e9"; border = "#c9ead2";
+      status = "Good";
+      background = "#e4f7e9";
+      border = "#c9ead2";
     } else if (aqi <= 100) {
-      status = "Moderate · Some people may be sensitive"; face = "😐";
-      background = "#fff6d9"; border = "#f0df9f";
+      status = "Moderate";
+      background = "#fff6d9";
+      border = "#f0df9f";
     } else if (aqi <= 150) {
-      status = "Unhealthy for sensitive groups"; face = "😷";
-      background = "#ffead7"; border = "#f3c39b";
+      status = "Unhealthy for Sensitive Groups";
+      background = "#ffead7";
+      border = "#f3c39b";
     } else if (aqi <= 200) {
-      status = "Unhealthy · Reduce outdoor exertion"; face = "😟";
-      background = "#ffe0df"; border = "#f3b1ae";
+      status = "Unhealthy";
+      background = "#ffe0df";
+      border = "#f3b1ae";
     } else if (aqi <= 300) {
-      status = "Very unhealthy · Avoid outdoor exertion"; face = "🤢";
-      background = "#f1e2ff"; border = "#d9b8f3";
+      status = "Very Unhealthy";
+      background = "#f1e2ff";
+      border = "#d9b8f3";
     } else {
-      status = "Hazardous · Stay indoors if possible"; face = "☠️";
-      background = "#ead5dd"; border = "#d4a7b6";
+      status = "Hazardous";
+      background = "#ead5dd";
+      border = "#d4a7b6";
     }
 
     const card = document.getElementById("aqiCard");
     card.style.background = background;
     card.style.borderColor = border;
     document.getElementById("aqiStatus").textContent = status;
-    document.getElementById("aqiFace").textContent = face;
+
+    const markerPosition = Math.min(100, Math.max(0, aqi / 350 * 100));
+    document.getElementById("aqiMarker").style.left = markerPosition + "%";
   } catch (error) {
     document.getElementById("aqiNumber").textContent = "--";
     document.getElementById("aqiStatus").textContent = "Data unavailable";
