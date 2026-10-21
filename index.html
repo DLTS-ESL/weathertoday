@@ -14,9 +14,8 @@
   --muted: #60748c;
   --blue: #2878e5;
   --border: #e1eaf5;
-  --shadow: 0 5px 18px rgba(28,65,110,.08);
+  --shadow: 0 5px 18px rgba(28, 65, 110, .08);
 }
-
 * { box-sizing: border-box; }
 
 html, body {
@@ -34,10 +33,10 @@ body { overflow: hidden; }
   width: 100%;
   height: 100dvh;
   min-height: 0;
-  padding: 9px 18px 7px;
+  padding: 14px 18px 10px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
 }
 
 .topbar {
@@ -75,7 +74,7 @@ body { overflow: hidden; }
   background: linear-gradient(115deg, #145ec4, #398ded);
   color: white;
   border-radius: 20px;
-  padding: 10px 22px;
+  padding: 13px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -114,7 +113,7 @@ body { overflow: hidden; }
 
 .weather-grid {
   display: grid;
-  grid-template-columns: minmax(0,1.05fr) minmax(0,1.65fr) minmax(190px,.8fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.65fr) minmax(190px, .8fr);
   gap: 10px;
   flex: 1 1 auto;
   min-height: 0;
@@ -124,14 +123,14 @@ body { overflow: hidden; }
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 17px;
-  padding: 11px 15px;
+  padding: 13px 15px;
   box-shadow: var(--shadow);
   min-width: 0;
   min-height: 0;
 }
 
 .card-heading {
-  font-size: clamp(15px,1.4vw,20px);
+  font-size: clamp(15px, 1.4vw, 20px);
   font-weight: 900;
   margin-bottom: 8px;
   display: flex;
@@ -148,33 +147,33 @@ body { overflow: hidden; }
 }
 
 .weather-icon {
-  font-size: clamp(55px,6vw,82px);
+  font-size: clamp(55px, 6vw, 82px);
   line-height: 1;
   animation: float 4s ease-in-out infinite;
 }
 
 .temperature {
-  font-size: clamp(43px,5vw,66px);
+  font-size: clamp(43px, 5vw, 66px);
   font-weight: 900;
   letter-spacing: -2px;
   line-height: 1;
 }
 
 .condition {
-  font-size: clamp(14px,1.4vw,19px);
+  font-size: clamp(14px, 1.4vw, 19px);
   font-weight: 800;
   margin-top: 6px;
 }
 
 .feels {
   color: var(--muted);
-  font-size: clamp(12px,1.1vw,15px);
+  font-size: clamp(12px, 1.1vw, 15px);
   margin-top: 5px;
 }
 
 .weather-details {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 7px;
   margin-top: 10px;
 }
@@ -187,13 +186,13 @@ body { overflow: hidden; }
 }
 
 .detail .value {
-  font-size: clamp(15px,1.6vw,22px);
+  font-size: clamp(15px, 1.6vw, 22px);
   font-weight: 900;
 }
 
 .detail .label {
   color: var(--muted);
-  font-size: clamp(10px,.95vw,13px);
+  font-size: clamp(10px, .95vw, 13px);
   margin-top: 4px;
 }
 
@@ -203,7 +202,7 @@ body { overflow: hidden; }
   color: #183153;
   background: #e4f7e9;
   border: 1px solid #c9ead2;
-  transition: background .6s,border-color .6s;
+  transition: background .6s, border-color .6s;
   min-width: 0;
 }
 
@@ -215,19 +214,19 @@ body { overflow: hidden; }
 }
 
 .aqi-title {
-  font-size: clamp(14px,1.3vw,18px);
+  font-size: clamp(14px, 1.3vw, 18px);
   font-weight: 900;
 }
 
 .aqi-number {
-  font-size: clamp(36px,4vw,52px);
+  font-size: clamp(36px, 4vw, 52px);
   font-weight: 900;
   line-height: 1.1;
   margin-top: 9px;
 }
 
 .aqi-status {
-  font-size: clamp(13px,1.25vw,17px);
+  font-size: clamp(13px, 1.25vw, 17px);
   font-weight: 900;
   margin-top: 3px;
 }
@@ -236,8 +235,8 @@ body { overflow: hidden; }
   height: 8px;
   border-radius: 20px;
   background: linear-gradient(to right,
-    #3bbd73 0%,#c9d84b 18%,#ffb648 36%,
-    #f06b53 55%,#b66bea 76%,#8f263f 100%);
+    #3bbd73 0%, #c9d84b 18%, #ffb648 36%,
+    #f06b53 55%, #b66bea 76%, #8f263f 100%);
   position: relative;
   margin-top: 12px;
 }
@@ -255,13 +254,13 @@ body { overflow: hidden; }
 }
 
 .pm-value {
-  font-size: clamp(12px,1.1vw,15px);
+  font-size: clamp(12px, 1.1vw, 15px);
   font-weight: 800;
   margin-top: 10px;
 }
 
 .aqi-place {
-  font-size: clamp(10px,1vw,13px);
+  font-size: clamp(10px, 1vw, 13px);
   font-weight: 900;
   letter-spacing: .35px;
   margin-top: 9px;
@@ -269,7 +268,7 @@ body { overflow: hidden; }
 
 .aqi-note {
   color: #4d6176;
-  font-size: clamp(10px,.9vw,12px);
+  font-size: clamp(10px, .9vw, 12px);
   line-height: 1.3;
   margin-top: 4px;
 }
@@ -282,7 +281,7 @@ body { overflow: hidden; }
 
 .forecast-list {
   display: grid;
-  grid-template-columns: repeat(6,minmax(0,1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 6px;
   flex: 1;
   min-height: 0;
@@ -303,23 +302,23 @@ body { overflow: hidden; }
 }
 
 .forecast-time {
-  font-size: clamp(10px,.95vw,13px);
+  font-size: clamp(10px, .95vw, 13px);
   font-weight: 800;
   color: var(--muted);
 }
 
 .forecast-icon {
-  font-size: clamp(24px,2.7vw,37px);
+  font-size: clamp(24px, 2.7vw, 37px);
   animation: float 4.5s ease-in-out infinite;
 }
 
 .forecast-temp {
-  font-size: clamp(15px,1.6vw,22px);
+  font-size: clamp(15px, 1.6vw, 22px);
   font-weight: 900;
 }
 
 .forecast-rain {
-  font-size: clamp(10px,.9vw,12px);
+  font-size: clamp(10px, .9vw, 12px);
   color: #2878e5;
   font-weight: 800;
 }
@@ -332,32 +331,38 @@ body { overflow: hidden; }
 }
 
 .info-card {
-  padding: 9px 15px;
-  min-height: 92px;
+  padding: 11px 15px;
+  min-height: 105px;
   overflow: hidden;
 }
 
 .info-heading {
-  font-size: clamp(15px,1.35vw,19px);
+  font-size: clamp(15px, 1.35vw, 19px);
   font-weight: 900;
   margin-bottom: 6px;
 }
 
 .info-text {
-  font-size: clamp(13px,1.25vw,17px);
+  font-size: clamp(13px, 1.25vw, 17px);
   font-weight: 700;
   line-height: 1.35;
 }
 
 .info-subtext {
-  font-size: clamp(11px,1vw,13px);
+  font-size: clamp(11px, 1vw, 13px);
   color: var(--muted);
   margin-top: 5px;
   line-height: 1.3;
 }
 
+.tip-icon {
+  float: left;
+  font-size: 29px;
+  margin-right: 9px;
+}
+
 .math-question {
-  font-size: clamp(23px,2.5vw,34px);
+  font-size: clamp(23px, 2.5vw, 34px);
   font-weight: 900;
   letter-spacing: .5px;
   margin-top: 3px;
@@ -377,16 +382,15 @@ body { overflow: hidden; }
   border-color: #ded5ff;
 }
 
-/* Slim football ticker: separate bar at the bottom */
 .football-bar {
   display: flex;
   align-items: center;
   gap: 0;
   background: #142d4e;
   color: white;
-  border-radius: 10px;
-  min-height: 32px;
-  height: 32px;
+  border-radius: 12px;
+  min-height: 38px;
+  height: 38px;
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -436,17 +440,17 @@ body { overflow: hidden; }
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  padding: 0 20px;
-  height: 32px;
+  padding: 0 23px;
+  height: 38px;
   border-right: 1px solid rgba(255,255,255,.16);
-  font-size: clamp(11px,1vw,13px);
+  font-size: clamp(11px, 1vw, 13px);
   font-weight: 700;
 }
 
 .ticker-item .score {
   font-size: 14px;
   font-weight: 900;
-  color: #fff;
+  color: #ffffff;
 }
 
 .ticker-item .match-status {
@@ -468,52 +472,48 @@ body { overflow: hidden; }
 
 .footer {
   text-align: right;
-  font-size: 9px;
-  line-height: 1.1;
+  font-size: 10px;
   color: #7d8ea3;
   flex-shrink: 0;
 }
 
 @keyframes float {
-  0%,100% { transform: translateY(0); }
+  0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
 }
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes pulse {
-  0%,100% { opacity: 1; }
+  0%, 100% { opacity: 1; }
   50% { opacity: .35; }
 }
-
 @keyframes tickerScroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
 
-@media (min-width:1500px) {
-  .dashboard { padding: 11px 24px 8px; gap: 8px; }
-  .card { padding: 12px 19px; }
-  .info-card { min-height: 96px; }
+@media (min-width: 1500px) {
+  .dashboard { padding: 18px 24px 12px; gap: 12px; }
+  .card { padding: 16px 19px; }
+  .info-card { min-height: 115px; }
 }
 
-@media (max-height:760px) {
-  .dashboard { padding: 7px 14px 5px; gap: 6px; }
-  .clock-card { padding: 8px 17px; }
-  .clock { font-size: clamp(34px,4.5vw,56px); }
-  .card { padding: 9px 12px; }
-  .info-card { min-height: 82px; padding: 7px 12px; }
+@media (max-height: 760px) {
+  .dashboard { padding: 9px 14px 7px; gap: 7px; }
+  .clock-card { padding: 9px 17px; }
+  .clock { font-size: clamp(34px, 4.5vw, 56px); }
+  .card { padding: 10px 12px; }
+  .info-card { min-height: 88px; padding: 9px 12px; }
   .current-weather { min-height: 80px; }
-  .weather-icon { font-size: clamp(43px,5vw,65px); }
-  .temperature { font-size: clamp(36px,4vw,53px); }
+  .weather-icon { font-size: clamp(43px, 5vw, 65px); }
+  .temperature { font-size: clamp(36px, 4vw, 53px); }
   .forecast-item { padding: 5px 2px; gap: 3px; }
   .weather-details { margin-top: 6px; }
 }
 
-@media (max-width:900px) {
+@media (max-width: 900px) {
   body { overflow: auto; }
   .dashboard { height: auto; min-height: 100dvh; }
   .weather-grid { grid-template-columns: 1fr 1fr; }
@@ -522,202 +522,325 @@ body { overflow: hidden; }
   .football-bar { position: sticky; bottom: 0; }
 }
 
-@media (prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
   }
 }
+
+
+/* COMPACT TV LAYOUT: move content upward and reduce card sizes */
+.dashboard {
+  padding: 7px 12px 5px;
+  gap: 6px;
+}
+.topbar { gap: 9px; }
+.brand { font-size: clamp(17px, 1.7vw, 25px); }
+.location { margin-top: 1px; font-size: clamp(11px, .95vw, 14px); }
+.live-label { padding: 5px 9px; font-size: 11px; }
+.clock-card {
+  padding: 7px 16px;
+  border-radius: 14px;
+  gap: 10px;
+}
+.clock-label { font-size: clamp(10px, .95vw, 13px); }
+.clock { font-size: clamp(32px, 4.3vw, 55px); }
+.date { font-size: clamp(15px, 1.65vw, 23px); line-height: 1.2; }
+.date small { font-size: clamp(10px, 1vw, 14px); }
+.weather-grid { gap: 7px; }
+.card {
+  padding: 9px 11px;
+  border-radius: 13px;
+}
+.card-heading {
+  font-size: clamp(13px, 1.15vw, 17px);
+  margin-bottom: 4px;
+  gap: 5px;
+}
+.current-weather { min-height: 72px; gap: 5px; }
+.weather-icon { font-size: clamp(42px, 4.5vw, 63px); }
+.temperature { font-size: clamp(34px, 4vw, 53px); }
+.condition { font-size: clamp(12px, 1.15vw, 16px); margin-top: 3px; }
+.feels { font-size: clamp(10px, .9vw, 13px); margin-top: 3px; }
+.weather-details { gap: 5px; margin-top: 6px; }
+.detail { padding: 6px 4px; border-radius: 8px; }
+.detail .value { font-size: clamp(13px, 1.35vw, 19px); }
+.detail .label { font-size: clamp(9px, .8vw, 11px); margin-top: 2px; }
+.aqi-card { padding: 9px 10px; border-radius: 12px; }
+.aqi-title { font-size: clamp(12px, 1.1vw, 16px); }
+.aqi-number { font-size: clamp(30px, 3.4vw, 44px); margin-top: 4px; }
+.aqi-status { font-size: clamp(11px, 1vw, 14px); margin-top: 1px; }
+.aqi-bar { height: 6px; margin-top: 7px; }
+.aqi-marker { height: 13px; top: -4px; }
+.pm-value { font-size: clamp(10px, .95vw, 13px); margin-top: 6px; }
+.aqi-place { font-size: clamp(9px, .8vw, 11px); margin-top: 5px; }
+.aqi-note { font-size: clamp(9px, .75vw, 10px); margin-top: 2px; line-height: 1.2; }
+.forecast-list { gap: 4px; }
+.forecast-item { padding: 5px 2px; gap: 3px; border-radius: 8px; }
+.forecast-time { font-size: clamp(9px, .8vw, 11px); }
+.forecast-icon { font-size: clamp(20px, 2.2vw, 30px); }
+.forecast-temp { font-size: clamp(13px, 1.35vw, 18px); }
+.forecast-rain { font-size: clamp(9px, .75vw, 10px); }
+.info-grid { gap: 7px; }
+.info-card { padding: 7px 11px; min-height: 76px; }
+.info-heading { font-size: clamp(13px, 1.1vw, 16px); margin-bottom: 3px; }
+.info-text { font-size: clamp(11px, 1vw, 14px); line-height: 1.2; }
+.info-subtext { font-size: clamp(9px, .8vw, 11px); margin-top: 3px; line-height: 1.2; }
+.tip-icon { font-size: 23px; margin-right: 6px; }
+.math-question { font-size: clamp(19px, 2vw, 28px); margin-top: 1px; }
+.football-bar { min-height: 29px; height: 29px; border-radius: 8px; }
+.football-label { padding: 0 9px; font-size: 10px; gap: 5px; }
+.live-dot { width: 6px; height: 6px; }
+.ticker-item { height: 29px; padding: 0 14px; gap: 6px; font-size: clamp(10px, .85vw, 12px); }
+.ticker-item .score { font-size: 12px; }
+.ticker-item .match-status { font-size: 10px; }
+.ticker-loading { font-size: 11px; }
+.footer { font-size: 9px; line-height: 1.1; }
+
+@media (min-width: 1500px) {
+  .dashboard { padding: 7px 14px 5px; gap: 6px; }
+  .card { padding: 9px 12px; }
+  .info-card { min-height: 76px; }
+}
+@media (max-height: 760px) {
+  .dashboard { padding: 5px 10px 4px; gap: 4px; }
+  .clock-card { padding: 6px 14px; }
+  .clock { font-size: clamp(30px, 4vw, 49px); }
+  .card { padding: 7px 9px; }
+  .info-card { min-height: 65px; padding: 6px 9px; }
+  .current-weather { min-height: 62px; }
+  .weather-icon { font-size: clamp(37px, 4vw, 54px); }
+  .temperature { font-size: clamp(30px, 3.5vw, 46px); }
+  .weather-details { margin-top: 4px; }
+  .forecast-item { padding: 3px 1px; gap: 2px; }
+  .aqi-card { padding: 7px 9px; }
+}
+
 </style>
 </head>
 
 <body>
 <div class="dashboard">
 
-<header class="topbar">
-  <div>
-    <div class="brand">🌤 DLTS Weather &amp; Date Dashboard</div>
-    <div class="location">📍 Bang Kruai, Nonthaburi, Thailand</div>
-  </div>
-  <div class="live-label">● LIVE DASHBOARD</div>
-</header>
-
-<section class="clock-card">
-  <div>
-    <div class="clock-label">THAILAND LOCAL TIME</div>
-    <div class="clock" id="clock">--:--:--</div>
-  </div>
-  <div class="date">
-    <div id="weekday">Loading day...</div>
-    <small id="fullDate">Loading date...</small>
-  </div>
-</section>
-
-<main class="weather-grid">
-
-<section class="card">
-  <div class="card-heading">
-    <span>🌦 Current Weather</span>
-    <span id="weatherUpdated" style="font-size:11px;color:#60748c">Updating...</span>
-  </div>
-  <div class="current-weather">
-    <div class="weather-icon" id="currentIcon">🌤️</div>
+  <header class="topbar">
     <div>
-      <div class="temperature"><span id="temperature">--</span><span style="font-size:.55em">°C</span></div>
-      <div class="condition" id="condition">Loading weather...</div>
-      <div class="feels">Feels like <strong id="feelsLike">--°C</strong></div>
+      <div class="brand">🌤 DLTS Weather &amp; Date Dashboard</div>
+      <div class="location">📍 Bang Kruai, Nonthaburi, Thailand</div>
     </div>
-  </div>
-  <div class="weather-details">
-    <div class="detail">
-      <div class="value" id="humidity">--%</div>
-      <div class="label">💧 Humidity</div>
+    <div class="live-label">● LIVE DASHBOARD</div>
+  </header>
+
+  <section class="clock-card">
+    <div>
+      <div class="clock-label">THAILAND LOCAL TIME</div>
+      <div class="clock" id="clock">--:--:--</div>
     </div>
-    <div class="detail">
-      <div class="value" id="wind">--</div>
-      <div class="label">💨 Wind km/h</div>
+    <div class="date">
+      <div id="weekday">Loading day...</div>
+      <small id="fullDate">Loading date...</small>
     </div>
-    <div class="detail">
-      <div class="value" id="rainNow">--</div>
-      <div class="label">🌧 Rain mm</div>
+  </section>
+
+  <main class="weather-grid">
+
+    <section class="card">
+      <div class="card-heading">
+        <span>🌦 Current Weather</span>
+        <span id="weatherUpdated" style="font-size:11px;color:#60748c;">Updating...</span>
+      </div>
+
+      <div class="current-weather">
+        <div class="weather-icon" id="currentIcon">🌤️</div>
+        <div>
+          <div class="temperature"><span id="temperature">--</span><span style="font-size:.55em;">°C</span></div>
+          <div class="condition" id="condition">Loading weather...</div>
+          <div class="feels">Feels like <strong id="feelsLike">--°C</strong></div>
+        </div>
+      </div>
+
+      <div class="weather-details">
+        <div class="detail">
+          <div class="value" id="humidity">--%</div>
+          <div class="label">💧 Humidity</div>
+        </div>
+        <div class="detail">
+          <div class="value" id="wind">--</div>
+          <div class="label">💨 Wind km/h</div>
+        </div>
+        <div class="detail">
+          <div class="value" id="rainNow">--</div>
+          <div class="label">🌧 Rain mm</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card forecast-card">
+      <div class="card-heading">
+        <span>🕒 Upcoming Weather</span>
+        <span style="font-size:11px;color:#60748c;">Next 6 hours</span>
+      </div>
+      <div class="forecast-list" id="forecastList">
+        <div class="forecast-item">Loading...</div>
+      </div>
+    </section>
+
+    <section class="aqi-card" id="aqiCard">
+      <div class="aqi-top">
+        <div class="aqi-title">🌿 Air Quality</div>
+        <span style="font-size:11px;font-weight:800;">US AQI</span>
+      </div>
+      <div class="aqi-number" id="aqiNumber">--</div>
+      <div class="aqi-status" id="aqiStatus">Loading air quality...</div>
+      <div class="aqi-bar"><div class="aqi-marker" id="aqiMarker"></div></div>
+      <div class="pm-value">PM2.5: <span id="pm25">--</span> µg/m³</div>
+      <div class="aqi-place">BANG KRUAI, NONTHABURI</div>
+      <div class="aqi-note">Area estimate · Not a specific Rama 5 station reading</div>
+    </section>
+
+  </main>
+
+  <section class="info-grid">
+
+    <div class="card info-card daily-tip">
+      <div class="info-heading">💡 Tip of the Day</div>
+      <div class="info-text" id="dailyTip">Drink water regularly throughout the day.</div>
+      <div class="info-subtext" id="tipCategory">A healthy habit makes a difference.</div>
     </div>
-  </div>
-</section>
 
-<section class="card forecast-card">
-  <div class="card-heading">
-    <span>🕒 Upcoming Weather</span>
-    <span style="font-size:11px;color:#60748c">Next 6 hours</span>
-  </div>
-  <div class="forecast-list" id="forecastList">
-    <div class="forecast-item">Loading...</div>
-  </div>
-</section>
-
-<section class="aqi-card" id="aqiCard">
-  <div class="aqi-top">
-    <div class="aqi-title">🌿 Air Quality</div>
-    <span style="font-size:11px;font-weight:800">US AQI</span>
-  </div>
-  <div class="aqi-number" id="aqiNumber">--</div>
-  <div class="aqi-status" id="aqiStatus">Loading air quality...</div>
-  <div class="aqi-bar"><div class="aqi-marker" id="aqiMarker"></div></div>
-  <div class="pm-value">PM2.5: <span id="pm25">--</span> µg/m³</div>
-  <div class="aqi-place">BANG KRUAI, NONTHABURI</div>
-  <div class="aqi-note">Area estimate · Not a specific Rama 5 station reading</div>
-</section>
-
-</main>
-
-<section class="info-grid">
-  <div class="card info-card daily-tip">
-    <div class="info-heading">💡 Tip of the Day</div>
-    <div class="info-text" id="dailyTip">Drink water regularly throughout the day.</div>
-    <div class="info-subtext" id="tipCategory">A healthy habit makes a difference.</div>
-  </div>
-  <div class="card info-card math-card">
-    <div class="info-heading">🧠 Super Math Challenge</div>
-    <div class="math-question" id="mathQuestion">12 + 8 × 3 = ?</div>
-    <div class="info-subtext" id="mathHint">Solve it! Remember the order of operations.</div>
-  </div>
-  <div class="card info-card school-tip">
-    <div class="info-heading">🏫 School Tip</div>
-    <div class="info-text" id="schoolTip">Be kind, be curious, and help someone today!</div>
-    <div class="info-subtext">Small actions can make our school a better place.</div>
-  </div>
-</section>
-
-<!-- The only new dashboard feature: a slim ticker at the bottom -->
-<section class="football-bar" aria-label="Football scores ticker">
-  <div class="football-label">
-    <span class="live-dot"></span>
-    ⚽ FOOTBALL
-  </div>
-  <div class="ticker-window">
-    <div class="ticker-track" id="tickerTrack">
-      <div class="ticker-loading">Loading major match scores and fixtures...</div>
+    <div class="card info-card math-card">
+      <div class="info-heading">🧠 Super Math Challenge</div>
+      <div class="math-question" id="mathQuestion">12 + 8 × 3 = ?</div>
+      <div class="info-subtext" id="mathHint">Solve it! Remember the order of operations.</div>
     </div>
-  </div>
-</section>
 
-<div class="footer">
-  Weather and air-quality data are estimates. Football scores and fixtures depend on data-provider availability.
-</div>
+    <div class="card info-card school-tip">
+      <div class="info-heading">🏫 School Tip</div>
+      <div class="info-text" id="schoolTip">Be kind, be curious, and help someone today!</div>
+      <div class="info-subtext">Small actions can make our school a better place.</div>
+    </div>
+
+  </section>
+
+  <section class="football-bar" aria-label="Football scores ticker">
+    <div class="football-label">
+      <span class="live-dot"></span>
+      ⚽ FOOTBALL
+    </div>
+    <div class="ticker-window">
+      <div class="ticker-track" id="tickerTrack">
+        <div class="ticker-loading">Loading major match scores and fixtures...</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    Weather and air-quality data are estimates. Football scores and fixtures depend on data-provider availability.
+  </div>
+
 </div>
 
 <script>
 "use strict";
 
+/* -------------------------------------------------------
+   LOCATION AND CLOCK
+   Bang Kruai, Nonthaburi — approximate area coordinates
+------------------------------------------------------- */
 const LAT = 13.805;
 const LON = 100.472;
 const TIME_ZONE = "Asia/Bangkok";
 
 function updateClock() {
   const now = new Date();
+
   document.getElementById("clock").textContent =
     new Intl.DateTimeFormat("en-GB", {
-      timeZone: TIME_ZONE, hour: "2-digit", minute: "2-digit",
-      second: "2-digit", hour12: false
+      timeZone: TIME_ZONE,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false
     }).format(now);
 
   document.getElementById("weekday").textContent =
     new Intl.DateTimeFormat("en-US", {
-      timeZone: TIME_ZONE, weekday: "long"
+      timeZone: TIME_ZONE,
+      weekday: "long"
     }).format(now);
 
   document.getElementById("fullDate").textContent =
     new Intl.DateTimeFormat("en-GB", {
-      timeZone: TIME_ZONE, day: "2-digit", month: "long", year: "numeric"
+      timeZone: TIME_ZONE,
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
     }).format(now);
 }
 
 updateClock();
 setInterval(updateClock, 1000);
 
+/* -------------------------------------------------------
+   WEATHER
+   Open-Meteo public forecast endpoint; no API key needed.
+------------------------------------------------------- */
 function weatherDescription(code, isDay = true) {
-  if (code === 0) return isDay ? ["☀️","Sunny"] : ["🌙","Clear"];
-  if (code === 1) return isDay ? ["🌤️","Mostly clear"] : ["🌙","Mostly clear"];
-  if (code === 2) return ["⛅","Partly cloudy"];
-  if (code === 3) return ["☁️","Overcast"];
-  if (code === 45 || code === 48) return ["🌫️","Foggy"];
-  if ([51,53,55].includes(code)) return ["🌦️","Drizzle"];
-  if ([56,57].includes(code)) return ["🌧️","Freezing drizzle"];
-  if ([61,63,65].includes(code)) return ["🌧️","Rain"];
-  if ([66,67].includes(code)) return ["🌧️","Freezing rain"];
-  if ([71,73,75,77].includes(code)) return ["❄️","Snow"];
-  if ([80,81,82].includes(code)) return ["🌧️","Rain showers"];
-  if ([85,86].includes(code)) return ["🌨️","Snow showers"];
-  if (code === 95) return ["⛈️","Thunderstorm"];
-  if ([96,99].includes(code)) return ["⛈️","Thunderstorm with hail"];
-  return ["🌤️","Changeable"];
+  if (code === 0) return isDay ? ["☀️", "Sunny"] : ["🌙", "Clear"];
+  if (code === 1) return isDay ? ["🌤️", "Mostly clear"] : ["🌙", "Mostly clear"];
+  if (code === 2) return ["⛅", "Partly cloudy"];
+  if (code === 3) return ["☁️", "Overcast"];
+  if (code === 45 || code === 48) return ["🌫️", "Foggy"];
+  if ([51, 53, 55].includes(code)) return ["🌦️", "Drizzle"];
+  if ([56, 57].includes(code)) return ["🌧️", "Freezing drizzle"];
+  if ([61, 63, 65].includes(code)) return ["🌧️", "Rain"];
+  if ([66, 67].includes(code)) return ["🌧️", "Freezing rain"];
+  if ([71, 73, 75, 77].includes(code)) return ["❄️", "Snow"];
+  if ([80, 81, 82].includes(code)) return ["🌧️", "Rain showers"];
+  if ([85, 86].includes(code)) return ["🌨️", "Snow showers"];
+  if (code === 95) return ["⛈️", "Thunderstorm"];
+  if ([96, 99].includes(code)) return ["⛈️", "Thunderstorm with hail"];
+  return ["🌤️", "Changeable"];
 }
 
 async function loadWeather() {
-  const url = "https://api.open-meteo.com/v1/forecast" +
+  const url =
+    "https://api.open-meteo.com/v1/forecast" +
     `?latitude=${LAT}&longitude=${LON}` +
-    "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m" +
+    "&current=temperature_2m,relative_humidity_2m,apparent_temperature," +
+    "is_day,precipitation,weather_code,wind_speed_10m" +
     "&hourly=temperature_2m,precipitation_probability,weather_code" +
     "&forecast_days=2&timezone=Asia%2FBangkok";
 
   try {
-    const response = await fetch(url, {cache:"no-store"});
+    const response = await fetch(url, { cache: "no-store" });
     if (!response.ok) throw new Error("Weather service unavailable");
+
     const data = await response.json();
     const c = data.current;
-    const [icon, description] = weatherDescription(c.weather_code, c.is_day === 1);
+
+    const [icon, description] =
+      weatherDescription(c.weather_code, c.is_day === 1);
 
     document.getElementById("currentIcon").textContent = icon;
-    document.getElementById("temperature").textContent = Math.round(c.temperature_2m);
+    document.getElementById("temperature").textContent =
+      Math.round(c.temperature_2m);
     document.getElementById("condition").textContent = description;
-    document.getElementById("feelsLike").textContent = Math.round(c.apparent_temperature) + "°C";
-    document.getElementById("humidity").textContent = Math.round(c.relative_humidity_2m) + "%";
-    document.getElementById("wind").textContent = Math.round(c.wind_speed_10m);
-    document.getElementById("rainNow").textContent = Number(c.precipitation || 0).toFixed(1);
+    document.getElementById("feelsLike").textContent =
+      Math.round(c.apparent_temperature) + "°C";
+    document.getElementById("humidity").textContent =
+      Math.round(c.relative_humidity_2m) + "%";
+    document.getElementById("wind").textContent =
+      Math.round(c.wind_speed_10m);
+    document.getElementById("rainNow").textContent =
+      Number(c.precipitation || 0).toFixed(1);
 
     document.getElementById("weatherUpdated").textContent =
       "Updated " + new Intl.DateTimeFormat("en-GB", {
-        timeZone:TIME_ZONE, hour:"2-digit", minute:"2-digit"
+        timeZone: TIME_ZONE,
+        hour: "2-digit",
+        minute: "2-digit"
       }).format(new Date());
 
     renderForecast(data.hourly);
@@ -731,11 +854,13 @@ async function loadWeather() {
 function renderForecast(hourly) {
   const container = document.getElementById("forecastList");
   container.innerHTML = "";
+
   const now = Date.now();
   const upcoming = [];
 
   for (let i = 0; i < hourly.time.length; i++) {
-    if (new Date(hourly.time[i]).getTime() >= now) {
+    const timestamp = new Date(hourly.time[i]).getTime();
+    if (timestamp >= now) {
       upcoming.push(i);
       if (upcoming.length === 6) break;
     }
@@ -749,8 +874,12 @@ function renderForecast(hourly) {
   upcoming.forEach((index, position) => {
     const time = new Date(hourly.time[index]);
     const hourLabel = new Intl.DateTimeFormat("en-GB", {
-      timeZone:TIME_ZONE, hour:"2-digit", minute:"2-digit", hour12:false
+      timeZone: TIME_ZONE,
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
     }).format(time);
+
     const [icon] = weatherDescription(hourly.weather_code[index], true);
     const temp = Math.round(hourly.temperature_2m[index]);
     const rain = hourly.precipitation_probability[index];
@@ -783,17 +912,25 @@ function renderForecast(hourly) {
 loadWeather();
 setInterval(loadWeather, 10 * 60 * 1000);
 
+/* -------------------------------------------------------
+   AIR QUALITY
+   Open-Meteo air-quality API; nearest grid/area estimate,
+   not a dedicated Rama 5 monitoring station.
+------------------------------------------------------- */
 async function loadAirQuality() {
-  const url = "https://air-quality-api.open-meteo.com/v1/air-quality" +
+  const url =
+    "https://air-quality-api.open-meteo.com/v1/air-quality" +
     `?latitude=${LAT}&longitude=${LON}` +
     "&current=us_aqi,pm2_5&timezone=Asia%2FBangkok";
 
   try {
-    const response = await fetch(url, {cache:"no-store"});
+    const response = await fetch(url, { cache: "no-store" });
     if (!response.ok) throw new Error("Air quality service unavailable");
+
     const data = await response.json();
     const aqi = data.current.us_aqi;
     const pm25 = data.current.pm2_5;
+
     if (aqi == null) throw new Error("AQI unavailable");
 
     document.getElementById("aqiNumber").textContent = Math.round(aqi);
@@ -803,25 +940,38 @@ async function loadAirQuality() {
     let status, background, border;
 
     if (aqi <= 50) {
-      status = "Good"; background = "#e4f7e9"; border = "#c9ead2";
+      status = "Good";
+      background = "#e4f7e9";
+      border = "#c9ead2";
     } else if (aqi <= 100) {
-      status = "Moderate"; background = "#fff6d9"; border = "#f0df9f";
+      status = "Moderate";
+      background = "#fff6d9";
+      border = "#f0df9f";
     } else if (aqi <= 150) {
-      status = "Unhealthy for Sensitive Groups"; background = "#ffead7"; border = "#f3c39b";
+      status = "Unhealthy for Sensitive Groups";
+      background = "#ffead7";
+      border = "#f3c39b";
     } else if (aqi <= 200) {
-      status = "Unhealthy"; background = "#ffe0df"; border = "#f3b1ae";
+      status = "Unhealthy";
+      background = "#ffe0df";
+      border = "#f3b1ae";
     } else if (aqi <= 300) {
-      status = "Very Unhealthy"; background = "#f1e2ff"; border = "#d9b8f3";
+      status = "Very Unhealthy";
+      background = "#f1e2ff";
+      border = "#d9b8f3";
     } else {
-      status = "Hazardous"; background = "#ead5dd"; border = "#d4a7b6";
+      status = "Hazardous";
+      background = "#ead5dd";
+      border = "#d4a7b6";
     }
 
     const card = document.getElementById("aqiCard");
     card.style.background = background;
     card.style.borderColor = border;
     document.getElementById("aqiStatus").textContent = status;
-    document.getElementById("aqiMarker").style.left =
-      Math.min(100, Math.max(0, aqi / 350 * 100)) + "%";
+
+    const markerPosition = Math.min(100, Math.max(0, aqi / 350 * 100));
+    document.getElementById("aqiMarker").style.left = markerPosition + "%";
   } catch (error) {
     document.getElementById("aqiNumber").textContent = "--";
     document.getElementById("aqiStatus").textContent = "Data unavailable";
@@ -832,19 +982,22 @@ async function loadAirQuality() {
 loadAirQuality();
 setInterval(loadAirQuality, 15 * 60 * 1000);
 
+/* -------------------------------------------------------
+   DAILY TIP
+------------------------------------------------------- */
 const dailyTips = [
-  ["💧 Drink water regularly throughout the day.","Hydration helps you stay focused."],
-  ["🥗 Add colourful fruit and vegetables to your meals.","Small healthy choices add up."],
-  ["🧼 Wash your hands before eating.","Good hygiene protects everyone."],
-  ["🚶 Move your body and stretch between activities.","A little movement goes a long way."],
-  ["😴 Get enough sleep to help your brain recharge.","Rest supports learning and wellbeing."],
-  ["🌳 Spend a little time outdoors when it is safe.","Fresh air and movement can feel refreshing."],
-  ["🧴 Protect your skin from strong sunlight.","Use shade, a hat, and sunscreen."],
-  ["😊 Take a slow breath when you feel stressed.","Pause, breathe, and reset."],
-  ["📚 Read something interesting every day.","Curiosity helps your brain grow."],
-  ["🦷 Brush your teeth twice a day.","Build healthy habits every day."],
-  ["🍱 Choose a balanced lunch to fuel your afternoon.","Food helps you learn and play."],
-  ["🧹 Keep your learning space clean and organised.","A tidy space can help you focus."]
+  ["💧 Drink water regularly throughout the day.", "Hydration helps you stay focused."],
+  ["🥗 Add colourful fruit and vegetables to your meals.", "Small healthy choices add up."],
+  ["🧼 Wash your hands before eating.", "Good hygiene protects everyone."],
+  ["🚶 Move your body and stretch between activities.", "A little movement goes a long way."],
+  ["😴 Get enough sleep to help your brain recharge.", "Rest supports learning and wellbeing."],
+  ["🌳 Spend a little time outdoors when it is safe.", "Fresh air and movement can feel refreshing."],
+  ["🧴 Protect your skin from strong sunlight.", "Use shade, a hat, and sunscreen."],
+  ["😊 Take a slow breath when you feel stressed.", "Pause, breathe, and reset."],
+  ["📚 Read something interesting every day.", "Curiosity helps your brain grow."],
+  ["🦷 Brush your teeth twice a day.", "Build healthy habits every day."],
+  ["🍱 Choose a balanced lunch to fuel your afternoon.", "Food helps you learn and play."],
+  ["🧹 Keep your learning space clean and organised.", "A tidy space can help you focus."]
 ];
 
 const schoolTips = [
@@ -863,8 +1016,12 @@ const schoolTips = [
 function setDailyTips() {
   const now = new Date();
   const dateKey = new Intl.DateTimeFormat("en-CA", {
-    timeZone:TIME_ZONE, year:"numeric", month:"2-digit", day:"2-digit"
+    timeZone: TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
   }).format(now);
+
   const dayNumber = Math.floor(new Date(dateKey + "T00:00:00Z").getTime() / 86400000);
   const tip = dailyTips[((dayNumber % dailyTips.length) + dailyTips.length) % dailyTips.length];
   const school = schoolTips[((dayNumber % schoolTips.length) + schoolTips.length) % schoolTips.length];
@@ -877,34 +1034,65 @@ function setDailyTips() {
 setDailyTips();
 setInterval(setDailyTips, 60 * 60 * 1000);
 
+/* -------------------------------------------------------
+   MATH CHALLENGE
+   Generates a new 2–3 operation problem every 10 minutes.
+   The answer is not shown on the screen.
+------------------------------------------------------- */
 function createMathProblem() {
-  const rand = (min,max) => Math.floor(Math.random() * (max-min+1)) + min;
+  const rand = (min, max) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
+
   let question, answer;
 
-  switch (rand(1,6)) {
+  switch (rand(1, 6)) {
     case 1: {
-      const a=rand(12,35), b=rand(2,9), c=rand(2,8);
-      question=`${a} + ${b} × ${c} = ?`; answer=a+b*c; break;
+      const a = rand(12, 35);
+      const b = rand(2, 9);
+      const c = rand(2, 8);
+      question = `${a} + ${b} × ${c} = ?`;
+      answer = a + b * c;
+      break;
     }
     case 2: {
-      const a=rand(5,15), b=rand(3,12), c=rand(2,9);
-      question=`(${a} + ${b}) × ${c} = ?`; answer=(a+b)*c; break;
+      const a = rand(5, 15);
+      const b = rand(3, 12);
+      const c = rand(2, 9);
+      question = `(${a} + ${b}) × ${c} = ?`;
+      answer = (a + b) * c;
+      break;
     }
     case 3: {
-      const b=rand(2,9), c=rand(2,9), a=b*c+rand(10,30);
-      question=`${a} − ${b} × ${c} = ?`; answer=a-b*c; break;
+      const b = rand(2, 9);
+      const c = rand(2, 9);
+      const a = b * c + rand(10, 30);
+      question = `${a} − ${b} × ${c} = ?`;
+      answer = a - b * c;
+      break;
     }
     case 4: {
-      const a=rand(3,12), b=rand(2,8), c=rand(2,9);
-      question=`${a} × ${b} + ${c} = ?`; answer=a*b+c; break;
+      const a = rand(3, 12);
+      const b = rand(2, 8);
+      const c = rand(2, 9);
+      question = `${a} × ${b} + ${c} = ?`;
+      answer = a * b + c;
+      break;
     }
     case 5: {
-      const a=rand(3,12), b=rand(2,9), product=a*b, c=rand(2,8);
-      question=`${product} ÷ ${a} + ${c} = ?`; answer=product/a+c; break;
+      const a = rand(3, 12);
+      const b = rand(2, 9);
+      const product = a * b;
+      const c = rand(2, 8);
+      question = `${product} ÷ ${a} + ${c} = ?`;
+      answer = product / a + c;
+      break;
     }
     default: {
-      const a=rand(3,10), b=rand(2,8), c=rand(2,6);
-      question=`${a} × (${b} + ${c}) = ?`; answer=a*(b+c);
+      const a = rand(3, 10);
+      const b = rand(2, 8);
+      const c = rand(2, 6);
+      question = `${a} × (${b} + ${c}) = ?`;
+      answer = a * (b + c);
     }
   }
 
@@ -915,16 +1103,19 @@ function createMathProblem() {
 createMathProblem();
 setInterval(createMathProblem, 10 * 60 * 1000);
 
-/* Football scores and fixtures: ESPN public scoreboard endpoints.
-   No API key is configured; availability may change. */
+/* -------------------------------------------------------
+   FOOTBALL SCORES TICKER
+   Reads scoreboards from ESPN's public, undocumented API.
+   No API key is configured. The service can change or fail.
+------------------------------------------------------- */
 const FOOTBALL_LEAGUES = [
-  {name:"UEFA Champions League",slug:"uefa.champions"},
-  {name:"Premier League",slug:"eng.1"},
-  {name:"La Liga",slug:"esp.1"},
-  {name:"Serie A",slug:"ita.1"},
-  {name:"Bundesliga",slug:"ger.1"},
-  {name:"Ligue 1",slug:"fra.1"},
-  {name:"MLS",slug:"usa.1"}
+  { name: "UEFA Champions League", slug: "uefa.champions" },
+  { name: "Premier League", slug: "eng.1" },
+  { name: "La Liga", slug: "esp.1" },
+  { name: "Serie A", slug: "ita.1" },
+  { name: "Bundesliga", slug: "ger.1" },
+  { name: "Ligue 1", slug: "fra.1" },
+  { name: "MLS", slug: "usa.1" }
 ];
 
 const FOOTBALL_REFRESH_MS = 5 * 60 * 1000;
@@ -934,54 +1125,81 @@ function thailandDateTime(isoDate) {
   if (!isoDate) return "";
   const date = new Date(isoDate);
   if (Number.isNaN(date.getTime())) return "";
+
   return new Intl.DateTimeFormat("en-GB", {
-    timeZone:TIME_ZONE, day:"2-digit", month:"short",
-    hour:"2-digit", minute:"2-digit", hour12:false
+    timeZone: TIME_ZONE,
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
   }).format(date);
 }
 
 function getEventStatus(event) {
-  const type = event.status?.type || {};
+  const status = event.status || {};
+  const type = status.type || {};
   const state = String(type.state || "").toLowerCase();
 
   if (state === "in") {
-    return {label:type.shortDetail || type.detail || "LIVE",live:true,completed:false};
+    const detail = type.shortDetail || type.detail || "LIVE";
+    return { label: detail, live: true, completed: false };
   }
+
   if (state === "post" || type.completed === true) {
-    return {label:type.shortDetail || type.detail || "FT",live:false,completed:true};
+    return {
+      label: type.shortDetail || type.detail || "FT",
+      live: false,
+      completed: true
+    };
   }
-  return {label:thailandDateTime(event.date),live:false,completed:false};
+
+  return {
+    label: thailandDateTime(event.date),
+    live: false,
+    completed: false
+  };
 }
 
 function getMatchInfo(event, leagueName) {
-  const competition = event.competitions?.[0];
+  const competition = event.competitions && event.competitions[0];
   if (!competition || !Array.isArray(competition.competitors)) return null;
 
   const competitors = competition.competitors;
   const home = competitors.find(team => team.homeAway === "home");
   const away = competitors.find(team => team.homeAway === "away");
+
   if (!home || !away) return null;
 
+  const status = getEventStatus(event);
+  const kickoff = new Date(event.date).getTime();
+
   return {
-    id:event.id || `${leagueName}-${event.date}-${home.team?.id}-${away.team?.id}`,
-    league:leagueName,
-    home:home.team?.shortDisplayName || home.team?.displayName || home.team?.name || "Home",
-    away:away.team?.shortDisplayName || away.team?.displayName || away.team?.name || "Away",
-    homeScore:home.score == null ? null : home.score,
-    awayScore:away.score == null ? null : away.score,
-    status:getEventStatus(event),
-    kickoff:new Date(event.date).getTime(),
-    dateLabel:thailandDateTime(event.date)
+    id: event.id || `${leagueName}-${event.date}-${home.team?.id}-${away.team?.id}`,
+    league: leagueName,
+    home: home.team?.shortDisplayName || home.team?.displayName || home.team?.name || "Home",
+    away: away.team?.shortDisplayName || away.team?.displayName || away.team?.name || "Away",
+    homeScore: home.score == null ? null : home.score,
+    awayScore: away.score == null ? null : away.score,
+    status,
+    kickoff,
+    dateLabel: thailandDateTime(event.date)
   };
 }
 
 async function fetchLeagueScoreboard(league) {
-  const url = `https://site.api.espn.com/apis/site/v2/sports/soccer/${league.slug}/scoreboard`;
-  const response = await fetch(url,{cache:"no-store"});
+  const url =
+    `https://site.api.espn.com/apis/site/v2/sports/soccer/${league.slug}/scoreboard`;
+
+  const response = await fetch(url, { cache: "no-store" });
   if (!response.ok) throw new Error(`${league.name}: HTTP ${response.status}`);
+
   const data = await response.json();
-  return (Array.isArray(data.events) ? data.events : [])
-    .map(event => getMatchInfo(event,league.name)).filter(Boolean);
+  const events = Array.isArray(data.events) ? data.events : [];
+
+  return events
+    .map(event => getMatchInfo(event, league.name))
+    .filter(Boolean);
 }
 
 function scoreText(match) {
@@ -997,6 +1215,7 @@ function renderTicker(matches, failedLeagues) {
     const message = failedLeagues === FOOTBALL_LEAGUES.length
       ? "Football scores temporarily unavailable · Check your internet connection"
       : "No major matches listed right now · Checking again soon";
+
     const fallback = document.createElement("div");
     fallback.className = "ticker-loading";
     fallback.textContent = "⚽ " + message;
@@ -1007,8 +1226,8 @@ function renderTicker(matches, failedLeagues) {
 
   const fragment = document.createDocumentFragment();
 
-  // Duplicate matches to create a seamless scrolling loop.
-  [0,1].forEach(() => {
+  // Duplicate the items so the scrolling ticker loops seamlessly.
+  [0, 1].forEach(() => {
     matches.forEach(match => {
       const item = document.createElement("div");
       item.className = "ticker-item";
@@ -1028,13 +1247,15 @@ function renderTicker(matches, failedLeagues) {
       status.className = match.status.live ? "match-live" : "match-status";
       status.textContent = match.status.label || match.dateLabel || "";
 
-      item.append(league,teams,score,status);
+      item.append(league, teams, score, status);
       fragment.appendChild(item);
     });
   });
 
   track.appendChild(fragment);
-  const duration = Math.max(50,Math.min(140,matches.length*4.5));
+
+  // Set speed based on content length, keeping a consistent readable pace.
+  const duration = Math.max(50, Math.min(140, matches.length * 4.5));
   track.style.animation = `tickerScroll ${duration}s linear infinite`;
 }
 
@@ -1054,31 +1275,47 @@ async function loadFootballScores() {
         matches = matches.concat(result.value);
       } else {
         failedLeagues++;
-        console.warn("Football scoreboard unavailable:",result.reason);
+        console.warn("Football scoreboard unavailable:", result.reason);
       }
     });
 
     const now = Date.now();
-    const oneDay = 24*60*60*1000;
+    const oneDay = 24 * 60 * 60 * 1000;
+
+    // Prioritise live matches, then upcoming fixtures, then recent finals.
     const live = matches.filter(match => match.status.live);
 
-    const upcoming = matches.filter(match =>
-      !match.status.live && !match.status.completed &&
-      match.kickoff >= now-60*60*1000
-    ).sort((a,b) => a.kickoff-b.kickoff);
+    const upcoming = matches
+      .filter(match =>
+        !match.status.live &&
+        !match.status.completed &&
+        match.kickoff >= now - 60 * 60 * 1000
+      )
+      .sort((a, b) => a.kickoff - b.kickoff);
 
-    const recentFinals = matches.filter(match =>
-      match.status.completed && match.kickoff >= now-oneDay
-    ).sort((a,b) => b.kickoff-a.kickoff);
+    const recentFinals = matches
+      .filter(match =>
+        match.status.completed &&
+        match.kickoff >= now - oneDay
+      )
+      .sort((a, b) => b.kickoff - a.kickoff);
 
-    const other = matches.filter(match =>
-      !live.includes(match) && !upcoming.includes(match) &&
-      !recentFinals.includes(match)
-    ).sort((a,b) => b.kickoff-a.kickoff);
+    const olderOrOther = matches
+      .filter(match =>
+        !live.includes(match) &&
+        !upcoming.includes(match) &&
+        !recentFinals.includes(match)
+      )
+      .sort((a, b) => b.kickoff - a.kickoff);
 
-    const selected = [...live,...upcoming,...recentFinals,...other]
-      .slice(0,MAX_TICKER_MATCHES);
+    const selected = [
+      ...live,
+      ...upcoming,
+      ...recentFinals,
+      ...olderOrOther
+    ].slice(0, MAX_TICKER_MATCHES);
 
+    // Remove duplicate events where a provider response overlaps.
     const unique = [];
     const seen = new Set();
 
@@ -1089,14 +1326,15 @@ async function loadFootballScores() {
       }
     });
 
-    renderTicker(unique,failedLeagues);
+    renderTicker(unique, failedLeagues);
 
     if (!unique.length && failedLeagues < FOOTBALL_LEAGUES.length) {
-      track.setAttribute("aria-label","No major matches currently listed");
+      track.setAttribute("aria-label", "No major matches currently listed");
     }
   } catch (error) {
-    console.warn("Football ticker update failed:",error);
+    console.warn("Football ticker update failed:", error);
     track.innerHTML = "";
+
     const message = document.createElement("div");
     message.className = "ticker-loading";
     message.textContent = "⚽ Football scores temporarily unavailable · Retrying soon";
@@ -1105,9 +1343,10 @@ async function loadFootballScores() {
 }
 
 loadFootballScores();
-setInterval(loadFootballScores,FOOTBALL_REFRESH_MS);
+setInterval(loadFootballScores, FOOTBALL_REFRESH_MS);
 
-document.addEventListener("visibilitychange",() => {
+/* Pause scrolling when the page is hidden; resume on return. */
+document.addEventListener("visibilitychange", () => {
   if (!document.hidden) {
     loadFootballScores();
     loadWeather();
