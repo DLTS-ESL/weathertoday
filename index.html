@@ -4,1019 +4,211 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DLTS Weather & Air Quality</title>
+<title>Bang Kruai Air Quality</title>
 
 <style>
-:root {
-  --blue: #164b8c;
-  --text: #18324f;
-  --muted: #62748a;
-  --border: #dce8f5;
-  --yellow: #fff4c2;
-  --pink: #ffe8f0;
-  --green: #e1f8e8;
-  --purple: #f0e8ff;
-  --sky: #e5f3ff;
+* {
+  box-sizing: border-box;
 }
-
-* { box-sizing: border-box; }
 
 html, body {
   margin: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   font-family: Arial, Helvetica, sans-serif;
-  background: #eef5ff;
-  color: var(--text);
 }
 
-.dashboard {
+body {
+  background: #16834a;
+  color: white;
+  overflow: hidden;
+  transition: background 0.5s ease;
+}
+
+#app {
   width: 100%;
-  height: 100vh;
   height: 100dvh;
-  padding: 7px 13px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 8% 10%, #fff5c8 0, transparent 18%),
-    radial-gradient(circle at 92% 20%, #dff4ff 0, transparent 22%),
-    #eef5ff;
-}
-
-.card {
-  background: #fff;
-  border: 2px solid var(--border);
-  border-radius: 16px;
-  padding: 8px 12px;
-  min-width: 0;
-  box-shadow: 0 3px 8px #214b7710;
-  position: relative;
-}
-
-.header {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  min-height: 55px;
-  flex-shrink: 0;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.logo {
-  width: 58px;
-  height: 47px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-h1 {
-  margin: 0;
-  color: var(--blue);
-  font-size: clamp(23px, 2.5vw, 37px);
-  letter-spacing: -0.6px;
-}
-
-.subtitle {
-  margin-top: 3px;
-  color: var(--muted);
-  font-size: clamp(11px, 1vw, 14px);
+  justify-content: center;
+  text-align: center;
+  padding: 3vh 4vw;
 }
 
 .location {
-  color: var(--blue);
-  font-weight: bold;
-  font-size: clamp(12px, 1.2vw, 17px);
-  text-align: right;
-  white-space: nowrap;
-  background: white;
-  border: 2px solid #d8eaff;
-  border-radius: 30px;
-  padding: 8px 12px;
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
-.top-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 7px;
-  flex-shrink: 0;
+.subtitle {
+  font-size: clamp(16px, 2vw, 26px);
+  margin-top: 8px;
+  opacity: 0.9;
 }
 
-.time-date {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  background: linear-gradient(120deg, white, #f7fbff);
+#aqi {
+  font-size: clamp(160px, 34vw, 390px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -8px;
+  margin: 1vh 0;
 }
 
-.eyebrow {
-  color: var(--muted);
-  font-size: clamp(10px, 0.9vw, 13px);
-  font-weight: bold;
-  letter-spacing: 1.2px;
-  margin-bottom: 3px;
-}
-
-.big-time {
-  color: var(--blue);
-  font-size: clamp(28px, 3vw, 43px);
-  line-height: 1;
+#status {
+  font-size: clamp(36px, 7vw, 82px);
   font-weight: 800;
-  white-space: nowrap;
+  margin: 1vh 0;
 }
 
-.big-date {
-  font-size: clamp(17px, 1.8vw, 26px);
-  line-height: 1.15;
-  font-weight: 800;
-}
-
-.day-text {
-  color: var(--muted);
-  font-size: clamp(11px, 1vw, 14px);
-  margin-top: 4px;
-}
-
-.weather-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr 1fr;
-  gap: 7px;
-  flex-shrink: 0;
-}
-
-.weather-card {
-  min-height: 88px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.weather-card:nth-child(1) {
-  background: linear-gradient(135deg, #fff9d9, #fff);
-  border-color: #f2e5a8;
-}
-
-.weather-card:nth-child(2) {
-  background: linear-gradient(135deg, #e8f4ff, #fff);
-  border-color: #cce5ff;
-}
-
-.weather-card:nth-child(4) {
-  background: linear-gradient(135deg, #f0eaff, #fff);
-  border-color: #dfd0ff;
-}
-
-.weather-main {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.weather-icon {
-  font-size: clamp(34px, 3.5vw, 49px);
-  line-height: 1;
-  filter: drop-shadow(0 2px 2px #0000000b);
-}
-
-.temperature {
-  color: var(--blue);
-  font-size: clamp(31px, 3.3vw, 46px);
-  line-height: 1;
-  font-weight: 800;
-}
-
-.weather-description {
-  margin-top: 5px;
-  color: var(--muted);
-  font-size: clamp(11px, 1vw, 14px);
-}
-
-.metric-title {
-  color: var(--muted);
-  font-size: clamp(10px, 0.95vw, 14px);
-  font-weight: bold;
-  letter-spacing: 0.3px;
-}
-
-.metric-value {
-  margin-top: 5px;
-  font-size: clamp(26px, 2.7vw, 37px);
-  font-weight: 800;
-  line-height: 1.05;
-  color: var(--blue);
-}
-
-.metric-sub {
-  margin-top: 4px;
-  font-size: clamp(10px, 0.9vw, 13px);
-  color: var(--muted);
-}
-
-/* AQI card changes color automatically */
-#aqiCard {
-  transition: background-color 0.5s, border-color 0.5s;
-}
-
-#aqiCard .metric-title,
-#aqiCard .metric-value,
-#aqiCard .metric-sub {
-  color: inherit;
-}
-
-.aqi-good {
-  background: #d9f5df !important;
-  border-color: #76ce8a !important;
-  color: #176b31 !important;
-}
-
-.aqi-moderate {
-  background: #fff3bd !important;
-  border-color: #e7cb54 !important;
-  color: #785900 !important;
-}
-
-.aqi-sensitive {
-  background: #ffe1c2 !important;
-  border-color: #f0a04d !important;
-  color: #914500 !important;
-}
-
-.aqi-unhealthy {
-  background: #ffdada !important;
-  border-color: #e77777 !important;
-  color: #a71919 !important;
-}
-
-.aqi-very-unhealthy {
-  background: #eadcff !important;
-  border-color: #b18ae8 !important;
-  color: #6325a1 !important;
-}
-
-.aqi-hazardous {
-  background: #e9d3e8 !important;
-  border-color: #8c477f !important;
-  color: #651342 !important;
-}
-
-.forecast-section {
-  flex-shrink: 0;
-}
-
-/* Compact hourly forecast: preserve the original dashboard layout */
-.forecast-grid { gap: 5px; }
-.forecast-card { padding: 4px 3px; border-radius: 10px; }
-.forecast-time { font-size: clamp(9px, 0.8vw, 11px); }
-.forecast-icon { font-size: clamp(19px, 1.7vw, 25px); margin: 1px 0; }
-.forecast-temp { font-size: clamp(16px, 1.45vw, 21px); }
-.forecast-rain { font-size: clamp(8px, 0.7vw, 10px); margin-top: 1px; }
-
-.section-heading {
-  color: var(--blue);
-  font-size: clamp(13px, 1.15vw, 17px);
-  font-weight: 800;
-  margin: 0 0 5px 2px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.heading-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff1c9;
-  border-radius: 10px;
-  width: 31px;
-  height: 29px;
-  flex-shrink: 0;
-}
-
-.forecast-grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 7px;
-}
-
-.forecast-card {
-  padding: 7px 4px;
-  text-align: center;
-  background: linear-gradient(180deg, #fff, #f6fbff);
-  border-color: #dceafa;
-  border-radius: 14px;
-}
-
-.forecast-time {
-  color: var(--muted);
-  font-size: clamp(10px, 0.95vw, 13px);
-  font-weight: bold;
-}
-
-.forecast-icon {
-  font-size: clamp(23px, 2.2vw, 32px);
-  margin: 3px 0;
-}
-
-.forecast-temp {
-  color: var(--blue);
-  font-size: clamp(18px, 1.9vw, 27px);
-  font-weight: 800;
-}
-
-.forecast-rain {
-  color: var(--muted);
-  font-size: clamp(9px, 0.85vw, 12px);
-  margin-top: 3px;
-}
-
-.bottom-row {
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  gap: 7px;
-  flex: 1;
-  min-height: 80px;
-}
-
-.tip-card, .math-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 0;
-  overflow: hidden;
-  border-radius: 17px;
-}
-
-.tip-card {
-  background: linear-gradient(135deg, #e5f9e8, #f7fff8);
-  border-color: #bde8c7;
-}
-
-.tip-heading, .math-heading {
-  font-size: clamp(11px, 1.05vw, 15px);
-  font-weight: 800;
-  letter-spacing: 0.6px;
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.heading-bubble {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 29px;
-  height: 29px;
-  border-radius: 10px;
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
-.tip-heading { color: #237849; }
-
-.tip-heading .heading-bubble {
-  background: #c9f1d1;
-}
-
-.tip-text {
-  color: #285b3b;
-  font-size: clamp(13px, 1.25vw, 18px);
+.details {
+  font-size: clamp(22px, 3vw, 38px);
   font-weight: 600;
-  line-height: 1.25;
+  margin-top: 2vh;
 }
 
-.math-card {
-  background: linear-gradient(135deg, #e4f1ff, #f6f0ff);
-  border-color: #cadcf8;
-  align-items: center;
-  text-align: center;
-  padding: 7px 10px;
-  position: relative;
+#updated {
+  font-size: clamp(14px, 1.5vw, 20px);
+  margin-top: 3vh;
+  opacity: 0.85;
 }
 
-.math-heading {
-  color: var(--blue);
-}
-
-.math-heading .heading-bubble {
-  background: #d6e6ff;
-}
-
-.math-question {
-  color: #17447e;
-  font-size: clamp(24px, 2.8vw, 40px);
-  font-weight: 800;
-  line-height: 1.1;
-  white-space: nowrap;
-  background: white;
-  border: 2px dashed #b7d2ff;
-  border-radius: 14px;
-  padding: 5px 16px;
-  max-width: 100%;
-}
-
-.math-caption {
-  color: #45678f;
-  font-size: clamp(10px, 0.9vw, 13px);
-  margin-top: 4px;
-}
-
-.status-line {
-  flex-shrink: 0;
-  text-align: right;
-  color: #7c8b9d;
-  font-size: 10px;
-}
-
-/* Short TV screens */
-@media (max-height: 750px) {
-  .dashboard { padding: 5px 10px; gap: 4px; }
-  .header { min-height: 46px; }
-  .logo { width: 48px; height: 39px; }
-  .card { padding: 6px 9px; border-radius: 12px; }
-  .weather-card { min-height: 74px; }
-  .forecast-card { padding: 5px 3px; }
-  .forecast-icon { margin: 2px 0; }
-  .section-heading { margin-bottom: 3px; }
-  .bottom-row { min-height: 70px; }
-  .subtitle { display: none; }
+#message {
+  font-size: clamp(16px, 2vw, 24px);
+  margin-top: 1.5vh;
 }
 
 @media (max-height: 600px) {
-  .dashboard { padding: 4px 8px; gap: 3px; }
-  .header { min-height: 39px; }
-  .logo { width: 40px; height: 33px; }
-  h1 { font-size: clamp(19px, 2.2vw, 29px); }
-  .card { padding: 5px 8px; }
-  .weather-card { min-height: 62px; }
-  .temperature { font-size: 29px; }
-  .weather-icon { font-size: 29px; }
-  .metric-value { font-size: 24px; }
-  .forecast-icon { font-size: 22px; }
-  .forecast-temp { font-size: 18px; }
-  .bottom-row { min-height: 58px; }
-  .tip-text { font-size: 12px; }
-  .math-question { font-size: 24px; padding: 3px 10px; }
-  .math-caption { display: none; }
-  .heading-bubble { width: 23px; height: 23px; font-size: 15px; }
-}
+  #aqi {
+    font-size: min(35vh, 250px);
+    margin: 0;
+  }
 
-@media (max-width: 700px) {
-  html, body { height: auto; min-height: 100%; overflow: auto; }
-  .dashboard { height: auto; min-height: 100vh; overflow: visible; padding: 5px; gap: 5px; }
-  .header { gap: 4px; }
-  .brand { gap: 5px; }
-  .logo { width: 36px; height: 35px; }
-  h1 { font-size: 17px; }
-  .location { font-size: 10px; padding: 5px 7px; }
-  .top-row { gap: 4px; }
-  .weather-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; }
-  .weather-card { min-height: 59px; }
-  .forecast-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
-  .forecast-card:nth-child(n+4) { display: none; }
-  .bottom-row { grid-template-columns: 1fr 1fr; gap: 4px; min-height: 110px; }
-  .tip-text { font-size: 11px; }
-  .math-question { font-size: clamp(17px, 4vw, 25px); padding: 4px 6px; }
-  .math-caption { font-size: 9px; }
+  #status {
+    font-size: min(8vh, 48px);
+    margin: 0;
+  }
+
+  .details {
+    margin-top: 1vh;
+  }
+
+  #updated {
+    margin-top: 1vh;
+  }
 }
 </style>
 </head>
 
 <body>
-<div class="dashboard">
+<div id="app">
+  <div class="location">AIR QUALITY</div>
+  <div class="subtitle">Bang Kruai · Nonthaburi, Thailand</div>
 
-  <header class="header">
-    <div class="brand">
-      <img class="logo"
-        src="https://i.ibb.co/FbyHfVzQ/DLTS-Logo.png"
-        alt="DLTS Logo"
-        onerror="this.style.display='none'">
-      <div>
-        <h1>🌈 DLTS Weather &amp; Air Quality</h1>
-        <div class="subtitle">☀️ Weather updates, healthy habits &amp; brain challenges ⭐</div>
-      </div>
-    </div>
-    <div class="location">📍 Nonthaburi, Thailand</div>
-  </header>
+  <div id="aqi">--</div>
+  <div id="status">Loading...</div>
 
-  <div class="top-row">
-    <section class="card time-date">
-      <div>
-        <div class="eyebrow">🕒 LOCAL TIME</div>
-        <div class="big-time" id="clock">--:--:--</div>
-      </div>
-      <div style="text-align:right">
-        <div class="eyebrow">📅 TODAY</div>
-        <div class="big-date" id="date">---</div>
-        <div class="day-text" id="day">---</div>
-      </div>
-    </section>
-
-    <section class="card time-date">
-      <div>
-        <div class="eyebrow">🌍 YOUR LOCAL WEATHER</div>
-        <div style="font-size:clamp(16px,1.8vw,25px);font-weight:800">Nonthaburi</div>
-        <div class="day-text">🌤️ Live weather &amp; air quality</div>
-      </div>
-      <div style="font-size:clamp(27px,3vw,40px)">🏫</div>
-    </section>
+  <div class="details">
+    PM2.5: <span id="pm25">--</span> µg/m³
   </div>
 
-  <div class="weather-grid">
-    <section class="card weather-card">
-      <div class="weather-main">
-        <div class="weather-icon" id="weatherIcon">🌤️</div>
-        <div>
-          <div class="temperature" id="temperature">--°</div>
-          <div class="weather-description" id="weatherDescription">Loading weather...</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card weather-card">
-      <div class="metric-title">🌡️ FEELS LIKE</div>
-      <div class="metric-value" id="feelsLike">--°</div>
-      <div class="metric-sub">How warm it feels outside</div>
-    </section>
-
-    <section class="card weather-card aqi-moderate" id="aqiCard">
-      <div class="metric-title">🍃 IQAIR STATION AQI</div>
-      <a href="https://www.iqair.com/th-en/air-quality/thailand/nonthaburi/bang-kruai/denlarama-v" target="_blank" rel="noopener" style="color:inherit;text-decoration:none"><div class="metric-value" id="aqi">--</div></a>
-      <div class="metric-sub" id="aqiLabel">Connecting to Denla Rama 5...</div>
-      <div class="metric-sub"><a href="https://www.iqair.com/th-en/air-quality/thailand/nonthaburi/bang-kruai/denlarama-v" target="_blank" rel="noopener" style="color:inherit;font-weight:bold">Open IQAir station ↗</a></div>
-    </section>
-
-    <section class="card weather-card">
-      <div class="metric-title">🔬 PM2.5</div>
-      <div class="metric-value" id="pm25">--</div>
-      <div class="metric-sub">Tiny particles in the air · µg/m³</div>
-    </section>
-  </div>
-
-  <section class="card" id="classroomTipCard" style="padding:6px 10px;background:#fff9df;border-color:#f1df9b;display:flex;align-items:center;gap:9px;flex-shrink:0">
-    <div id="classroomTipIcon" style="font-size:clamp(20px,2vw,28px)">🌤️</div>
-    <div style="min-width:0">
-      <div style="font-size:clamp(10px,.9vw,13px);font-weight:800;color:#775b00">CLASSROOM WEATHER MISSION</div>
-      <div id="classroomTip" style="font-size:clamp(11px,1vw,14px);font-weight:600;color:#574b24">Check the air quality before outdoor play.</div>
-    </div>
-  </section>
-
-  <section class="forecast-section">
-    <h2 class="section-heading">
-      <span class="heading-icon">⏰</span>
-      WEATHER ADVENTURE · NEXT HOURS 🌈
-    </h2>
-    <div class="forecast-grid" id="forecast">
-      <div class="card forecast-card">Loading forecast...</div>
-    </div>
-  </section>
-
-  <div class="bottom-row">
-    <section class="card tip-card">
-      <div class="tip-heading">
-        <span class="heading-bubble" id="tipIcon">💚</span>
-        HEALTHY HABITS
-      </div>
-      <div class="tip-text" id="healthyTip">Small healthy choices make a difference!</div>
-    </section>
-
-    <section class="card math-card">
-      <div class="math-heading">
-        <span class="heading-bubble">🧠</span>
-        SUPER MATH CHALLENGE ⭐
-      </div>
-      <div class="math-question" id="mathQuestion">Loading...</div>
-      <div class="math-caption">💡 Can you solve it? · New puzzle every 10 minutes!</div>
-    </section>
-  </div>
-
-  <div class="status-line" id="updatedAt">🔄 Connecting to live weather data...</div>
+  <div id="message">Checking the latest available air quality data...</div>
+  <div id="updated">Connecting...</div>
 </div>
 
 <script>
-const TIMEZONE = "Asia/Bangkok";
-const LATITUDE = 13.8591;
-const LONGITUDE = 100.5217;
+const latitude = 13.805;
+const longitude = 100.472;
 
-function updateClock() {
-  const now = new Date();
-
-  document.getElementById("clock").textContent =
-    new Intl.DateTimeFormat("en-GB", {
-      timeZone: TIMEZONE,
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false
-    }).format(now);
-
-  document.getElementById("date").textContent =
-    new Intl.DateTimeFormat("en-GB", {
-      timeZone: TIMEZONE,
-      day: "2-digit",
-      month: "short",
-      year: "numeric"
-    }).format(now);
-
-  document.getElementById("day").textContent =
-    new Intl.DateTimeFormat("en-US", {
-      timeZone: TIMEZONE,
-      weekday: "long"
-    }).format(now);
-}
-
-updateClock();
-setInterval(updateClock, 1000);
-
-const tips = [
-  ["💧", "Drink water regularly throughout the day."],
-  ["🤸", "Stand up and stretch after sitting for a long time."],
-  ["🍎", "Eat a variety of colourful fruits and vegetables."],
-  ["🧼", "Wash your hands before eating."],
-  ["🏃", "Take a short movement break between tasks."],
-  ["💤", "Get enough sleep to help your brain recharge."],
-  ["👀", "Remember to blink and rest your eyes from screens."],
-  ["🥤", "Choose water instead of sugary drinks."],
-  ["🌳", "Spend time outdoors when air quality is good."],
-  ["🦷", "Brush your teeth twice a day."],
-  ["🥣", "Enjoy a balanced breakfast to start your day."],
-  ["🪑", "Sit with good posture when studying."],
-  ["🌬️", "Take slow, deep breaths when you feel stressed."],
-  ["🚰", "Keep your personal water bottle clean."],
-  ["🚶", "Walk or move whenever you have the opportunity."],
-  ["🍽️", "Eat slowly and enjoy your meals."],
-  ["🤧", "Cover your mouth when coughing or sneezing."],
-  ["😄", "Make time for play, hobbies and laughter."],
-  ["🍓", "Wash fruits before eating them."],
-  ["📵", "Give your eyes a break from screens."],
-  ["🥚", "Try to include protein in your meals."],
-  ["🧹", "Keep your workspace clean and organised."],
-  ["🧑‍🤝‍🧑", "Spend time talking and laughing with friends."],
-  ["🧢", "Wear a hat or find shade in strong sunshine."],
-  ["🌱", "Stretch gently after long periods of sitting."],
-  ["💚", "Remember that rest is part of being productive."],
-  ["🥕", "Choose a healthy snack when you feel hungry."],
-  ["🧽", "Keep your surroundings tidy to reduce dust."],
-  ["⭐", "Think of one good thing that happened today."],
-  ["🤝", "Be kind to yourself and others."]
-];
-
-function bangkokDateKey() {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: TIMEZONE,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  }).formatToParts(new Date());
-
-  const values = {};
-  parts.forEach(p => values[p.type] = p.value);
-  return `${values.year}-${values.month}-${values.day}`;
-}
-
-function updateHealthyTip() {
-  const key = bangkokDateKey();
-  const dayNumber = Math.floor(
-    new Date(key + "T00:00:00Z").getTime() / 86400000
-  );
-  const index = ((dayNumber % tips.length) + tips.length) % tips.length;
-
-  document.getElementById("tipIcon").textContent = tips[index][0];
-  document.getElementById("healthyTip").textContent = tips[index][1];
-}
-
-updateHealthyTip();
-setInterval(updateHealthyTip, 60 * 60 * 1000);
-
-function makeMathQuestion() {
-  const rand = (min, max) =>
-    Math.floor(Math.random() * (max - min + 1)) + min;
-
-  switch (rand(0, 6)) {
-    case 0: {
-      const a = rand(3, 12), b = rand(4, 9), c = rand(5, 25);
-      return `${a} + ${b} × ${c} = ?`;
-    }
-    case 1: {
-      const b = rand(2, 12), a = b * rand(3, 12), c = rand(5, 30);
-      return `${a} ÷ ${b} + ${c} = ?`;
-    }
-    case 2: {
-      const a = rand(8, 25), b = rand(5, 20), c = rand(2, 6);
-      return `(${a} + ${b}) × ${c} = ?`;
-    }
-    case 3: {
-      const a = rand(6, 15), b = rand(3, 9), c = rand(2, 8), d = rand(5, 25);
-      return `${a} × ${b} − ${c} + ${d} = ?`;
-    }
-    case 4: {
-      const b = rand(2, 10), a = b * rand(4, 15), c = rand(2, 8);
-      return `${a} ÷ ${b} × ${c} = ?`;
-    }
-    case 5: {
-      const a = rand(30, 100), b = rand(2, 9), c = rand(2, 9), d = rand(5, 30);
-      return `${a} − ${b} × ${c} + ${d} = ?`;
-    }
-    default: {
-      const a = rand(3, 15), b = rand(2, 8), c = rand(2, 9);
-      return `${a} × (${b} + ${c}) = ?`;
-    }
-  }
-}
-
-let previousQuestion = "";
-
-function updateMathQuestion() {
-  let next;
-  do {
-    next = makeMathQuestion();
-  } while (next === previousQuestion);
-
-  previousQuestion = next;
-  document.getElementById("mathQuestion").textContent = next;
-}
-
-updateMathQuestion();
-setInterval(updateMathQuestion, 10 * 60 * 1000);
-
-function weatherInfo(code) {
-  const map = {
-    0: ["☀️", "Sunny skies"],
-    1: ["🌤️", "Mostly sunny"],
-    2: ["⛅", "Partly cloudy"],
-    3: ["☁️", "Cloudy skies"],
-    45: ["🌫️", "Foggy"],
-    48: ["🌫️", "Foggy"],
-    51: ["🌦️", "Light drizzle"],
-    53: ["🌦️", "Drizzle"],
-    55: ["🌧️", "Heavy drizzle"],
-    56: ["🌧️", "Freezing drizzle"],
-    57: ["🌧️", "Freezing drizzle"],
-    61: ["🌦️", "Light rain"],
-    63: ["🌧️", "Moderate rain"],
-    65: ["🌧️", "Heavy rain"],
-    66: ["🌧️", "Freezing rain"],
-    67: ["🌧️", "Freezing rain"],
-    71: ["🌨️", "Light snow"],
-    73: ["🌨️", "Snow"],
-    75: ["❄️", "Heavy snow"],
-    77: ["🌨️", "Snow grains"],
-    80: ["🌦️", "Rain showers"],
-    81: ["🌧️", "Moderate showers"],
-    82: ["⛈️", "Heavy showers"],
-    85: ["🌨️", "Snow showers"],
-    86: ["❄️", "Heavy snow showers"],
-    95: ["⛈️", "Thunderstorm"],
-    96: ["⛈️", "Thunderstorm with hail"],
-    99: ["⛈️", "Severe thunderstorm"]
-  };
-
-  return map[code] || ["🌤️", "Weather unavailable"];
-}
-
-function getAQIState(value) {
-  if (value == null || !Number.isFinite(Number(value))) {
-    return { className: "", label: "⚪ Unavailable" };
-  }
-
-  value = Number(value);
-
-  if (value <= 50)
-    return { className: "aqi-good", label: "🟢 Good air" };
-
-  if (value <= 100)
-    return { className: "aqi-moderate", label: "🟡 Moderate" };
-
-  if (value <= 150)
-    return { className: "aqi-sensitive", label: "🟠 Sensitive groups" };
-
-  if (value <= 200)
-    return { className: "aqi-unhealthy", label: "🔴 Unhealthy" };
-
-  if (value <= 300)
-    return { className: "aqi-very-unhealthy", label: "🟣 Very unhealthy" };
-
-  return { className: "aqi-hazardous", label: "🟤 Hazardous" };
-}
-
-async function loadWeather() {
-  const url = new URL("https://api.open-meteo.com/v1/forecast");
-
-  url.search = new URLSearchParams({
-    latitude: LATITUDE,
-    longitude: LONGITUDE,
-    current: "temperature_2m,apparent_temperature,weather_code",
-    hourly: "temperature_2m,precipitation_probability,weather_code",
-    timezone: TIMEZONE,
-    forecast_days: "2"
-  }).toString();
+async function loadAQI() {
+  const updated = document.getElementById("updated");
+  const message = document.getElementById("message");
 
   try {
+    const url =
+      `https://air-quality-api.open-meteo.com/v1/air-quality` +
+      `?latitude=${latitude}` +
+      `&longitude=${longitude}` +
+      `&current=us_aqi,pm2_5` +
+      `&timezone=Asia%2FBangkok`;
+
     const response = await fetch(url);
-    if (!response.ok) throw new Error("Weather request failed");
+
+    if (!response.ok) throw new Error("Data unavailable");
 
     const data = await response.json();
     const current = data.current;
-    const info = weatherInfo(current.weather_code);
 
-    document.getElementById("temperature").textContent =
-      `${Math.round(current.temperature_2m)}°`;
+    if (current.us_aqi == null) {
+      throw new Error("AQI unavailable");
+    }
 
-    document.getElementById("feelsLike").textContent =
-      `${Math.round(current.apparent_temperature)}°`;
+    const aqi = Math.round(current.us_aqi);
+    const pm = current.pm2_5;
 
-    document.getElementById("weatherIcon").textContent = info[0];
-    document.getElementById("weatherDescription").textContent = info[1];
+    let color, status, advice;
 
-    const container = document.getElementById("forecast");
-    container.innerHTML = "";
+    if (aqi <= 50) {
+      color = "#16834a";
+      status = "GOOD";
+      advice = "Great air for outdoor activities!";
+    } else if (aqi <= 100) {
+      color = "#b9a900";
+      status = "MODERATE";
+      advice = "Sensitive students should take care.";
+    } else if (aqi <= 150) {
+      color = "#d96b00";
+      status = "UNHEALTHY FOR SENSITIVE GROUPS";
+      advice = "Sensitive students should limit outdoor activity.";
+    } else if (aqi <= 200) {
+      color = "#c62828";
+      status = "UNHEALTHY";
+      advice = "Reduce prolonged outdoor activities.";
+    } else if (aqi <= 300) {
+      color = "#7626a8";
+      status = "VERY UNHEALTHY";
+      advice = "Avoid outdoor exercise where possible.";
+    } else {
+      color = "#681b27";
+      status = "HAZARDOUS";
+      advice = "Avoid outdoor activities.";
+    }
 
-    const now = Date.now();
-    let start = data.hourly.time.findIndex(
-      t => new Date(t).getTime() >= now
-    );
-    if (start < 0) start = 0;
+    document.body.style.background = color;
+    document.getElementById("aqi").textContent = aqi;
+    document.getElementById("status").textContent = status;
+    document.getElementById("pm25").textContent =
+      pm == null ? "--" : Number(pm).toFixed(1);
 
-    for (let i = 0; i < 6; i++) {
-      const index = start + i * 2;
-      if (index >= data.hourly.time.length) break;
+    message.textContent = advice;
 
-      const time = new Date(data.hourly.time[index]);
-
-      const timeLabel = new Intl.DateTimeFormat("en-GB", {
-        timeZone: TIMEZONE,
+    const time = new Date(current.time);
+    updated.textContent =
+      "Last updated: " +
+      time.toLocaleString("en-GB", {
+        timeZone: "Asia/Bangkok",
+        day: "numeric",
+        month: "short",
         hour: "2-digit",
         minute: "2-digit",
         hour12: false
-      }).format(time);
-
-      const info = weatherInfo(data.hourly.weather_code[index]);
-      const temp = Math.round(data.hourly.temperature_2m[index]);
-      const rain = data.hourly.precipitation_probability[index];
-
-      const card = document.createElement("div");
-      card.className = "card forecast-card";
-
-      const timeEl = document.createElement("div");
-      timeEl.className = "forecast-time";
-      timeEl.textContent = "🕒 " + timeLabel;
-
-      const iconEl = document.createElement("div");
-      iconEl.className = "forecast-icon";
-      iconEl.textContent = info[0];
-
-      const tempEl = document.createElement("div");
-      tempEl.className = "forecast-temp";
-      tempEl.textContent = `${temp}°`;
-
-      const rainEl = document.createElement("div");
-      rainEl.className = "forecast-rain";
-      rainEl.textContent = `💧 ${rain ?? "--"}% rain`;
-
-      card.append(timeEl, iconEl, tempEl, rainEl);
-      container.appendChild(card);
-    }
-
-    document.getElementById("updatedAt").textContent =
-      "🔄 Weather updated: " +
-      new Intl.DateTimeFormat("en-GB", {
-        timeZone: TIMEZONE,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-      }).format(new Date());
+      }) +
+      " · Bangkok time";
 
   } catch (error) {
-    document.getElementById("weatherDescription").textContent =
-      "Weather data unavailable";
-
-    document.getElementById("updatedAt").textContent =
-      "⚠️ Weather connection unavailable. Retrying automatically.";
-
-    console.error(error);
+    document.getElementById("aqi").textContent = "--";
+    document.getElementById("status").textContent = "DATA UNAVAILABLE";
+    document.getElementById("pm25").textContent = "--";
+    message.textContent =
+      "Please check the internet connection.";
+    updated.textContent = "Unable to retrieve current data.";
+    document.body.style.background = "#424b55";
   }
 }
 
-// To show the exact Denla Rama 5 station reading, add an IQAir AirVisual API key below.
-// Create/manage a key at https://dashboard.iqair.com/.
-// The API plan must permit the /v2/station endpoint for station-level data.
-const IQAIR_API_KEY = "PASTE_YOUR_IQAIR_API_KEY_HERE";
-const IQAIR_STATION_PAGE = "https://www.iqair.com/th-en/air-quality/thailand/nonthaburi/bang-kruai/denlarama-v";
-
-function updateClassroomMission(aqiValue, weatherCode) {
-  const icon = document.getElementById("classroomTipIcon");
-  const tip = document.getElementById("classroomTip");
-  const card = document.getElementById("classroomTipCard");
-
-  if (aqiValue == null || !Number.isFinite(Number(aqiValue))) {
-    icon.textContent = "🍃";
-    tip.textContent = "Check the latest IQAir reading before outdoor play.";
-    card.style.background = "#fff9df";
-    card.style.borderColor = "#f1df9b";
-    return;
-  }
-
-  const aqi = Number(aqiValue);
-  if (aqi <= 50) {
-    icon.textContent = "🌳";
-    tip.textContent = "Air looks good! If school rules allow, enjoy some outdoor movement.";
-    card.style.background = "#e1f8e8";
-    card.style.borderColor = "#9dd9ab";
-  } else if (aqi <= 100) {
-    icon.textContent = "🙂";
-    tip.textContent = "Air quality is moderate. Sensitive students should take care during outdoor exercise.";
-    card.style.background = "#fff4c2";
-    card.style.borderColor = "#e7cb54";
-  } else if (aqi <= 150) {
-    icon.textContent = "😷";
-    tip.textContent = "Sensitive groups should reduce long or intense outdoor activity.";
-    card.style.background = "#ffe1c2";
-    card.style.borderColor = "#f0a04d";
-  } else {
-    icon.textContent = "🏫";
-    tip.textContent = "Poor air quality: choose indoor activities and follow school guidance.";
-    card.style.background = "#ffdada";
-    card.style.borderColor = "#e77777";
-  }
-}
-
-async function loadAirQuality() {
-  const aqiEl = document.getElementById("aqi");
-  const labelEl = document.getElementById("aqiLabel");
-  const pmEl = document.getElementById("pm25");
-  const card = document.getElementById("aqiCard");
-
-  if (!IQAIR_API_KEY || IQAIR_API_KEY === "PASTE_YOUR_IQAIR_API_KEY_HERE") {
-    aqiEl.textContent = "--";
-    pmEl.textContent = "--";
-    labelEl.textContent = "Add IQAir API key for live station data";
-    card.classList.remove("aqi-good", "aqi-moderate", "aqi-sensitive",
-      "aqi-unhealthy", "aqi-very-unhealthy", "aqi-hazardous");
-    card.classList.add("aqi-moderate");
-    updateClassroomMission(null);
-    return;
-  }
-
-  const params = new URLSearchParams({
-    station: "Denla Rama 5",
-    city: "Bang Kruai",
-    state: "Nonthaburi",
-    country: "Thailand",
-    key: IQAIR_API_KEY
-  });
-
-  try {
-    const response = await fetch("https://api.airvisual.com/v2/station?" + params.toString());
-    if (!response.ok) throw new Error("IQAir API request failed");
-    const result = await response.json();
-    if (result.status !== "success" || !result.data?.current?.pollution) {
-      throw new Error(result.data?.message || "Station data unavailable");
-    }
-
-    const pollution = result.data.current.pollution;
-    const aqi = pollution.aqius;
-    const pm25 = pollution.p2?.conc ?? pollution.pm25?.conc ?? null;
-
-    aqiEl.textContent = aqi == null ? "--" : Math.round(aqi);
-    pmEl.textContent = pm25 == null ? "--" : Number(pm25).toFixed(1);
-
-    const state = getAQIState(aqi);
-    card.classList.remove("aqi-good", "aqi-moderate", "aqi-sensitive",
-      "aqi-unhealthy", "aqi-very-unhealthy", "aqi-hazardous");
-    if (state.className) card.classList.add(state.className);
-
-    const timestamp = pollution.ts
-      ? new Date(pollution.ts).toLocaleTimeString("en-GB", {
-          timeZone: TIMEZONE, hour: "2-digit", minute: "2-digit"
-        })
-      : "";
-    labelEl.textContent = state.label + (timestamp ? " · IQAir " + timestamp : "");
-    updateClassroomMission(aqi);
-  } catch (error) {
-    aqiEl.textContent = "--";
-    pmEl.textContent = "--";
-    labelEl.textContent = "Live station data unavailable · Open IQAir ↗";
-    updateClassroomMission(null);
-    console.error("IQAir station data:", error);
-  }
-}
-
-loadWeather();
-loadAirQuality();
-
-setInterval(loadWeather, 10 * 60 * 1000);
-setInterval(loadAirQuality, 10 * 60 * 1000);
+loadAQI();
+setInterval(loadAQI, 10 * 60 * 1000);
 </script>
 </body>
 </html>
