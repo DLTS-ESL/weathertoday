@@ -782,38 +782,71 @@ body { overflow: hidden; }
 
 
 
-/* TV header: title, location, Thailand time and date share one row */
+/* Shared top row: clock/date on the left, Christmas countdown on the right */
 .masthead-clock {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(250px, .8fr) minmax(0, .9fr);
-  align-items: center;
-  gap: clamp(12px, 1.5vw, 24px);
-  padding: clamp(10px, 1.2vw, 18px) clamp(16px, 1.7vw, 26px);
+  grid-template-columns: minmax(0, 1.45fr) minmax(340px, 1fr);
+  align-items: stretch;
+  gap: clamp(10px, 1.2vw, 18px);
+  padding: clamp(9px, 1vw, 15px) clamp(12px, 1.5vw, 22px);
   border-radius: 20px;
   color: #fff;
   background: linear-gradient(115deg, #145ec4, #398ded);
   box-shadow: var(--shadow);
   flex-shrink: 0;
 }
-.masthead-brand { min-width: 0; }
-.masthead-clock .brand { font-size: clamp(23px, 2.25vw, 38px); line-height: 1.12; }
-.masthead-clock .location { color: #e5f1ff; font-size: clamp(17px, 1.55vw, 26px); margin-top: 8px; }
-.masthead-time { min-width: 0; }
-.masthead-clock .clock-label { font-size: clamp(15px, 1.25vw, 21px); }
-.masthead-clock .clock { font-size: clamp(48px, 5vw, 82px); letter-spacing: -1px; }
-.masthead-date { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; min-width: 0; }
-.masthead-clock .date { font-size: clamp(22px, 2.1vw, 34px); }
-.masthead-clock .date small { font-size: clamp(16px, 1.35vw, 22px); }
-.masthead-clock .live-label { background: rgba(255,255,255,.18); color: #fff; font-size: clamp(12px, .95vw, 16px); padding: 6px 10px; }
-@media (max-width: 900px) {
-  .masthead-clock { grid-template-columns: 1fr 1fr; }
-  .masthead-date { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; }
+.masthead-clock-info {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(190px, .8fr) minmax(0, .75fr);
+  align-items: center;
+  gap: clamp(8px, 1vw, 16px);
+  min-width: 0;
 }
-@media (max-width: 560px) {
-  .masthead-clock { grid-template-columns: 1fr; gap: 10px; }
-  .masthead-clock .clock { font-size: clamp(42px, 11vw, 60px); }
-  .masthead-date { grid-column: auto; }
-  .masthead-clock .brand { font-size: 23px; }
+.masthead-brand { min-width: 0; }
+.masthead-clock .brand { font-size: clamp(21px, 2vw, 34px); line-height: 1.12; }
+.masthead-clock .location { color: #e5f1ff; font-size: clamp(13px, 1.15vw, 19px); margin-top: 7px; }
+.masthead-time { min-width: 0; }
+.masthead-clock .clock-label { font-size: clamp(12px, 1vw, 17px); }
+.masthead-clock .clock { font-size: clamp(40px, 4.2vw, 68px); letter-spacing: -1px; }
+.masthead-date { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; min-width: 0; }
+.masthead-clock .date { font-size: clamp(17px, 1.6vw, 27px); }
+.masthead-clock .date small { font-size: clamp(12px, 1vw, 17px); }
+.masthead-clock .live-label { background: rgba(255,255,255,.18); color: #fff; font-size: clamp(10px, .8vw, 13px); padding: 6px 9px; }
+
+/* Compact countdown card sized to share the header without crowding the clock */
+.masthead-clock .christmas-countdown-section {
+  width: 100%; min-width: 0; margin: 0; padding: 10px 12px;
+  display: flex; flex-direction: column; justify-content: center; gap: 8px;
+  border: 1px solid rgba(255,255,255,.38); border-radius: 15px;
+  background: linear-gradient(120deg, rgba(8,75,45,.96), rgba(17,111,66,.96));
+  box-shadow: inset 0 1px 8px rgba(255,255,255,.09);
+}
+.masthead-clock .christmas-countdown-title {
+  margin: 0; font-size: clamp(15px, 1.35vw, 22px); line-height: 1.1;
+  letter-spacing: .025em;
+}
+.masthead-clock .christmas-countdown-grid {
+  width: 100%; max-width: none; gap: clamp(4px, .55vw, 9px);
+}
+.masthead-clock .christmas-unit { padding: clamp(5px, .65vw, 10px) 2px; border-radius: 9px; }
+.masthead-clock .christmas-number { font-size: clamp(23px, 2.65vw, 43px); }
+.masthead-clock .christmas-caption { margin-top: 4px; font-size: clamp(8px, .72vw, 11px); letter-spacing: .04em; }
+.masthead-clock .christmas-greeting { margin-top: 0; font-size: clamp(9px, .75vw, 12px); }
+
+@media (max-width: 1050px) {
+  .masthead-clock { grid-template-columns: minmax(0, 1fr); }
+  .masthead-clock-info { grid-template-columns: minmax(0, 1.1fr) minmax(180px, .8fr) minmax(0, .7fr); }
+  .masthead-clock .christmas-countdown-section { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; }
+  .masthead-clock .christmas-countdown-title { white-space: nowrap; }
+}
+@media (max-width: 650px) {
+  .masthead-clock-info { grid-template-columns: 1fr 1fr; }
+  .masthead-date { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; }
+  .masthead-clock .clock { font-size: clamp(38px, 10vw, 56px); }
+  .masthead-clock .brand { font-size: 22px; }
+  .masthead-clock .christmas-countdown-section { display: flex; }
+  .masthead-clock .christmas-countdown-title { white-space: normal; font-size: 18px; }
+  .masthead-clock .christmas-number { font-size: clamp(25px, 7vw, 38px); }
 }
 
 
@@ -898,6 +931,184 @@ body { overflow: hidden; }
 @media (max-width:560px) { .outdoor-aqi-split { grid-template-columns:1fr; } }
 @media (max-height:760px) { .aqi-live-card, .outdoor-card { padding:8px 9px; gap:5px; } .aqi-live-number { font-size:clamp(35px, 3.8vw, 54px); } .outdoor-main { font-size:clamp(21px, 2.2vw, 32px); } .outdoor-message { font-size:clamp(12px, 1vw, 15px); } .outdoor-detail, .aqi-live-note, .aqi-live-link { font-size:clamp(10px, .8vw, 12px); } }
 
+
+
+/* Christmas additions — isolated styles to preserve the existing dashboard */
+#christmasSnowLayer {
+  position: fixed; inset: 0; overflow: hidden; pointer-events: none;
+  z-index: 9999; contain: strict;
+}
+#christmasSnowLayer .snowflake {
+  position: absolute; top: -12vh; color: rgba(255,255,255,.88);
+  text-shadow: 0 0 5px rgba(90,145,200,.35);
+  user-select: none; will-change: transform;
+  animation-name: dltsSnowFall; animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes dltsSnowFall {
+  0% { transform: translate3d(0,-12vh,0) rotate(0deg); }
+  100% { transform: translate3d(var(--snow-drift, 30px),112vh,0) rotate(360deg); }
+}
+/* Large four-part Christmas countdown */
+.christmas-countdown-section {
+  width: 100%;
+  margin: 8px 0 0;
+  padding: clamp(14px, 1.8vw, 26px);
+  box-sizing: border-box;
+  border-radius: 18px;
+  border: 2px solid rgba(255,255,255,.75);
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255,255,255,.18), transparent 28%),
+    linear-gradient(115deg, #0d5b3a, #16834e 55%, #0c5738);
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 7px 22px rgba(16,72,53,.2);
+}
+.christmas-countdown-title {
+  margin: 0 0 clamp(12px, 1.4vw, 20px);
+  font-size: clamp(25px, 3.1vw, 48px);
+  line-height: 1.08;
+  font-weight: 950;
+  letter-spacing: .035em;
+  text-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+.christmas-countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(7px, 1.3vw, 18px);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.christmas-unit {
+  min-width: 0;
+  padding: clamp(9px, 1.3vw, 18px) 5px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.3);
+  box-shadow: inset 0 1px 5px rgba(255,255,255,.08);
+}
+.christmas-number {
+  font-size: clamp(34px, 5.4vw, 82px);
+  line-height: .98;
+  font-weight: 950;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.04em;
+}
+.christmas-caption {
+  margin-top: 8px;
+  font-size: clamp(11px, 1.25vw, 19px);
+  font-weight: 900;
+  letter-spacing: .1em;
+}
+.christmas-greeting {
+  margin-top: 12px;
+  font-size: clamp(12px, 1.1vw, 16px);
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+@media (max-width: 600px) {
+  .christmas-countdown-section { padding: 13px 9px; }
+  .christmas-countdown-title { font-size: clamp(21px, 6vw, 30px); }
+  .christmas-countdown-grid { gap: 5px; }
+  .christmas-unit { padding: 10px 2px; border-radius: 9px; }
+  .christmas-number { font-size: clamp(27px, 8vw, 42px); }
+  .christmas-caption { font-size: clamp(9px, 2.5vw, 12px); letter-spacing: .04em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #christmasSnowLayer .snowflake { animation: none !important; display: none; }
+}
+
+
+
+/* THREE EVENT COUNTDOWNS — oversized for classroom / TV viewing */
+.masthead-clock { grid-template-columns: minmax(0, 1fr) !important; }
+.event-countdown-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(8px, 1vw, 16px);
+  flex: 0 0 auto;
+  min-width: 0;
+}
+.event-countdown {
+  min-width: 0;
+  padding: clamp(12px, 1.35vw, 21px);
+  border-radius: 17px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 5px 18px rgba(28, 65, 110, .12);
+  border: 1px solid rgba(255,255,255,.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(5px, .65vw, 10px);
+}
+.event-dlts { background: linear-gradient(125deg, #075b39, #15965a); }
+.event-avengers { background: linear-gradient(125deg, #172b54, #365b9c); }
+.event-christmas { background: linear-gradient(125deg, #8e202b, #c74643); }
+.event-countdown-title {
+  margin: 0;
+  font-size: clamp(22px, 2.15vw, 36px);
+  line-height: 1.08;
+  font-weight: 950;
+  letter-spacing: .015em;
+  text-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+.event-countdown-date {
+  font-size: clamp(13px, 1.05vw, 18px);
+  font-weight: 850;
+  letter-spacing: .09em;
+  opacity: .92;
+}
+.event-countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(4px, .55vw, 9px);
+  width: 100%;
+}
+.event-countdown-unit {
+  min-width: 0;
+  padding: clamp(7px, .85vw, 13px) 2px;
+  border-radius: 11px;
+  background: rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.28);
+}
+.event-countdown-number {
+  font-size: clamp(34px, 4.2vw, 68px);
+  line-height: .98;
+  font-weight: 950;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.045em;
+}
+.event-countdown-label {
+  margin-top: 5px;
+  font-size: clamp(9px, .85vw, 14px);
+  font-weight: 900;
+  letter-spacing: .07em;
+}
+.event-countdown-message {
+  font-size: clamp(11px, .95vw, 16px);
+  font-weight: 800;
+}
+@media (min-width: 1500px) {
+  .event-countdown { padding: 20px 18px; }
+  .event-countdown-title { font-size: clamp(30px, 2.25vw, 42px); }
+  .event-countdown-number { font-size: clamp(58px, 4.5vw, 82px); }
+  .event-countdown-label { font-size: clamp(13px, .9vw, 17px); }
+}
+@media (max-width: 900px) {
+  .event-countdown-board { grid-template-columns: 1fr; }
+  .event-countdown { padding: 16px 12px; }
+  .event-countdown-title { font-size: clamp(24px, 5vw, 34px); }
+  .event-countdown-number { font-size: clamp(38px, 9vw, 60px); }
+}
+@media (max-height: 760px) and (min-width: 901px) {
+  .event-countdown { padding: 8px 10px; gap: 4px; }
+  .event-countdown-title { font-size: clamp(19px, 1.8vw, 29px); }
+  .event-countdown-number { font-size: clamp(30px, 3.5vw, 54px); }
+  .event-countdown-unit { padding: 6px 2px; }
+  .event-countdown-message { display: none; }
+}
+
 </style>
 </head>
 
@@ -905,21 +1116,63 @@ body { overflow: hidden; }
 <div class="dashboard">
 
   <section class="masthead-clock">
-    <div class="masthead-brand">
-      <div class="brand">🌤 DLTS Weather &amp; Date Dashboard</div>
-      <div class="location">📍 Bang Kruai, Nonthaburi, Thailand</div>
-    </div>
-    <div class="masthead-time">
-      <div class="clock-label">THAILAND LOCAL TIME</div>
-      <div class="clock" id="clock">--:--:--</div>
-    </div>
-    <div class="masthead-date">
-      <div class="date">
-        <div id="weekday">Loading day...</div>
-        <small id="fullDate">Loading date...</small>
+    <div class="masthead-clock-info">
+      <div class="masthead-brand">
+        <div class="brand">🌤 DLTS Weather &amp; Date Dashboard</div>
+        <div class="location">📍 Bang Kruai, Nonthaburi, Thailand</div>
       </div>
-      <div class="live-label">● LIVE DASHBOARD</div>
+      <div class="masthead-time">
+        <div class="clock-label">THAILAND LOCAL TIME</div>
+        <div class="clock" id="clock">--:--:--</div>
+      </div>
+      <div class="masthead-date">
+        <div class="date">
+          <div id="weekday">Loading day...</div>
+          <small id="fullDate">Loading date...</small>
+        </div>
+        <div class="live-label">● LIVE DASHBOARD</div>
+      </div>
     </div>
+
+  </section>
+
+  <!-- THREE LARGE EVENT COUNTDOWNS -->
+  <section class="event-countdown-board" aria-label="Upcoming event countdowns">
+    <article class="event-countdown event-dlts">
+      <h2 class="event-countdown-title">🎄 DLTS CHRISTMAS SHOW</h2>
+      <div class="event-countdown-date">10 DECEMBER 2026</div>
+      <div class="event-countdown-grid" role="timer" aria-live="off" data-target="2026-12-10T00:00:00+07:00">
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="days">--</div><div class="event-countdown-label">DAYS</div></div>
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="hours">--</div><div class="event-countdown-label">HOURS</div></div>
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="minutes">--</div><div class="event-countdown-label">MINUTES</div></div>
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="seconds">--</div><div class="event-countdown-label">SECONDS</div></div>
+      </div>
+      <div class="event-countdown-message" data-message>🎅 Get ready for the show!</div>
+    </article>
+
+    <article class="event-countdown event-avengers">
+      <h2 class="event-countdown-title">🦸 AVENGERS: DOOMSDAY</h2>
+      <div class="event-countdown-date">17 DECEMBER 2026</div>
+      <div class="event-countdown-grid" role="timer" aria-live="off" data-target="2026-12-17T00:00:00+07:00">
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="days">--</div><div class="event-countdown-label">DAYS</div></div>
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="hours">--</div><div class="event-countdown-label">HOURS</div></div>
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="minutes">--</div><div class="event-countdown-label">MINUTES</div></div>
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="seconds">--</div><div class="event-countdown-label">SECONDS</div></div>
+      </div>
+      <div class="event-countdown-message" data-message>✨ The next big adventure awaits!</div>
+    </article>
+
+    <article class="event-countdown event-christmas">
+      <h2 class="event-countdown-title">🎄 CHRISTMAS DAY</h2>
+      <div class="event-countdown-date">25 DECEMBER 2026</div>
+      <div class="event-countdown-grid" role="timer" aria-live="off" data-target="2026-12-25T00:00:00+07:00">
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="days">--</div><div class="event-countdown-label">DAYS</div></div>
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="hours">--</div><div class="event-countdown-label">HOURS</div></div>
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="minutes">--</div><div class="event-countdown-label">MINUTES</div></div>
+        <div class="event-countdown-unit"><div class="event-countdown-number" data-part="seconds">--</div><div class="event-countdown-label">SECONDS</div></div>
+      </div>
+      <div class="event-countdown-message" data-message>❄️ Merry Christmas!</div>
+    </article>
   </section>
 
   <main class="weather-grid">
@@ -950,10 +1203,11 @@ body { overflow: hidden; }
 
     <div class="outdoor-aqi-split">
       <section class="aqi-live-card" aria-live="polite" aria-label="Bang Kruai air quality estimate">
-        <div class="aqi-live-heading">AIR QUALITY · BANG KRUAI, NONTHABURI</div>
+        <div class="aqi-live-heading">AIR QUALITY · BANG KRUAI</div>
         <div class="aqi-live-number" id="aqiLiveNumber">--</div>
         <div class="aqi-live-status" id="aqiLiveStatus">Loading AQI…</div>
-        <div class="aqi-live-note" id="aqiLiveNote">General Bang Kruai area estimate · US AQI</div>
+        <div class="aqi-live-note" id="aqiLiveNote">Nearby model estimate · US AQI</div>
+        <a class="aqi-live-link" href="https://www.iqair.com/air-quality/thailand/nonthaburi/bang-kruai/denlarama-v" target="_blank" rel="noopener">View Denla Rama V on IQAir ↗</a>
       </section>
       <section class="outdoor-card" id="outdoorCard" aria-live="polite">
         <div class="outdoor-heading">TODAY’S OUTDOOR GUIDE</div>
@@ -1009,6 +1263,8 @@ body { overflow: hidden; }
 
 
   </section>
+
+
 
   <section class="football-bar" aria-label="Football scores ticker">
     <div class="football-label">
@@ -1260,7 +1516,7 @@ setInterval(loadWeather, 10 * 60 * 1000);
 
 /* -------------------------------------------------------
    BANG KRUAI AIR QUALITY
-   General Open-Meteo modeled US AQI for Bang Kruai, Nonthaburi.
+   Open-Meteo modeled US AQI; not a direct IQAir station feed.
 ------------------------------------------------------- */
 async function loadAirQuality() {
   const numberEl = document.getElementById("aqiLiveNumber");
@@ -1286,14 +1542,14 @@ async function loadAirQuality() {
     statusEl.textContent = status;
     const pm = Number(current.pm2_5);
     noteEl.textContent = Number.isFinite(pm)
-      ? `PM2.5 ${pm.toFixed(1)} µg/m³ · General area estimate`
-      : "General Bang Kruai area estimate · US AQI";
+      ? `PM2.5 ${pm.toFixed(1)} µg/m³ · Model estimate`
+      : "Nearby model estimate · US AQI";
     const card = numberEl.closest(".aqi-live-card");
     card.style.background = bg; card.style.borderColor = border;
   } catch (error) {
     numberEl.textContent = "--";
     statusEl.textContent = "UNAVAILABLE";
-    noteEl.textContent = "Could not load Bang Kruai area AQI estimate";
+    noteEl.textContent = "Could not load nearby AQI estimate";
     console.warn("Air-quality update failed:", error);
   }
 }
@@ -1717,6 +1973,62 @@ document.addEventListener("visibilitychange", () => {
     loadWeather();
   }
 });
+</script>
+<script>
+
+/* -------------------------------------------------------
+   THREE EVENT COUNTDOWNS — all targets use Thailand time.
+------------------------------------------------------- */
+(function initEventCountdowns() {
+  const countdowns = document.querySelectorAll('.event-countdown-grid[data-target]');
+
+  function updateEventCountdowns() {
+    const now = Date.now();
+    countdowns.forEach((grid) => {
+      const target = new Date(grid.dataset.target).getTime();
+      const remaining = Math.max(0, target - now);
+      const days = Math.floor(remaining / 86400000);
+      const hours = Math.floor((remaining % 86400000) / 3600000);
+      const minutes = Math.floor((remaining % 3600000) / 60000);
+      const seconds = Math.floor((remaining % 60000) / 1000);
+
+      const values = { days, hours, minutes, seconds };
+      Object.entries(values).forEach(([part, value]) => {
+        const element = grid.querySelector(`[data-part="${part}"]`);
+        if (element) element.textContent = String(value).padStart(2, '0');
+      });
+
+      const message = grid.parentElement.querySelector('[data-message]');
+      if (message && remaining === 0) message.textContent = '🎉 The day has arrived!';
+    });
+  }
+
+  updateEventCountdowns();
+  setInterval(updateEventCountdowns, 1000);
+})();
+
+/* Gentle decorative snowfall. It sits above the page but never blocks clicks. */
+(function initChristmasSnow() {
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const layer = document.createElement("div");
+  layer.id = "christmasSnowLayer";
+  layer.setAttribute("aria-hidden", "true");
+  document.body.appendChild(layer);
+  const count = 38;
+  for (let i = 0; i < count; i++) {
+    const flake = document.createElement("span");
+    flake.className = "snowflake";
+    flake.textContent = i % 4 === 0 ? "❄" : "·";
+    flake.style.left = (Math.random() * 100) + "%";
+    flake.style.fontSize = (8 + Math.random() * 14) + "px";
+    flake.style.opacity = (0.28 + Math.random() * 0.58).toFixed(2);
+    flake.style.animationDuration = (10 + Math.random() * 15) + "s";
+    flake.style.animationDelay = (-Math.random() * 24) + "s";
+    flake.style.setProperty("--snow-drift", ((Math.random() * 100) - 50) + "px");
+    layer.appendChild(flake);
+  }
+})();
+
 </script>
 </body>
 </html>
